@@ -1,0 +1,6 @@
+/home/lavenda/Projects/AdminGas/build/CMakeFiles/api_server.dir
+/home/lavenda/Projects/AdminGas/build/CMakeFiles/edit_cache.dir
+/home/lavenda/Projects/AdminGas/build/CMakeFiles/rebuild_cache.dir
+/home/lavenda/Projects/AdminGas/build/test/CMakeFiles/api_server_test.dir
+/home/lavenda/Projects/AdminGas/build/test/CMakeFiles/edit_cache.dir
+/home/lavenda/Projects/AdminGas/build/test/CMakeFiles/rebuild_cache.dir
