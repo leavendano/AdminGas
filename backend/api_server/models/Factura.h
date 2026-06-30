@@ -60,6 +60,10 @@ class Factura
         static const std::string _impuestos;
         static const std::string _total;
         static const std::string _conceptos;
+        static const std::string _xml_timbrado;
+        static const std::string _uuid;
+        static const std::string _sello;
+        static const std::string _status;
     };
 
     static const int primaryKeyNumber;
@@ -250,8 +254,48 @@ class Factura
     void setConceptos(const std::string &pConceptos) noexcept;
     void setConceptos(std::string &&pConceptos) noexcept;
 
+    /**  For column xml_timbrado  */
+    ///Get the value of the column xml_timbrado, returns the default value if the column is null
+    const std::string &getValueOfXmlTimbrado() const noexcept;
+    ///Return a shared_ptr object pointing to the column const value, or an empty shared_ptr object if the column is null
+    const std::shared_ptr<std::string> &getXmlTimbrado() const noexcept;
+    ///Set the value of the column xml_timbrado
+    void setXmlTimbrado(const std::string &pXmlTimbrado) noexcept;
+    void setXmlTimbrado(std::string &&pXmlTimbrado) noexcept;
+    void setXmlTimbradoToNull() noexcept;
 
-    static size_t getColumnNumber() noexcept {  return 16;  }
+    /**  For column uuid  */
+    ///Get the value of the column uuid, returns the default value if the column is null
+    const std::string &getValueOfUuid() const noexcept;
+    ///Return a shared_ptr object pointing to the column const value, or an empty shared_ptr object if the column is null
+    const std::shared_ptr<std::string> &getUuid() const noexcept;
+    ///Set the value of the column uuid
+    void setUuid(const std::string &pUuid) noexcept;
+    void setUuid(std::string &&pUuid) noexcept;
+    void setUuidToNull() noexcept;
+
+    /**  For column sello  */
+    ///Get the value of the column sello, returns the default value if the column is null
+    const std::string &getValueOfSello() const noexcept;
+    ///Return a shared_ptr object pointing to the column const value, or an empty shared_ptr object if the column is null
+    const std::shared_ptr<std::string> &getSello() const noexcept;
+    ///Set the value of the column sello
+    void setSello(const std::string &pSello) noexcept;
+    void setSello(std::string &&pSello) noexcept;
+    void setSelloToNull() noexcept;
+
+    /**  For column status  */
+    ///Get the value of the column status, returns the default value if the column is null
+    const std::string &getValueOfStatus() const noexcept;
+    ///Return a shared_ptr object pointing to the column const value, or an empty shared_ptr object if the column is null
+    const std::shared_ptr<std::string> &getStatus() const noexcept;
+    ///Set the value of the column status
+    void setStatus(const std::string &pStatus) noexcept;
+    void setStatus(std::string &&pStatus) noexcept;
+    void setStatusToNull() noexcept;
+
+
+    static size_t getColumnNumber() noexcept {  return 20;  }
     static const std::string &getColumnName(size_t index) noexcept(false);
 
     Json::Value toJson() const;
@@ -289,6 +333,10 @@ class Factura
     std::shared_ptr<double> impuestos_;
     std::shared_ptr<double> total_;
     std::shared_ptr<std::string> conceptos_;
+    std::shared_ptr<std::string> xmlTimbrado_;
+    std::shared_ptr<std::string> uuid_;
+    std::shared_ptr<std::string> sello_;
+    std::shared_ptr<std::string> status_;
     struct MetaData
     {
         const std::string colName_;
@@ -300,7 +348,7 @@ class Factura
         const bool notNull_;
     };
     static const std::vector<MetaData> metaData_;
-    bool dirtyFlag_[16]={ false };
+    bool dirtyFlag_[20]={ false };
   public:
     static const std::string &sqlForFindingByPrimaryKey()
     {
@@ -395,6 +443,27 @@ class Factura
             sql += "conceptos,";
             ++parametersCount;
         }
+        if(dirtyFlag_[16])
+        {
+            sql += "xml_timbrado,";
+            ++parametersCount;
+        }
+        if(dirtyFlag_[17])
+        {
+            sql += "uuid,";
+            ++parametersCount;
+        }
+        if(dirtyFlag_[18])
+        {
+            sql += "sello,";
+            ++parametersCount;
+        }
+        sql += "status,";
+        ++parametersCount;
+        if(!dirtyFlag_[19])
+        {
+            needSelection=true;
+        }
         needSelection=true;
         if(parametersCount > 0)
         {
@@ -482,6 +551,30 @@ class Factura
         {
             n = snprintf(placeholderStr,sizeof(placeholderStr),"$%d,",placeholder++);
             sql.append(placeholderStr, n);
+        }
+        if(dirtyFlag_[16])
+        {
+            n = snprintf(placeholderStr,sizeof(placeholderStr),"$%d,",placeholder++);
+            sql.append(placeholderStr, n);
+        }
+        if(dirtyFlag_[17])
+        {
+            n = snprintf(placeholderStr,sizeof(placeholderStr),"$%d,",placeholder++);
+            sql.append(placeholderStr, n);
+        }
+        if(dirtyFlag_[18])
+        {
+            n = snprintf(placeholderStr,sizeof(placeholderStr),"$%d,",placeholder++);
+            sql.append(placeholderStr, n);
+        }
+        if(dirtyFlag_[19])
+        {
+            n = snprintf(placeholderStr,sizeof(placeholderStr),"$%d,",placeholder++);
+            sql.append(placeholderStr, n);
+        }
+        else
+        {
+            sql +="default,";
         }
         if(parametersCount > 0)
         {

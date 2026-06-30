@@ -1,58 +1,78 @@
 [
 {
   "directory": "/home/lavenda/Projects/AdminGas/build",
-  "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -isystem /usr/include/jsoncpp -g -std=c++17 -o CMakeFiles/api_server.dir/main.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/main.cc",
+  "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -I/home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated -isystem /usr/include/jsoncpp -isystem /usr/include/libxml2 -g -std=c++17 -o CMakeFiles/api_server.dir/main.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/main.cc",
   "file": "/home/lavenda/Projects/AdminGas/backend/api_server/main.cc"
 },
 {
   "directory": "/home/lavenda/Projects/AdminGas/build",
-  "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -isystem /usr/include/jsoncpp -g -std=c++17 -o CMakeFiles/api_server.dir/controllers/ConceptoController.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/controllers/ConceptoController.cc",
+  "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -I/home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated -isystem /usr/include/jsoncpp -isystem /usr/include/libxml2 -g -std=c++17 -o CMakeFiles/api_server.dir/controllers/CfdiHelper.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/controllers/CfdiHelper.cc",
+  "file": "/home/lavenda/Projects/AdminGas/backend/api_server/controllers/CfdiHelper.cc"
+},
+{
+  "directory": "/home/lavenda/Projects/AdminGas/build",
+  "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -I/home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated -isystem /usr/include/jsoncpp -isystem /usr/include/libxml2 -g -std=c++17 -o CMakeFiles/api_server.dir/controllers/ConceptoController.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/controllers/ConceptoController.cc",
   "file": "/home/lavenda/Projects/AdminGas/backend/api_server/controllers/ConceptoController.cc"
 },
 {
   "directory": "/home/lavenda/Projects/AdminGas/build",
-  "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -isystem /usr/include/jsoncpp -g -std=c++17 -o CMakeFiles/api_server.dir/controllers/EmisorController.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/controllers/EmisorController.cc",
+  "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -I/home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated -isystem /usr/include/jsoncpp -isystem /usr/include/libxml2 -g -std=c++17 -o CMakeFiles/api_server.dir/controllers/EmisorController.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/controllers/EmisorController.cc",
   "file": "/home/lavenda/Projects/AdminGas/backend/api_server/controllers/EmisorController.cc"
 },
 {
   "directory": "/home/lavenda/Projects/AdminGas/build",
-  "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -isystem /usr/include/jsoncpp -g -std=c++17 -o CMakeFiles/api_server.dir/controllers/FacturaController.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/controllers/FacturaController.cc",
+  "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -I/home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated -isystem /usr/include/jsoncpp -isystem /usr/include/libxml2 -g -std=c++17 -o CMakeFiles/api_server.dir/controllers/FacturaController.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/controllers/FacturaController.cc",
   "file": "/home/lavenda/Projects/AdminGas/backend/api_server/controllers/FacturaController.cc"
 },
 {
   "directory": "/home/lavenda/Projects/AdminGas/build",
-  "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -isystem /usr/include/jsoncpp -g -std=c++17 -o CMakeFiles/api_server.dir/controllers/ReceptorController.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/controllers/ReceptorController.cc",
+  "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -I/home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated -isystem /usr/include/jsoncpp -isystem /usr/include/libxml2 -g -std=c++17 -o CMakeFiles/api_server.dir/controllers/ReceptorController.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/controllers/ReceptorController.cc",
   "file": "/home/lavenda/Projects/AdminGas/backend/api_server/controllers/ReceptorController.cc"
 },
 {
   "directory": "/home/lavenda/Projects/AdminGas/build",
-  "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -isystem /usr/include/jsoncpp -g -std=c++17 -o CMakeFiles/api_server.dir/controllers/TodoController.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/controllers/TodoController.cc",
+  "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -I/home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated -isystem /usr/include/jsoncpp -isystem /usr/include/libxml2 -g -std=c++17 -o CMakeFiles/api_server.dir/controllers/TodoController.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/controllers/TodoController.cc",
   "file": "/home/lavenda/Projects/AdminGas/backend/api_server/controllers/TodoController.cc"
 },
 {
   "directory": "/home/lavenda/Projects/AdminGas/build",
-  "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -isystem /usr/include/jsoncpp -g -std=c++17 -o CMakeFiles/api_server.dir/models/Concepto.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/models/Concepto.cc",
+  "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -I/home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated -isystem /usr/include/jsoncpp -isystem /usr/include/libxml2 -g -std=c++17 -o CMakeFiles/api_server.dir/models/Concepto.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/models/Concepto.cc",
   "file": "/home/lavenda/Projects/AdminGas/backend/api_server/models/Concepto.cc"
 },
 {
   "directory": "/home/lavenda/Projects/AdminGas/build",
-  "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -isystem /usr/include/jsoncpp -g -std=c++17 -o CMakeFiles/api_server.dir/models/Emisor.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/models/Emisor.cc",
+  "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -I/home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated -isystem /usr/include/jsoncpp -isystem /usr/include/libxml2 -g -std=c++17 -o CMakeFiles/api_server.dir/models/Emisor.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/models/Emisor.cc",
   "file": "/home/lavenda/Projects/AdminGas/backend/api_server/models/Emisor.cc"
 },
 {
   "directory": "/home/lavenda/Projects/AdminGas/build",
-  "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -isystem /usr/include/jsoncpp -g -std=c++17 -o CMakeFiles/api_server.dir/models/Factura.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/models/Factura.cc",
+  "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -I/home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated -isystem /usr/include/jsoncpp -isystem /usr/include/libxml2 -g -std=c++17 -o CMakeFiles/api_server.dir/models/Factura.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/models/Factura.cc",
   "file": "/home/lavenda/Projects/AdminGas/backend/api_server/models/Factura.cc"
 },
 {
   "directory": "/home/lavenda/Projects/AdminGas/build",
-  "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -isystem /usr/include/jsoncpp -g -std=c++17 -o CMakeFiles/api_server.dir/models/Receptor.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/models/Receptor.cc",
+  "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -I/home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated -isystem /usr/include/jsoncpp -isystem /usr/include/libxml2 -g -std=c++17 -o CMakeFiles/api_server.dir/models/Receptor.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/models/Receptor.cc",
   "file": "/home/lavenda/Projects/AdminGas/backend/api_server/models/Receptor.cc"
 },
 {
   "directory": "/home/lavenda/Projects/AdminGas/build",
-  "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -isystem /usr/include/jsoncpp -g -std=c++17 -o CMakeFiles/api_server.dir/models/Todo.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/models/Todo.cc",
+  "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -I/home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated -isystem /usr/include/jsoncpp -isystem /usr/include/libxml2 -g -std=c++17 -o CMakeFiles/api_server.dir/models/Todo.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/models/Todo.cc",
   "file": "/home/lavenda/Projects/AdminGas/backend/api_server/models/Todo.cc"
+},
+{
+  "directory": "/home/lavenda/Projects/AdminGas/build",
+  "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -I/home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated -isystem /usr/include/jsoncpp -isystem /usr/include/libxml2 -g -std=c++17 -o CMakeFiles/api_server.dir/xsd/generated/catCFDI.cpp.o -c /home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated/catCFDI.cpp",
+  "file": "/home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated/catCFDI.cpp"
+},
+{
+  "directory": "/home/lavenda/Projects/AdminGas/build",
+  "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -I/home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated -isystem /usr/include/jsoncpp -isystem /usr/include/libxml2 -g -std=c++17 -o CMakeFiles/api_server.dir/xsd/generated/cfdv40.cpp.o -c /home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated/cfdv40.cpp",
+  "file": "/home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated/cfdv40.cpp"
+},
+{
+  "directory": "/home/lavenda/Projects/AdminGas/build",
+  "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -I/home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated -isystem /usr/include/jsoncpp -isystem /usr/include/libxml2 -g -std=c++17 -o CMakeFiles/api_server.dir/xsd/generated/tdCFDI.cpp.o -c /home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated/tdCFDI.cpp",
+  "file": "/home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated/tdCFDI.cpp"
 },
 {
   "directory": "/home/lavenda/Projects/AdminGas/build/test",

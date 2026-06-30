@@ -31,6 +31,22 @@ add_executable(${PROJECT_NAME} main.cc)
 find_package(Drogon CONFIG REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE Drogon::Drogon)
 
+# Find PkgConfig and retrieve XML/XSLT libraries
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(LIBXML2 REQUIRED IMPORTED_TARGET libxml-2.0)
+pkg_check_modules(LIBXSLT REQUIRED IMPORTED_TARGET libxslt)
+pkg_check_modules(LIBEXSLT REQUIRED IMPORTED_TARGET libexslt)
+
+# Find XercesC
+find_package(XercesC REQUIRED)
+
+# Link XML, XSLT, EXSLT, and Xerces-C to the executable
+target_link_libraries(${PROJECT_NAME} PRIVATE
+                      PkgConfig::LIBXML2
+                      PkgConfig::LIBXSLT
+                      PkgConfig::LIBEXSLT
+                      XercesC::XercesC)
+
 # ##############################################################################
 
 if (CMAKE_CXX_STANDARD LESS 17)
@@ -45,6 +61,7 @@ aux_source_directory(controllers CTL_SRC)
 aux_source_directory(filters FILTER_SRC)
 aux_source_directory(plugins PLUGIN_SRC)
 aux_source_directory(models MODEL_SRC)
+aux_source_directory(xsd/generated XSD_SRC)
 
 drogon_create_views(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/views
                     ${CMAKE_CURRENT_BINARY_DIR})
@@ -58,14 +75,16 @@ drogon_create_views(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/views
 
 target_include_directories(${PROJECT_NAME}
                            PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
-                                   ${CMAKE_CURRENT_SOURCE_DIR}/models)
+                                   ${CMAKE_CURRENT_SOURCE_DIR}/models
+                                   ${CMAKE_CURRENT_SOURCE_DIR}/xsd/generated)
 target_sources(${PROJECT_NAME}
                PRIVATE
                ${SRC_DIR}
                ${CTL_SRC}
                ${FILTER_SRC}
                ${PLUGIN_SRC}
-               ${MODEL_SRC})
+               ${MODEL_SRC}
+               ${XSD_SRC})
 # ##############################################################################
 # uncomment the following line for dynamically loading views 
 # set_property(TARGET ${PROJECT_NAME} PROPERTY ENABLE_EXPORTS ON)

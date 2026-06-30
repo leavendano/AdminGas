@@ -34,6 +34,10 @@
 #ifndef CFDV40_H
 #define CFDV40_H
 
+#ifndef XSD_CXX11
+#define XSD_CXX11
+#endif
+
 #ifndef XSD_USE_CHAR
 #define XSD_USE_CHAR
 #endif
@@ -93,6 +97,8 @@
 #include <xsd/cxx/tree/serialization/float.hxx>
 #include <xsd/cxx/tree/serialization/double.hxx>
 #include <xsd/cxx/tree/serialization/decimal.hxx>
+
+#include <xsd/cxx/tree/std-ostream-operators.hxx>
 
 namespace xml_schema
 {
@@ -235,7 +241,7 @@ namespace xml_schema
   {
     // Automatic pointer for DOMDocument.
     //
-    using ::xsd::cxx::xml::dom::auto_ptr;
+    using ::xsd::cxx::xml::dom::unique_ptr;
 
 #ifndef XSD_CXX_TREE_TREE_NODE_KEY__XML_SCHEMA
 #define XSD_CXX_TREE_TREE_NODE_KEY__XML_SCHEMA
@@ -304,9 +310,10 @@ namespace cfdi
 }
 
 
-#include <memory>    // ::std::auto_ptr
+#include <memory>    // ::std::unique_ptr
 #include <limits>    // std::numeric_limits
 #include <algorithm> // std::binary_search
+#include <utility>   // std::move
 
 #include <xsd/cxx/xml/char-utf8.hxx>
 
@@ -345,7 +352,7 @@ namespace cfdi
     InformacionGlobal (const InformacionGlobal_optional& x);
 
     void
-    InformacionGlobal (::std::auto_ptr< InformacionGlobal_type > p);
+    InformacionGlobal (::std::unique_ptr< InformacionGlobal_type > p);
 
     // CfdiRelacionados
     //
@@ -379,7 +386,10 @@ namespace cfdi
     Emisor (const Emisor_type& x);
 
     void
-    Emisor (::std::auto_ptr< Emisor_type > p);
+    Emisor (::std::unique_ptr< Emisor_type > p);
+
+    ::std::unique_ptr< Emisor_type >
+    detach_Emisor ();
 
     // Receptor
     //
@@ -396,7 +406,10 @@ namespace cfdi
     Receptor (const Receptor_type& x);
 
     void
-    Receptor (::std::auto_ptr< Receptor_type > p);
+    Receptor (::std::unique_ptr< Receptor_type > p);
+
+    ::std::unique_ptr< Receptor_type >
+    detach_Receptor ();
 
     // Conceptos
     //
@@ -413,7 +426,10 @@ namespace cfdi
     Conceptos (const Conceptos_type& x);
 
     void
-    Conceptos (::std::auto_ptr< Conceptos_type > p);
+    Conceptos (::std::unique_ptr< Conceptos_type > p);
+
+    ::std::unique_ptr< Conceptos_type >
+    detach_Conceptos ();
 
     // Impuestos
     //
@@ -434,7 +450,7 @@ namespace cfdi
     Impuestos (const Impuestos_optional& x);
 
     void
-    Impuestos (::std::auto_ptr< Impuestos_type > p);
+    Impuestos (::std::unique_ptr< Impuestos_type > p);
 
     // Complemento
     //
@@ -455,7 +471,7 @@ namespace cfdi
     Complemento (const Complemento_optional& x);
 
     void
-    Complemento (::std::auto_ptr< Complemento_type > p);
+    Complemento (::std::unique_ptr< Complemento_type > p);
 
     // Addenda
     //
@@ -476,7 +492,7 @@ namespace cfdi
     Addenda (const Addenda_optional& x);
 
     void
-    Addenda (::std::auto_ptr< Addenda_type > p);
+    Addenda (::std::unique_ptr< Addenda_type > p);
 
     // Version
     //
@@ -508,7 +524,7 @@ namespace cfdi
     Serie (const Serie_optional& x);
 
     void
-    Serie (::std::auto_ptr< Serie_type > p);
+    Serie (::std::unique_ptr< Serie_type > p);
 
     // Folio
     //
@@ -529,7 +545,7 @@ namespace cfdi
     Folio (const Folio_optional& x);
 
     void
-    Folio (::std::auto_ptr< Folio_type > p);
+    Folio (::std::unique_ptr< Folio_type > p);
 
     // Fecha
     //
@@ -546,7 +562,10 @@ namespace cfdi
     Fecha (const Fecha_type& x);
 
     void
-    Fecha (::std::auto_ptr< Fecha_type > p);
+    Fecha (::std::unique_ptr< Fecha_type > p);
+
+    ::std::unique_ptr< Fecha_type >
+    detach_Fecha ();
 
     // Sello
     //
@@ -563,7 +582,10 @@ namespace cfdi
     Sello (const Sello_type& x);
 
     void
-    Sello (::std::auto_ptr< Sello_type > p);
+    Sello (::std::unique_ptr< Sello_type > p);
+
+    ::std::unique_ptr< Sello_type >
+    detach_Sello ();
 
     // FormaPago
     //
@@ -584,7 +606,7 @@ namespace cfdi
     FormaPago (const FormaPago_optional& x);
 
     void
-    FormaPago (::std::auto_ptr< FormaPago_type > p);
+    FormaPago (::std::unique_ptr< FormaPago_type > p);
 
     // NoCertificado
     //
@@ -601,7 +623,10 @@ namespace cfdi
     NoCertificado (const NoCertificado_type& x);
 
     void
-    NoCertificado (::std::auto_ptr< NoCertificado_type > p);
+    NoCertificado (::std::unique_ptr< NoCertificado_type > p);
+
+    ::std::unique_ptr< NoCertificado_type >
+    detach_NoCertificado ();
 
     // Certificado
     //
@@ -618,7 +643,10 @@ namespace cfdi
     Certificado (const Certificado_type& x);
 
     void
-    Certificado (::std::auto_ptr< Certificado_type > p);
+    Certificado (::std::unique_ptr< Certificado_type > p);
+
+    ::std::unique_ptr< Certificado_type >
+    detach_Certificado ();
 
     // CondicionesDePago
     //
@@ -639,7 +667,7 @@ namespace cfdi
     CondicionesDePago (const CondicionesDePago_optional& x);
 
     void
-    CondicionesDePago (::std::auto_ptr< CondicionesDePago_type > p);
+    CondicionesDePago (::std::unique_ptr< CondicionesDePago_type > p);
 
     // SubTotal
     //
@@ -656,7 +684,10 @@ namespace cfdi
     SubTotal (const SubTotal_type& x);
 
     void
-    SubTotal (::std::auto_ptr< SubTotal_type > p);
+    SubTotal (::std::unique_ptr< SubTotal_type > p);
+
+    ::std::unique_ptr< SubTotal_type >
+    detach_SubTotal ();
 
     // Descuento
     //
@@ -677,7 +708,7 @@ namespace cfdi
     Descuento (const Descuento_optional& x);
 
     void
-    Descuento (::std::auto_ptr< Descuento_type > p);
+    Descuento (::std::unique_ptr< Descuento_type > p);
 
     // Moneda
     //
@@ -694,7 +725,10 @@ namespace cfdi
     Moneda (const Moneda_type& x);
 
     void
-    Moneda (::std::auto_ptr< Moneda_type > p);
+    Moneda (::std::unique_ptr< Moneda_type > p);
+
+    ::std::unique_ptr< Moneda_type >
+    detach_Moneda ();
 
     // TipoCambio
     //
@@ -715,7 +749,7 @@ namespace cfdi
     TipoCambio (const TipoCambio_optional& x);
 
     void
-    TipoCambio (::std::auto_ptr< TipoCambio_type > p);
+    TipoCambio (::std::unique_ptr< TipoCambio_type > p);
 
     // Total
     //
@@ -732,7 +766,10 @@ namespace cfdi
     Total (const Total_type& x);
 
     void
-    Total (::std::auto_ptr< Total_type > p);
+    Total (::std::unique_ptr< Total_type > p);
+
+    ::std::unique_ptr< Total_type >
+    detach_Total ();
 
     // TipoDeComprobante
     //
@@ -749,7 +786,10 @@ namespace cfdi
     TipoDeComprobante (const TipoDeComprobante_type& x);
 
     void
-    TipoDeComprobante (::std::auto_ptr< TipoDeComprobante_type > p);
+    TipoDeComprobante (::std::unique_ptr< TipoDeComprobante_type > p);
+
+    ::std::unique_ptr< TipoDeComprobante_type >
+    detach_TipoDeComprobante ();
 
     // Exportacion
     //
@@ -766,7 +806,10 @@ namespace cfdi
     Exportacion (const Exportacion_type& x);
 
     void
-    Exportacion (::std::auto_ptr< Exportacion_type > p);
+    Exportacion (::std::unique_ptr< Exportacion_type > p);
+
+    ::std::unique_ptr< Exportacion_type >
+    detach_Exportacion ();
 
     // MetodoPago
     //
@@ -787,7 +830,7 @@ namespace cfdi
     MetodoPago (const MetodoPago_optional& x);
 
     void
-    MetodoPago (::std::auto_ptr< MetodoPago_type > p);
+    MetodoPago (::std::unique_ptr< MetodoPago_type > p);
 
     // LugarExpedicion
     //
@@ -804,7 +847,10 @@ namespace cfdi
     LugarExpedicion (const LugarExpedicion_type& x);
 
     void
-    LugarExpedicion (::std::auto_ptr< LugarExpedicion_type > p);
+    LugarExpedicion (::std::unique_ptr< LugarExpedicion_type > p);
+
+    ::std::unique_ptr< LugarExpedicion_type >
+    detach_LugarExpedicion ();
 
     // Confirmacion
     //
@@ -825,7 +871,7 @@ namespace cfdi
     Confirmacion (const Confirmacion_optional& x);
 
     void
-    Confirmacion (::std::auto_ptr< Confirmacion_type > p);
+    Confirmacion (::std::unique_ptr< Confirmacion_type > p);
 
     // Constructors.
     //
@@ -843,9 +889,9 @@ namespace cfdi
                  const Exportacion_type&,
                  const LugarExpedicion_type&);
 
-    Comprobante (::std::auto_ptr< Emisor_type >,
-                 ::std::auto_ptr< Receptor_type >,
-                 ::std::auto_ptr< Conceptos_type >,
+    Comprobante (::std::unique_ptr< Emisor_type >,
+                 ::std::unique_ptr< Receptor_type >,
+                 ::std::unique_ptr< Conceptos_type >,
                  const Fecha_type&,
                  const Sello_type&,
                  const NoCertificado_type&,
@@ -931,7 +977,10 @@ namespace cfdi
     Periodicidad (const Periodicidad_type& x);
 
     void
-    Periodicidad (::std::auto_ptr< Periodicidad_type > p);
+    Periodicidad (::std::unique_ptr< Periodicidad_type > p);
+
+    ::std::unique_ptr< Periodicidad_type >
+    detach_Periodicidad ();
 
     // Meses
     //
@@ -948,7 +997,10 @@ namespace cfdi
     Meses (const Meses_type& x);
 
     void
-    Meses (::std::auto_ptr< Meses_type > p);
+    Meses (::std::unique_ptr< Meses_type > p);
+
+    ::std::unique_ptr< Meses_type >
+    detach_Meses ();
 
     // A?o
     //
@@ -965,7 +1017,10 @@ namespace cfdi
     A_o (const A_o_type& x);
 
     void
-    A_o (::std::auto_ptr< A_o_type > p);
+    A_o (::std::unique_ptr< A_o_type > p);
+
+    ::std::unique_ptr< A_o_type >
+    detach_A_o ();
 
     // Constructors.
     //
@@ -1039,7 +1094,10 @@ namespace cfdi
     TipoRelacion (const TipoRelacion_type& x);
 
     void
-    TipoRelacion (::std::auto_ptr< TipoRelacion_type > p);
+    TipoRelacion (::std::unique_ptr< TipoRelacion_type > p);
+
+    ::std::unique_ptr< TipoRelacion_type >
+    detach_TipoRelacion ();
 
     // Constructors.
     //
@@ -1093,7 +1151,10 @@ namespace cfdi
     Rfc (const Rfc_type& x);
 
     void
-    Rfc (::std::auto_ptr< Rfc_type > p);
+    Rfc (::std::unique_ptr< Rfc_type > p);
+
+    ::std::unique_ptr< Rfc_type >
+    detach_Rfc ();
 
     // Nombre
     //
@@ -1110,7 +1171,10 @@ namespace cfdi
     Nombre (const Nombre_type& x);
 
     void
-    Nombre (::std::auto_ptr< Nombre_type > p);
+    Nombre (::std::unique_ptr< Nombre_type > p);
+
+    ::std::unique_ptr< Nombre_type >
+    detach_Nombre ();
 
     // RegimenFiscal
     //
@@ -1127,7 +1191,10 @@ namespace cfdi
     RegimenFiscal (const RegimenFiscal_type& x);
 
     void
-    RegimenFiscal (::std::auto_ptr< RegimenFiscal_type > p);
+    RegimenFiscal (::std::unique_ptr< RegimenFiscal_type > p);
+
+    ::std::unique_ptr< RegimenFiscal_type >
+    detach_RegimenFiscal ();
 
     // FacAtrAdquirente
     //
@@ -1148,7 +1215,7 @@ namespace cfdi
     FacAtrAdquirente (const FacAtrAdquirente_optional& x);
 
     void
-    FacAtrAdquirente (::std::auto_ptr< FacAtrAdquirente_type > p);
+    FacAtrAdquirente (::std::unique_ptr< FacAtrAdquirente_type > p);
 
     // Constructors.
     //
@@ -1206,7 +1273,10 @@ namespace cfdi
     Rfc (const Rfc_type& x);
 
     void
-    Rfc (::std::auto_ptr< Rfc_type > p);
+    Rfc (::std::unique_ptr< Rfc_type > p);
+
+    ::std::unique_ptr< Rfc_type >
+    detach_Rfc ();
 
     // Nombre
     //
@@ -1223,7 +1293,10 @@ namespace cfdi
     Nombre (const Nombre_type& x);
 
     void
-    Nombre (::std::auto_ptr< Nombre_type > p);
+    Nombre (::std::unique_ptr< Nombre_type > p);
+
+    ::std::unique_ptr< Nombre_type >
+    detach_Nombre ();
 
     // DomicilioFiscalReceptor
     //
@@ -1240,7 +1313,10 @@ namespace cfdi
     DomicilioFiscalReceptor (const DomicilioFiscalReceptor_type& x);
 
     void
-    DomicilioFiscalReceptor (::std::auto_ptr< DomicilioFiscalReceptor_type > p);
+    DomicilioFiscalReceptor (::std::unique_ptr< DomicilioFiscalReceptor_type > p);
+
+    ::std::unique_ptr< DomicilioFiscalReceptor_type >
+    detach_DomicilioFiscalReceptor ();
 
     // ResidenciaFiscal
     //
@@ -1261,7 +1337,7 @@ namespace cfdi
     ResidenciaFiscal (const ResidenciaFiscal_optional& x);
 
     void
-    ResidenciaFiscal (::std::auto_ptr< ResidenciaFiscal_type > p);
+    ResidenciaFiscal (::std::unique_ptr< ResidenciaFiscal_type > p);
 
     // NumRegIdTrib
     //
@@ -1282,7 +1358,7 @@ namespace cfdi
     NumRegIdTrib (const NumRegIdTrib_optional& x);
 
     void
-    NumRegIdTrib (::std::auto_ptr< NumRegIdTrib_type > p);
+    NumRegIdTrib (::std::unique_ptr< NumRegIdTrib_type > p);
 
     // RegimenFiscalReceptor
     //
@@ -1299,7 +1375,10 @@ namespace cfdi
     RegimenFiscalReceptor (const RegimenFiscalReceptor_type& x);
 
     void
-    RegimenFiscalReceptor (::std::auto_ptr< RegimenFiscalReceptor_type > p);
+    RegimenFiscalReceptor (::std::unique_ptr< RegimenFiscalReceptor_type > p);
+
+    ::std::unique_ptr< RegimenFiscalReceptor_type >
+    detach_RegimenFiscalReceptor ();
 
     // UsoCFDI
     //
@@ -1316,7 +1395,10 @@ namespace cfdi
     UsoCFDI (const UsoCFDI_type& x);
 
     void
-    UsoCFDI (::std::auto_ptr< UsoCFDI_type > p);
+    UsoCFDI (::std::unique_ptr< UsoCFDI_type > p);
+
+    ::std::unique_ptr< UsoCFDI_type >
+    detach_UsoCFDI ();
 
     // Constructors.
     //
@@ -1436,7 +1518,7 @@ namespace cfdi
     Retenciones (const Retenciones_optional& x);
 
     void
-    Retenciones (::std::auto_ptr< Retenciones_type > p);
+    Retenciones (::std::unique_ptr< Retenciones_type > p);
 
     // Traslados
     //
@@ -1457,7 +1539,7 @@ namespace cfdi
     Traslados (const Traslados_optional& x);
 
     void
-    Traslados (::std::auto_ptr< Traslados_type > p);
+    Traslados (::std::unique_ptr< Traslados_type > p);
 
     // TotalImpuestosRetenidos
     //
@@ -1478,7 +1560,7 @@ namespace cfdi
     TotalImpuestosRetenidos (const TotalImpuestosRetenidos_optional& x);
 
     void
-    TotalImpuestosRetenidos (::std::auto_ptr< TotalImpuestosRetenidos_type > p);
+    TotalImpuestosRetenidos (::std::unique_ptr< TotalImpuestosRetenidos_type > p);
 
     // TotalImpuestosTrasladados
     //
@@ -1499,7 +1581,7 @@ namespace cfdi
     TotalImpuestosTrasladados (const TotalImpuestosTrasladados_optional& x);
 
     void
-    TotalImpuestosTrasladados (::std::auto_ptr< TotalImpuestosTrasladados_type > p);
+    TotalImpuestosTrasladados (::std::unique_ptr< TotalImpuestosTrasladados_type > p);
 
     // Constructors.
     //
@@ -1987,7 +2069,10 @@ namespace cfdi
     UUID (const UUID_type& x);
 
     void
-    UUID (::std::auto_ptr< UUID_type > p);
+    UUID (::std::unique_ptr< UUID_type > p);
+
+    ::std::unique_ptr< UUID_type >
+    detach_UUID ();
 
     // Constructors.
     //
@@ -2196,7 +2281,7 @@ namespace cfdi
     Impuestos (const Impuestos_optional& x);
 
     void
-    Impuestos (::std::auto_ptr< Impuestos_type > p);
+    Impuestos (::std::unique_ptr< Impuestos_type > p);
 
     // ACuentaTerceros
     //
@@ -2217,7 +2302,7 @@ namespace cfdi
     ACuentaTerceros (const ACuentaTerceros_optional& x);
 
     void
-    ACuentaTerceros (::std::auto_ptr< ACuentaTerceros_type > p);
+    ACuentaTerceros (::std::unique_ptr< ACuentaTerceros_type > p);
 
     // InformacionAduanera
     //
@@ -2272,7 +2357,7 @@ namespace cfdi
     ComplementoConcepto (const ComplementoConcepto_optional& x);
 
     void
-    ComplementoConcepto (::std::auto_ptr< ComplementoConcepto_type > p);
+    ComplementoConcepto (::std::unique_ptr< ComplementoConcepto_type > p);
 
     // Parte
     //
@@ -2306,7 +2391,10 @@ namespace cfdi
     ClaveProdServ (const ClaveProdServ_type& x);
 
     void
-    ClaveProdServ (::std::auto_ptr< ClaveProdServ_type > p);
+    ClaveProdServ (::std::unique_ptr< ClaveProdServ_type > p);
+
+    ::std::unique_ptr< ClaveProdServ_type >
+    detach_ClaveProdServ ();
 
     // NoIdentificacion
     //
@@ -2327,7 +2415,7 @@ namespace cfdi
     NoIdentificacion (const NoIdentificacion_optional& x);
 
     void
-    NoIdentificacion (::std::auto_ptr< NoIdentificacion_type > p);
+    NoIdentificacion (::std::unique_ptr< NoIdentificacion_type > p);
 
     // Cantidad
     //
@@ -2344,7 +2432,10 @@ namespace cfdi
     Cantidad (const Cantidad_type& x);
 
     void
-    Cantidad (::std::auto_ptr< Cantidad_type > p);
+    Cantidad (::std::unique_ptr< Cantidad_type > p);
+
+    ::std::unique_ptr< Cantidad_type >
+    detach_Cantidad ();
 
     // ClaveUnidad
     //
@@ -2361,7 +2452,10 @@ namespace cfdi
     ClaveUnidad (const ClaveUnidad_type& x);
 
     void
-    ClaveUnidad (::std::auto_ptr< ClaveUnidad_type > p);
+    ClaveUnidad (::std::unique_ptr< ClaveUnidad_type > p);
+
+    ::std::unique_ptr< ClaveUnidad_type >
+    detach_ClaveUnidad ();
 
     // Unidad
     //
@@ -2382,7 +2476,7 @@ namespace cfdi
     Unidad (const Unidad_optional& x);
 
     void
-    Unidad (::std::auto_ptr< Unidad_type > p);
+    Unidad (::std::unique_ptr< Unidad_type > p);
 
     // Descripcion
     //
@@ -2399,7 +2493,10 @@ namespace cfdi
     Descripcion (const Descripcion_type& x);
 
     void
-    Descripcion (::std::auto_ptr< Descripcion_type > p);
+    Descripcion (::std::unique_ptr< Descripcion_type > p);
+
+    ::std::unique_ptr< Descripcion_type >
+    detach_Descripcion ();
 
     // ValorUnitario
     //
@@ -2416,7 +2513,10 @@ namespace cfdi
     ValorUnitario (const ValorUnitario_type& x);
 
     void
-    ValorUnitario (::std::auto_ptr< ValorUnitario_type > p);
+    ValorUnitario (::std::unique_ptr< ValorUnitario_type > p);
+
+    ::std::unique_ptr< ValorUnitario_type >
+    detach_ValorUnitario ();
 
     // Importe
     //
@@ -2433,7 +2533,10 @@ namespace cfdi
     Importe (const Importe_type& x);
 
     void
-    Importe (::std::auto_ptr< Importe_type > p);
+    Importe (::std::unique_ptr< Importe_type > p);
+
+    ::std::unique_ptr< Importe_type >
+    detach_Importe ();
 
     // Descuento
     //
@@ -2454,7 +2557,7 @@ namespace cfdi
     Descuento (const Descuento_optional& x);
 
     void
-    Descuento (::std::auto_ptr< Descuento_type > p);
+    Descuento (::std::unique_ptr< Descuento_type > p);
 
     // ObjetoImp
     //
@@ -2471,7 +2574,10 @@ namespace cfdi
     ObjetoImp (const ObjetoImp_type& x);
 
     void
-    ObjetoImp (::std::auto_ptr< ObjetoImp_type > p);
+    ObjetoImp (::std::unique_ptr< ObjetoImp_type > p);
+
+    ::std::unique_ptr< ObjetoImp_type >
+    detach_ObjetoImp ();
 
     // Constructors.
     //
@@ -2693,7 +2799,7 @@ namespace cfdi
     Traslados (const Traslados_optional& x);
 
     void
-    Traslados (::std::auto_ptr< Traslados_type > p);
+    Traslados (::std::unique_ptr< Traslados_type > p);
 
     // Retenciones
     //
@@ -2714,7 +2820,7 @@ namespace cfdi
     Retenciones (const Retenciones_optional& x);
 
     void
-    Retenciones (::std::auto_ptr< Retenciones_type > p);
+    Retenciones (::std::unique_ptr< Retenciones_type > p);
 
     // Constructors.
     //
@@ -2768,7 +2874,10 @@ namespace cfdi
     RfcACuentaTerceros (const RfcACuentaTerceros_type& x);
 
     void
-    RfcACuentaTerceros (::std::auto_ptr< RfcACuentaTerceros_type > p);
+    RfcACuentaTerceros (::std::unique_ptr< RfcACuentaTerceros_type > p);
+
+    ::std::unique_ptr< RfcACuentaTerceros_type >
+    detach_RfcACuentaTerceros ();
 
     // NombreACuentaTerceros
     //
@@ -2785,7 +2894,10 @@ namespace cfdi
     NombreACuentaTerceros (const NombreACuentaTerceros_type& x);
 
     void
-    NombreACuentaTerceros (::std::auto_ptr< NombreACuentaTerceros_type > p);
+    NombreACuentaTerceros (::std::unique_ptr< NombreACuentaTerceros_type > p);
+
+    ::std::unique_ptr< NombreACuentaTerceros_type >
+    detach_NombreACuentaTerceros ();
 
     // RegimenFiscalACuentaTerceros
     //
@@ -2802,7 +2914,10 @@ namespace cfdi
     RegimenFiscalACuentaTerceros (const RegimenFiscalACuentaTerceros_type& x);
 
     void
-    RegimenFiscalACuentaTerceros (::std::auto_ptr< RegimenFiscalACuentaTerceros_type > p);
+    RegimenFiscalACuentaTerceros (::std::unique_ptr< RegimenFiscalACuentaTerceros_type > p);
+
+    ::std::unique_ptr< RegimenFiscalACuentaTerceros_type >
+    detach_RegimenFiscalACuentaTerceros ();
 
     // DomicilioFiscalACuentaTerceros
     //
@@ -2819,7 +2934,10 @@ namespace cfdi
     DomicilioFiscalACuentaTerceros (const DomicilioFiscalACuentaTerceros_type& x);
 
     void
-    DomicilioFiscalACuentaTerceros (::std::auto_ptr< DomicilioFiscalACuentaTerceros_type > p);
+    DomicilioFiscalACuentaTerceros (::std::unique_ptr< DomicilioFiscalACuentaTerceros_type > p);
+
+    ::std::unique_ptr< DomicilioFiscalACuentaTerceros_type >
+    detach_DomicilioFiscalACuentaTerceros ();
 
     // Constructors.
     //
@@ -2878,7 +2996,10 @@ namespace cfdi
     NumeroPedimento (const NumeroPedimento_type& x);
 
     void
-    NumeroPedimento (::std::auto_ptr< NumeroPedimento_type > p);
+    NumeroPedimento (::std::unique_ptr< NumeroPedimento_type > p);
+
+    ::std::unique_ptr< NumeroPedimento_type >
+    detach_NumeroPedimento ();
 
     // Constructors.
     //
@@ -2931,7 +3052,10 @@ namespace cfdi
     Numero (const Numero_type& x);
 
     void
-    Numero (::std::auto_ptr< Numero_type > p);
+    Numero (::std::unique_ptr< Numero_type > p);
+
+    ::std::unique_ptr< Numero_type >
+    detach_Numero ();
 
     // Constructors.
     //
@@ -3033,7 +3157,10 @@ namespace cfdi
     ClaveProdServ (const ClaveProdServ_type& x);
 
     void
-    ClaveProdServ (::std::auto_ptr< ClaveProdServ_type > p);
+    ClaveProdServ (::std::unique_ptr< ClaveProdServ_type > p);
+
+    ::std::unique_ptr< ClaveProdServ_type >
+    detach_ClaveProdServ ();
 
     // NoIdentificacion
     //
@@ -3054,7 +3181,7 @@ namespace cfdi
     NoIdentificacion (const NoIdentificacion_optional& x);
 
     void
-    NoIdentificacion (::std::auto_ptr< NoIdentificacion_type > p);
+    NoIdentificacion (::std::unique_ptr< NoIdentificacion_type > p);
 
     // Cantidad
     //
@@ -3071,7 +3198,10 @@ namespace cfdi
     Cantidad (const Cantidad_type& x);
 
     void
-    Cantidad (::std::auto_ptr< Cantidad_type > p);
+    Cantidad (::std::unique_ptr< Cantidad_type > p);
+
+    ::std::unique_ptr< Cantidad_type >
+    detach_Cantidad ();
 
     // Unidad
     //
@@ -3092,7 +3222,7 @@ namespace cfdi
     Unidad (const Unidad_optional& x);
 
     void
-    Unidad (::std::auto_ptr< Unidad_type > p);
+    Unidad (::std::unique_ptr< Unidad_type > p);
 
     // Descripcion
     //
@@ -3109,7 +3239,10 @@ namespace cfdi
     Descripcion (const Descripcion_type& x);
 
     void
-    Descripcion (::std::auto_ptr< Descripcion_type > p);
+    Descripcion (::std::unique_ptr< Descripcion_type > p);
+
+    ::std::unique_ptr< Descripcion_type >
+    detach_Descripcion ();
 
     // ValorUnitario
     //
@@ -3130,7 +3263,7 @@ namespace cfdi
     ValorUnitario (const ValorUnitario_optional& x);
 
     void
-    ValorUnitario (::std::auto_ptr< ValorUnitario_type > p);
+    ValorUnitario (::std::unique_ptr< ValorUnitario_type > p);
 
     // Importe
     //
@@ -3151,7 +3284,7 @@ namespace cfdi
     Importe (const Importe_optional& x);
 
     void
-    Importe (::std::auto_ptr< Importe_type > p);
+    Importe (::std::unique_ptr< Importe_type > p);
 
     // Constructors.
     //
@@ -3359,7 +3492,10 @@ namespace cfdi
     Impuesto (const Impuesto_type& x);
 
     void
-    Impuesto (::std::auto_ptr< Impuesto_type > p);
+    Impuesto (::std::unique_ptr< Impuesto_type > p);
+
+    ::std::unique_ptr< Impuesto_type >
+    detach_Impuesto ();
 
     // Importe
     //
@@ -3376,7 +3512,10 @@ namespace cfdi
     Importe (const Importe_type& x);
 
     void
-    Importe (::std::auto_ptr< Importe_type > p);
+    Importe (::std::unique_ptr< Importe_type > p);
+
+    ::std::unique_ptr< Importe_type >
+    detach_Importe ();
 
     // Constructors.
     //
@@ -3431,7 +3570,10 @@ namespace cfdi
     Base (const Base_type& x);
 
     void
-    Base (::std::auto_ptr< Base_type > p);
+    Base (::std::unique_ptr< Base_type > p);
+
+    ::std::unique_ptr< Base_type >
+    detach_Base ();
 
     // Impuesto
     //
@@ -3448,7 +3590,10 @@ namespace cfdi
     Impuesto (const Impuesto_type& x);
 
     void
-    Impuesto (::std::auto_ptr< Impuesto_type > p);
+    Impuesto (::std::unique_ptr< Impuesto_type > p);
+
+    ::std::unique_ptr< Impuesto_type >
+    detach_Impuesto ();
 
     // TipoFactor
     //
@@ -3465,7 +3610,10 @@ namespace cfdi
     TipoFactor (const TipoFactor_type& x);
 
     void
-    TipoFactor (::std::auto_ptr< TipoFactor_type > p);
+    TipoFactor (::std::unique_ptr< TipoFactor_type > p);
+
+    ::std::unique_ptr< TipoFactor_type >
+    detach_TipoFactor ();
 
     // TasaOCuota
     //
@@ -3486,7 +3634,7 @@ namespace cfdi
     TasaOCuota (const TasaOCuota_optional& x);
 
     void
-    TasaOCuota (::std::auto_ptr< TasaOCuota_type > p);
+    TasaOCuota (::std::unique_ptr< TasaOCuota_type > p);
 
     // Importe
     //
@@ -3507,7 +3655,7 @@ namespace cfdi
     Importe (const Importe_optional& x);
 
     void
-    Importe (::std::auto_ptr< Importe_type > p);
+    Importe (::std::unique_ptr< Importe_type > p);
 
     // Constructors.
     //
@@ -3824,7 +3972,10 @@ namespace cfdi
     NumeroPedimento (const NumeroPedimento_type& x);
 
     void
-    NumeroPedimento (::std::auto_ptr< NumeroPedimento_type > p);
+    NumeroPedimento (::std::unique_ptr< NumeroPedimento_type > p);
+
+    ::std::unique_ptr< NumeroPedimento_type >
+    detach_NumeroPedimento ();
 
     // Constructors.
     //
@@ -3909,7 +4060,10 @@ namespace cfdi
     Base (const Base_type& x);
 
     void
-    Base (::std::auto_ptr< Base_type > p);
+    Base (::std::unique_ptr< Base_type > p);
+
+    ::std::unique_ptr< Base_type >
+    detach_Base ();
 
     // Impuesto
     //
@@ -3926,7 +4080,10 @@ namespace cfdi
     Impuesto (const Impuesto_type& x);
 
     void
-    Impuesto (::std::auto_ptr< Impuesto_type > p);
+    Impuesto (::std::unique_ptr< Impuesto_type > p);
+
+    ::std::unique_ptr< Impuesto_type >
+    detach_Impuesto ();
 
     // TipoFactor
     //
@@ -3943,7 +4100,10 @@ namespace cfdi
     TipoFactor (const TipoFactor_type& x);
 
     void
-    TipoFactor (::std::auto_ptr< TipoFactor_type > p);
+    TipoFactor (::std::unique_ptr< TipoFactor_type > p);
+
+    ::std::unique_ptr< TipoFactor_type >
+    detach_TipoFactor ();
 
     // TasaOCuota
     //
@@ -3964,7 +4124,7 @@ namespace cfdi
     TasaOCuota (const TasaOCuota_optional& x);
 
     void
-    TasaOCuota (::std::auto_ptr< TasaOCuota_type > p);
+    TasaOCuota (::std::unique_ptr< TasaOCuota_type > p);
 
     // Importe
     //
@@ -3985,7 +4145,7 @@ namespace cfdi
     Importe (const Importe_optional& x);
 
     void
-    Importe (::std::auto_ptr< Importe_type > p);
+    Importe (::std::unique_ptr< Importe_type > p);
 
     // Constructors.
     //
@@ -4044,7 +4204,10 @@ namespace cfdi
     Base (const Base_type& x);
 
     void
-    Base (::std::auto_ptr< Base_type > p);
+    Base (::std::unique_ptr< Base_type > p);
+
+    ::std::unique_ptr< Base_type >
+    detach_Base ();
 
     // Impuesto
     //
@@ -4061,7 +4224,10 @@ namespace cfdi
     Impuesto (const Impuesto_type& x);
 
     void
-    Impuesto (::std::auto_ptr< Impuesto_type > p);
+    Impuesto (::std::unique_ptr< Impuesto_type > p);
+
+    ::std::unique_ptr< Impuesto_type >
+    detach_Impuesto ();
 
     // TipoFactor
     //
@@ -4078,7 +4244,10 @@ namespace cfdi
     TipoFactor (const TipoFactor_type& x);
 
     void
-    TipoFactor (::std::auto_ptr< TipoFactor_type > p);
+    TipoFactor (::std::unique_ptr< TipoFactor_type > p);
+
+    ::std::unique_ptr< TipoFactor_type >
+    detach_TipoFactor ();
 
     // TasaOCuota
     //
@@ -4095,7 +4264,10 @@ namespace cfdi
     TasaOCuota (const TasaOCuota_type& x);
 
     void
-    TasaOCuota (::std::auto_ptr< TasaOCuota_type > p);
+    TasaOCuota (::std::unique_ptr< TasaOCuota_type > p);
+
+    ::std::unique_ptr< TasaOCuota_type >
+    detach_TasaOCuota ();
 
     // Importe
     //
@@ -4112,7 +4284,10 @@ namespace cfdi
     Importe (const Importe_type& x);
 
     void
-    Importe (::std::auto_ptr< Importe_type > p);
+    Importe (::std::unique_ptr< Importe_type > p);
+
+    ::std::unique_ptr< Importe_type >
+    detach_Importe ();
 
     // Constructors.
     //
@@ -4190,6 +4365,164 @@ namespace cfdi
 
 #include <iosfwd>
 
+namespace cfdi
+{
+  ::std::ostream&
+  operator<< (::std::ostream&, const Comprobante&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const InformacionGlobal&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const CfdiRelacionados&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Emisor&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Receptor&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Conceptos&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Impuestos&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Complemento&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Addenda&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Version&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Serie&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Folio&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Sello&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const NoCertificado&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Certificado&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const CondicionesDePago&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const TipoCambio&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Confirmacion&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const A_o&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const CfdiRelacionado&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Nombre&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const FacAtrAdquirente&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const DomicilioFiscalReceptor&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const NumRegIdTrib&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Concepto&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Retenciones&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Traslados&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const UUID&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Impuestos1&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const ACuentaTerceros&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const InformacionAduanera&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const CuentaPredial&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const ComplementoConcepto&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Parte&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const NoIdentificacion&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Cantidad&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Unidad&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Descripcion&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Retencion&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Traslado&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Traslados1&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Retenciones1&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const NombreACuentaTerceros&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const DomicilioFiscalACuentaTerceros&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const NumeroPedimento&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Numero&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const InformacionAduanera1&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const TasaOCuota&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Traslado1&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Retencion1&);
+
+  ::std::ostream&
+  operator<< (::std::ostream&, const Base&);
+}
+
+#include <iosfwd>
+
 #include <xercesc/sax/InputSource.hpp>
 #include <xercesc/dom/DOMDocument.hpp>
 #include <xercesc/dom/DOMErrorHandler.hpp>
@@ -4199,18 +4532,18 @@ namespace cfdi
   // Parse a URI or a local file.
   //
 
-  ::std::auto_ptr< ::cfdi::Comprobante >
+  ::std::unique_ptr< ::cfdi::Comprobante >
   Comprobante_ (const ::std::string& uri,
                 ::xml_schema::flags f = 0,
                 const ::xml_schema::properties& p = ::xml_schema::properties ());
 
-  ::std::auto_ptr< ::cfdi::Comprobante >
+  ::std::unique_ptr< ::cfdi::Comprobante >
   Comprobante_ (const ::std::string& uri,
                 ::xml_schema::error_handler& eh,
                 ::xml_schema::flags f = 0,
                 const ::xml_schema::properties& p = ::xml_schema::properties ());
 
-  ::std::auto_ptr< ::cfdi::Comprobante >
+  ::std::unique_ptr< ::cfdi::Comprobante >
   Comprobante_ (const ::std::string& uri,
                 ::xercesc::DOMErrorHandler& eh,
                 ::xml_schema::flags f = 0,
@@ -4219,37 +4552,37 @@ namespace cfdi
   // Parse std::istream.
   //
 
-  ::std::auto_ptr< ::cfdi::Comprobante >
+  ::std::unique_ptr< ::cfdi::Comprobante >
   Comprobante_ (::std::istream& is,
                 ::xml_schema::flags f = 0,
                 const ::xml_schema::properties& p = ::xml_schema::properties ());
 
-  ::std::auto_ptr< ::cfdi::Comprobante >
+  ::std::unique_ptr< ::cfdi::Comprobante >
   Comprobante_ (::std::istream& is,
                 ::xml_schema::error_handler& eh,
                 ::xml_schema::flags f = 0,
                 const ::xml_schema::properties& p = ::xml_schema::properties ());
 
-  ::std::auto_ptr< ::cfdi::Comprobante >
+  ::std::unique_ptr< ::cfdi::Comprobante >
   Comprobante_ (::std::istream& is,
                 ::xercesc::DOMErrorHandler& eh,
                 ::xml_schema::flags f = 0,
                 const ::xml_schema::properties& p = ::xml_schema::properties ());
 
-  ::std::auto_ptr< ::cfdi::Comprobante >
+  ::std::unique_ptr< ::cfdi::Comprobante >
   Comprobante_ (::std::istream& is,
                 const ::std::string& id,
                 ::xml_schema::flags f = 0,
                 const ::xml_schema::properties& p = ::xml_schema::properties ());
 
-  ::std::auto_ptr< ::cfdi::Comprobante >
+  ::std::unique_ptr< ::cfdi::Comprobante >
   Comprobante_ (::std::istream& is,
                 const ::std::string& id,
                 ::xml_schema::error_handler& eh,
                 ::xml_schema::flags f = 0,
                 const ::xml_schema::properties& p = ::xml_schema::properties ());
 
-  ::std::auto_ptr< ::cfdi::Comprobante >
+  ::std::unique_ptr< ::cfdi::Comprobante >
   Comprobante_ (::std::istream& is,
                 const ::std::string& id,
                 ::xercesc::DOMErrorHandler& eh,
@@ -4259,18 +4592,18 @@ namespace cfdi
   // Parse xercesc::InputSource.
   //
 
-  ::std::auto_ptr< ::cfdi::Comprobante >
+  ::std::unique_ptr< ::cfdi::Comprobante >
   Comprobante_ (::xercesc::InputSource& is,
                 ::xml_schema::flags f = 0,
                 const ::xml_schema::properties& p = ::xml_schema::properties ());
 
-  ::std::auto_ptr< ::cfdi::Comprobante >
+  ::std::unique_ptr< ::cfdi::Comprobante >
   Comprobante_ (::xercesc::InputSource& is,
                 ::xml_schema::error_handler& eh,
                 ::xml_schema::flags f = 0,
                 const ::xml_schema::properties& p = ::xml_schema::properties ());
 
-  ::std::auto_ptr< ::cfdi::Comprobante >
+  ::std::unique_ptr< ::cfdi::Comprobante >
   Comprobante_ (::xercesc::InputSource& is,
                 ::xercesc::DOMErrorHandler& eh,
                 ::xml_schema::flags f = 0,
@@ -4279,13 +4612,13 @@ namespace cfdi
   // Parse xercesc::DOMDocument.
   //
 
-  ::std::auto_ptr< ::cfdi::Comprobante >
+  ::std::unique_ptr< ::cfdi::Comprobante >
   Comprobante_ (const ::xercesc::DOMDocument& d,
                 ::xml_schema::flags f = 0,
                 const ::xml_schema::properties& p = ::xml_schema::properties ());
 
-  ::std::auto_ptr< ::cfdi::Comprobante >
-  Comprobante_ (::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d,
+  ::std::unique_ptr< ::cfdi::Comprobante >
+  Comprobante_ (::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d,
                 ::xml_schema::flags f = 0,
                 const ::xml_schema::properties& p = ::xml_schema::properties ());
 }
@@ -4363,7 +4696,7 @@ namespace cfdi
   // Serialize to a new xercesc::DOMDocument.
   //
 
-  ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument >
+  ::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument >
   Comprobante_ (const ::cfdi::Comprobante& x, 
                 const ::xml_schema::namespace_infomap& m = ::xml_schema::namespace_infomap (),
                 ::xml_schema::flags f = 0);

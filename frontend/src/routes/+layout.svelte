@@ -1,9 +1,9 @@
 <script lang="ts">
-	import favicon from '$lib/assets/favicon.svg';
-	import { page } from '$app/stores';
+	import favicon from "$lib/assets/favicon.svg";
+	import { page } from "$app/stores";
 
 	let { children } = $props();
-	
+
 	let isSidebarOpen = $state(true);
 
 	const toggleSidebar = () => {
@@ -13,12 +13,26 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link
+		rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+		integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+		crossorigin="anonymous"
+		referrerpolicy="no-referrer"
+	/>
 	<style>
 		/* Estilos globales y reset básicos */
 		:global(body) {
 			margin: 0;
-			font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+			font-family:
+				"Inter",
+				-apple-system,
+				BlinkMacSystemFont,
+				"Segoe UI",
+				Roboto,
+				"Helvetica Neue",
+				Arial,
+				sans-serif;
 			background-color: #f4f7f6;
 			color: #333;
 			overflow-x: hidden;
@@ -33,30 +47,52 @@
 	<!-- Menú Lateral (Sidebar) -->
 	<aside class="sidebar {isSidebarOpen ? 'open' : 'closed'}">
 		<div class="sidebar-header">
-			<h2>AdminGas</h2>
+			<span class="icon"
+				><i class="fa-solid fa-file-invoice-dollar"></i></span
+			>
+			<span class="text">Facturación</span>
 		</div>
 		<nav class="sidebar-nav">
-			<a href="/" class={$page.url.pathname === '/' ? 'active' : ''}>
+			<a href="/" class={$page.url.pathname === "/" ? "active" : ""}>
 				<span class="icon"><i class="fa-solid fa-house"></i></span>
 				<span class="text">Inicio</span>
 			</a>
-			<a href="/receptores" class={$page.url.pathname.startsWith('/receptores') ? 'active' : ''}>
+			<a
+				href="/receptores"
+				class={$page.url.pathname.startsWith("/receptores")
+					? "active"
+					: ""}
+			>
 				<span class="icon"><i class="fa-solid fa-users"></i></span>
 				<span class="text">Receptores</span>
 			</a>
-			<a href="/conceptos" class={$page.url.pathname.startsWith('/conceptos') ? 'active' : ''}>
+			<a
+				href="/conceptos"
+				class={$page.url.pathname.startsWith("/conceptos")
+					? "active"
+					: ""}
+			>
 				<span class="icon"><i class="fa-solid fa-tags"></i></span>
 				<span class="text">Conceptos</span>
 			</a>
-			<a href="/emisor" class={$page.url.pathname.startsWith('/emisor') ? 'active' : ''}>
+			<a
+				href="/emisor"
+				class={$page.url.pathname.startsWith("/emisor") ? "active" : ""}
+			>
 				<span class="icon"><i class="fa-solid fa-building"></i></span>
 				<span class="text">Emisor</span>
 			</a>
-			<a href="/facturas" class={$page.url.pathname.startsWith('/facturas') ? 'active' : ''}>
-				<span class="icon"><i class="fa-solid fa-file-invoice-dollar"></i></span>
+			<a
+				href="/facturas"
+				class={$page.url.pathname.startsWith("/facturas")
+					? "active"
+					: ""}
+			>
+				<span class="icon"
+					><i class="fa-solid fa-file-invoice-dollar"></i></span
+				>
 				<span class="text">Facturas</span>
 			</a>
-
 		</nav>
 	</aside>
 
@@ -64,8 +100,21 @@
 	<div class="main-wrapper {isSidebarOpen ? 'shifted' : 'full'}">
 		<!-- Barra Superior (Topbar) -->
 		<header class="topbar">
-			<button class="hamburger" onclick={toggleSidebar} aria-label="Alternar menú">
-				<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+			<button
+				class="hamburger"
+				onclick={toggleSidebar}
+				aria-label="Alternar menú"
+			>
+				<svg
+					viewBox="0 0 24 24"
+					width="24"
+					height="24"
+					stroke="currentColor"
+					stroke-width="2"
+					fill="none"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
 					<line x1="3" y1="12" x2="21" y2="12"></line>
 					<line x1="3" y1="6" x2="21" y2="6"></line>
 					<line x1="3" y1="18" x2="21" y2="18"></line>
@@ -95,14 +144,17 @@
 		top: 0;
 		left: 0;
 		height: 100vh;
-		background: #1a1c23;
-		color: #fff;
+		background: #0f172a;
+		color: #cbd5e1;
 		width: 260px;
-		transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		transition:
+			transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+			width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 		z-index: 1000;
 		box-shadow: 4px 0 15px rgba(0, 0, 0, 0.15);
 		display: flex;
 		flex-direction: column;
+		overflow-x: hidden;
 	}
 
 	.sidebar.closed {
@@ -114,18 +166,38 @@
 		display: flex;
 		align-items: center;
 		padding: 0 24px;
-		background: #12141a;
-		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+		background: #0b0f19;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+		transition: padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
-	.sidebar-header h2 {
-		margin: 0;
-		font-size: 1.6rem;
-		font-weight: 800;
+	.sidebar-header .icon {
+		font-size: 1.3rem;
+		margin-right: 16px;
+		width: 32px;
+		height: 32px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: #38bdf8;
+		background: rgba(56, 189, 248, 0.1);
+		border-radius: 8px;
+		transition: margin-right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.sidebar-header .text {
+		font-weight: 700;
+		font-size: 1.15rem;
+		color: #f8fafc;
 		letter-spacing: 0.5px;
-		background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
+		display: inline-block;
+		transition:
+			max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+			opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		opacity: 1;
+		max-width: 150px;
+		overflow: hidden;
+		white-space: nowrap;
 	}
 
 	.sidebar-nav {
@@ -138,22 +210,27 @@
 		display: flex;
 		align-items: center;
 		padding: 14px 24px;
-		color: #a0aec0;
+		color: #94a3b8;
 		text-decoration: none;
-		transition: all 0.2s ease;
+		transition:
+			background-color 0.2s ease,
+			color 0.2s ease,
+			border-left-color 0.2s ease,
+			padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 		border-left: 4px solid transparent;
 		font-size: 1.05rem;
+		white-space: nowrap;
 	}
 
 	.sidebar-nav a:hover {
-		background: rgba(255, 255, 255, 0.04);
-		color: #fff;
+		background: rgba(255, 255, 255, 0.03);
+		color: #f1f5f9;
 	}
 
 	.sidebar-nav a.active {
-		background: rgba(79, 172, 254, 0.1);
-		color: #4facfe;
-		border-left-color: #4facfe;
+		background: rgba(56, 189, 248, 0.08);
+		color: #38bdf8;
+		border-left-color: #38bdf8;
 	}
 
 	.sidebar-nav .icon {
@@ -161,10 +238,19 @@
 		margin-right: 16px;
 		width: 28px;
 		text-align: center;
+		transition: margin-right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
 	.sidebar-nav .text {
 		font-weight: 500;
+		display: inline-block;
+		transition:
+			max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+			opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		opacity: 1;
+		max-width: 200px;
+		overflow: hidden;
+		vertical-align: middle;
 	}
 
 	.main-wrapper {
@@ -178,11 +264,46 @@
 
 	/* En escritorio, el contenido se desplaza. En móviles, el sidebar se superpone. */
 	@media (min-width: 768px) {
+		.sidebar.closed {
+			transform: translateX(0);
+			width: 80px;
+		}
+
+		.sidebar.closed .sidebar-header {
+			padding: 0;
+			justify-content: center;
+		}
+
+		.sidebar.closed .sidebar-header .icon {
+			margin-right: 0;
+		}
+
+		.sidebar.closed .sidebar-header .text {
+			max-width: 0;
+			opacity: 0;
+			pointer-events: none;
+		}
+
+		.sidebar.closed .sidebar-nav a {
+			padding: 14px 0;
+			justify-content: center;
+		}
+
+		.sidebar.closed .sidebar-nav .icon {
+			margin-right: 0;
+		}
+
+		.sidebar.closed .sidebar-nav .text {
+			max-width: 0;
+			opacity: 0;
+			pointer-events: none;
+		}
+
 		.main-wrapper.shifted {
 			margin-left: 260px;
 		}
 		.main-wrapper.full {
-			margin-left: 0;
+			margin-left: 80px;
 		}
 	}
 
@@ -240,13 +361,13 @@
 		font-weight: bold;
 		font-size: 1.1rem;
 		cursor: pointer;
-		box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+		box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 		transition: transform 0.2s;
 	}
 
 	.profile-pic:hover {
 		transform: translateY(-2px);
-		box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 	}
 
 	.content {

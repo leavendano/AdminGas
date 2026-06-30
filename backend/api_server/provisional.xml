@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/4" Certificado="" Exportacion="01" Fecha="2026-06-28T13:45:03" FormaPago="03" LugarExpedicion="20928" MetodoPago="PUE" Moneda="MXN" NoCertificado="30001000000500003416" Sello="" SubTotal="21481.48" TipoDeComprobante="I" Total="24918.52" Version="4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd">
+  <cfdi:Emisor Nombre="ESCUELA KEMPER URGATE" RegimenFiscal="601" Rfc="EKU9003173C9"/>
+  <cfdi:Receptor DomicilioFiscalReceptor="30750" Nombre="GASOLINERAS Y SERVICIO MARFIL" RegimenFiscalReceptor="601" Rfc="GSM731122PK4" UsoCFDI="G03"/>
+  <cfdi:Conceptos>
+    <cfdi:Concepto Cantidad="2" ClaveProdServ="81112209" ClaveUnidad="E48" Descripcion="MANTENIMIENTO PREVENTIVO DE PROGRAMAS Y REDES" Importe="21481.48" ObjetoImp="02" ValorUnitario="10740.74">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="21481.48" Importe="3437.04" Impuesto="002" TasaOCuota="0.160000" TipoFactor="Tasa"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+  </cfdi:Conceptos>
+  <cfdi:Impuestos TotalImpuestosTrasladados="3437.04">
+    <cfdi:Traslados>
+      <cfdi:Traslado Base="21481.48" Importe="3437.04" Impuesto="002" TasaOCuota="0.160000" TipoFactor="Tasa"/>
+    </cfdi:Traslados>
+  </cfdi:Impuestos>
+</cfdi:Comprobante>

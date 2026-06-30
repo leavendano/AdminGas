@@ -10,6 +10,8 @@ class FacturaController : public drogon::HttpController<FacturaController>
     ADD_METHOD_TO(FacturaController::get, "/factura", Get, Options);
     ADD_METHOD_TO(FacturaController::create, "/factura", Post, Options);
     ADD_METHOD_TO(FacturaController::deleteOne, "/factura/{1}", Delete, Options);
+    ADD_METHOD_TO(FacturaController::timbrar, "/factura/{1}/timbrar", Post, Options);
+    ADD_METHOD_TO(FacturaController::getXml, "/factura/{1}/xml", Get, Options);
     METHOD_LIST_END
 
     void get(const HttpRequestPtr &req,
@@ -19,4 +21,10 @@ class FacturaController : public drogon::HttpController<FacturaController>
     void deleteOne(const HttpRequestPtr &req,
                    std::function<void(const HttpResponsePtr &)> &&callback,
                    std::string &&id);
+    void timbrar(const HttpRequestPtr &req,
+                 std::function<void(const HttpResponsePtr &)> &&callback,
+                 std::string &&id);
+    void getXml(const HttpRequestPtr &req,
+                std::function<void(const HttpResponsePtr &)> &&callback,
+                std::string &&id);
 };

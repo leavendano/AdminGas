@@ -70,9 +70,9 @@ namespace cfdi
   }
 
   void Comprobante::
-  InformacionGlobal (::std::auto_ptr< InformacionGlobal_type > x)
+  InformacionGlobal (::std::unique_ptr< InformacionGlobal_type > x)
   {
-    this->InformacionGlobal_.set (x);
+    this->InformacionGlobal_.set (std::move (x));
   }
 
   const Comprobante::CfdiRelacionados_sequence& Comprobante::
@@ -112,9 +112,15 @@ namespace cfdi
   }
 
   void Comprobante::
-  Emisor (::std::auto_ptr< Emisor_type > x)
+  Emisor (::std::unique_ptr< Emisor_type > x)
   {
-    this->Emisor_.set (x);
+    this->Emisor_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Comprobante::Emisor_type > Comprobante::
+  detach_Emisor ()
+  {
+    return this->Emisor_.detach ();
   }
 
   const Comprobante::Receptor_type& Comprobante::
@@ -136,9 +142,15 @@ namespace cfdi
   }
 
   void Comprobante::
-  Receptor (::std::auto_ptr< Receptor_type > x)
+  Receptor (::std::unique_ptr< Receptor_type > x)
   {
-    this->Receptor_.set (x);
+    this->Receptor_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Comprobante::Receptor_type > Comprobante::
+  detach_Receptor ()
+  {
+    return this->Receptor_.detach ();
   }
 
   const Comprobante::Conceptos_type& Comprobante::
@@ -160,9 +172,15 @@ namespace cfdi
   }
 
   void Comprobante::
-  Conceptos (::std::auto_ptr< Conceptos_type > x)
+  Conceptos (::std::unique_ptr< Conceptos_type > x)
   {
-    this->Conceptos_.set (x);
+    this->Conceptos_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Comprobante::Conceptos_type > Comprobante::
+  detach_Conceptos ()
+  {
+    return this->Conceptos_.detach ();
   }
 
   const Comprobante::Impuestos_optional& Comprobante::
@@ -190,9 +208,9 @@ namespace cfdi
   }
 
   void Comprobante::
-  Impuestos (::std::auto_ptr< Impuestos_type > x)
+  Impuestos (::std::unique_ptr< Impuestos_type > x)
   {
-    this->Impuestos_.set (x);
+    this->Impuestos_.set (std::move (x));
   }
 
   const Comprobante::Complemento_optional& Comprobante::
@@ -220,9 +238,9 @@ namespace cfdi
   }
 
   void Comprobante::
-  Complemento (::std::auto_ptr< Complemento_type > x)
+  Complemento (::std::unique_ptr< Complemento_type > x)
   {
-    this->Complemento_.set (x);
+    this->Complemento_.set (std::move (x));
   }
 
   const Comprobante::Addenda_optional& Comprobante::
@@ -250,9 +268,9 @@ namespace cfdi
   }
 
   void Comprobante::
-  Addenda (::std::auto_ptr< Addenda_type > x)
+  Addenda (::std::unique_ptr< Addenda_type > x)
   {
-    this->Addenda_.set (x);
+    this->Addenda_.set (std::move (x));
   }
 
   const Comprobante::Version_type& Comprobante::
@@ -292,9 +310,9 @@ namespace cfdi
   }
 
   void Comprobante::
-  Serie (::std::auto_ptr< Serie_type > x)
+  Serie (::std::unique_ptr< Serie_type > x)
   {
-    this->Serie_.set (x);
+    this->Serie_.set (std::move (x));
   }
 
   const Comprobante::Folio_optional& Comprobante::
@@ -322,9 +340,9 @@ namespace cfdi
   }
 
   void Comprobante::
-  Folio (::std::auto_ptr< Folio_type > x)
+  Folio (::std::unique_ptr< Folio_type > x)
   {
-    this->Folio_.set (x);
+    this->Folio_.set (std::move (x));
   }
 
   const Comprobante::Fecha_type& Comprobante::
@@ -346,9 +364,15 @@ namespace cfdi
   }
 
   void Comprobante::
-  Fecha (::std::auto_ptr< Fecha_type > x)
+  Fecha (::std::unique_ptr< Fecha_type > x)
   {
-    this->Fecha_.set (x);
+    this->Fecha_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Comprobante::Fecha_type > Comprobante::
+  detach_Fecha ()
+  {
+    return this->Fecha_.detach ();
   }
 
   const Comprobante::Sello_type& Comprobante::
@@ -370,9 +394,15 @@ namespace cfdi
   }
 
   void Comprobante::
-  Sello (::std::auto_ptr< Sello_type > x)
+  Sello (::std::unique_ptr< Sello_type > x)
   {
-    this->Sello_.set (x);
+    this->Sello_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Comprobante::Sello_type > Comprobante::
+  detach_Sello ()
+  {
+    return this->Sello_.detach ();
   }
 
   const Comprobante::FormaPago_optional& Comprobante::
@@ -400,9 +430,9 @@ namespace cfdi
   }
 
   void Comprobante::
-  FormaPago (::std::auto_ptr< FormaPago_type > x)
+  FormaPago (::std::unique_ptr< FormaPago_type > x)
   {
-    this->FormaPago_.set (x);
+    this->FormaPago_.set (std::move (x));
   }
 
   const Comprobante::NoCertificado_type& Comprobante::
@@ -424,9 +454,15 @@ namespace cfdi
   }
 
   void Comprobante::
-  NoCertificado (::std::auto_ptr< NoCertificado_type > x)
+  NoCertificado (::std::unique_ptr< NoCertificado_type > x)
   {
-    this->NoCertificado_.set (x);
+    this->NoCertificado_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Comprobante::NoCertificado_type > Comprobante::
+  detach_NoCertificado ()
+  {
+    return this->NoCertificado_.detach ();
   }
 
   const Comprobante::Certificado_type& Comprobante::
@@ -448,9 +484,15 @@ namespace cfdi
   }
 
   void Comprobante::
-  Certificado (::std::auto_ptr< Certificado_type > x)
+  Certificado (::std::unique_ptr< Certificado_type > x)
   {
-    this->Certificado_.set (x);
+    this->Certificado_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Comprobante::Certificado_type > Comprobante::
+  detach_Certificado ()
+  {
+    return this->Certificado_.detach ();
   }
 
   const Comprobante::CondicionesDePago_optional& Comprobante::
@@ -478,9 +520,9 @@ namespace cfdi
   }
 
   void Comprobante::
-  CondicionesDePago (::std::auto_ptr< CondicionesDePago_type > x)
+  CondicionesDePago (::std::unique_ptr< CondicionesDePago_type > x)
   {
-    this->CondicionesDePago_.set (x);
+    this->CondicionesDePago_.set (std::move (x));
   }
 
   const Comprobante::SubTotal_type& Comprobante::
@@ -502,9 +544,15 @@ namespace cfdi
   }
 
   void Comprobante::
-  SubTotal (::std::auto_ptr< SubTotal_type > x)
+  SubTotal (::std::unique_ptr< SubTotal_type > x)
   {
-    this->SubTotal_.set (x);
+    this->SubTotal_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Comprobante::SubTotal_type > Comprobante::
+  detach_SubTotal ()
+  {
+    return this->SubTotal_.detach ();
   }
 
   const Comprobante::Descuento_optional& Comprobante::
@@ -532,9 +580,9 @@ namespace cfdi
   }
 
   void Comprobante::
-  Descuento (::std::auto_ptr< Descuento_type > x)
+  Descuento (::std::unique_ptr< Descuento_type > x)
   {
-    this->Descuento_.set (x);
+    this->Descuento_.set (std::move (x));
   }
 
   const Comprobante::Moneda_type& Comprobante::
@@ -556,9 +604,15 @@ namespace cfdi
   }
 
   void Comprobante::
-  Moneda (::std::auto_ptr< Moneda_type > x)
+  Moneda (::std::unique_ptr< Moneda_type > x)
   {
-    this->Moneda_.set (x);
+    this->Moneda_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Comprobante::Moneda_type > Comprobante::
+  detach_Moneda ()
+  {
+    return this->Moneda_.detach ();
   }
 
   const Comprobante::TipoCambio_optional& Comprobante::
@@ -586,9 +640,9 @@ namespace cfdi
   }
 
   void Comprobante::
-  TipoCambio (::std::auto_ptr< TipoCambio_type > x)
+  TipoCambio (::std::unique_ptr< TipoCambio_type > x)
   {
-    this->TipoCambio_.set (x);
+    this->TipoCambio_.set (std::move (x));
   }
 
   const Comprobante::Total_type& Comprobante::
@@ -610,9 +664,15 @@ namespace cfdi
   }
 
   void Comprobante::
-  Total (::std::auto_ptr< Total_type > x)
+  Total (::std::unique_ptr< Total_type > x)
   {
-    this->Total_.set (x);
+    this->Total_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Comprobante::Total_type > Comprobante::
+  detach_Total ()
+  {
+    return this->Total_.detach ();
   }
 
   const Comprobante::TipoDeComprobante_type& Comprobante::
@@ -634,9 +694,15 @@ namespace cfdi
   }
 
   void Comprobante::
-  TipoDeComprobante (::std::auto_ptr< TipoDeComprobante_type > x)
+  TipoDeComprobante (::std::unique_ptr< TipoDeComprobante_type > x)
   {
-    this->TipoDeComprobante_.set (x);
+    this->TipoDeComprobante_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Comprobante::TipoDeComprobante_type > Comprobante::
+  detach_TipoDeComprobante ()
+  {
+    return this->TipoDeComprobante_.detach ();
   }
 
   const Comprobante::Exportacion_type& Comprobante::
@@ -658,9 +724,15 @@ namespace cfdi
   }
 
   void Comprobante::
-  Exportacion (::std::auto_ptr< Exportacion_type > x)
+  Exportacion (::std::unique_ptr< Exportacion_type > x)
   {
-    this->Exportacion_.set (x);
+    this->Exportacion_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Comprobante::Exportacion_type > Comprobante::
+  detach_Exportacion ()
+  {
+    return this->Exportacion_.detach ();
   }
 
   const Comprobante::MetodoPago_optional& Comprobante::
@@ -688,9 +760,9 @@ namespace cfdi
   }
 
   void Comprobante::
-  MetodoPago (::std::auto_ptr< MetodoPago_type > x)
+  MetodoPago (::std::unique_ptr< MetodoPago_type > x)
   {
-    this->MetodoPago_.set (x);
+    this->MetodoPago_.set (std::move (x));
   }
 
   const Comprobante::LugarExpedicion_type& Comprobante::
@@ -712,9 +784,15 @@ namespace cfdi
   }
 
   void Comprobante::
-  LugarExpedicion (::std::auto_ptr< LugarExpedicion_type > x)
+  LugarExpedicion (::std::unique_ptr< LugarExpedicion_type > x)
   {
-    this->LugarExpedicion_.set (x);
+    this->LugarExpedicion_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Comprobante::LugarExpedicion_type > Comprobante::
+  detach_LugarExpedicion ()
+  {
+    return this->LugarExpedicion_.detach ();
   }
 
   const Comprobante::Confirmacion_optional& Comprobante::
@@ -742,9 +820,9 @@ namespace cfdi
   }
 
   void Comprobante::
-  Confirmacion (::std::auto_ptr< Confirmacion_type > x)
+  Confirmacion (::std::unique_ptr< Confirmacion_type > x)
   {
-    this->Confirmacion_.set (x);
+    this->Confirmacion_.set (std::move (x));
   }
 
 
@@ -770,9 +848,15 @@ namespace cfdi
   }
 
   void InformacionGlobal::
-  Periodicidad (::std::auto_ptr< Periodicidad_type > x)
+  Periodicidad (::std::unique_ptr< Periodicidad_type > x)
   {
-    this->Periodicidad_.set (x);
+    this->Periodicidad_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< InformacionGlobal::Periodicidad_type > InformacionGlobal::
+  detach_Periodicidad ()
+  {
+    return this->Periodicidad_.detach ();
   }
 
   const InformacionGlobal::Meses_type& InformacionGlobal::
@@ -794,9 +878,15 @@ namespace cfdi
   }
 
   void InformacionGlobal::
-  Meses (::std::auto_ptr< Meses_type > x)
+  Meses (::std::unique_ptr< Meses_type > x)
   {
-    this->Meses_.set (x);
+    this->Meses_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< InformacionGlobal::Meses_type > InformacionGlobal::
+  detach_Meses ()
+  {
+    return this->Meses_.detach ();
   }
 
   const InformacionGlobal::A_o_type& InformacionGlobal::
@@ -818,9 +908,15 @@ namespace cfdi
   }
 
   void InformacionGlobal::
-  A_o (::std::auto_ptr< A_o_type > x)
+  A_o (::std::unique_ptr< A_o_type > x)
   {
-    this->A_o_.set (x);
+    this->A_o_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< InformacionGlobal::A_o_type > InformacionGlobal::
+  detach_A_o ()
+  {
+    return this->A_o_.detach ();
   }
 
 
@@ -864,9 +960,15 @@ namespace cfdi
   }
 
   void CfdiRelacionados::
-  TipoRelacion (::std::auto_ptr< TipoRelacion_type > x)
+  TipoRelacion (::std::unique_ptr< TipoRelacion_type > x)
   {
-    this->TipoRelacion_.set (x);
+    this->TipoRelacion_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< CfdiRelacionados::TipoRelacion_type > CfdiRelacionados::
+  detach_TipoRelacion ()
+  {
+    return this->TipoRelacion_.detach ();
   }
 
 
@@ -892,9 +994,15 @@ namespace cfdi
   }
 
   void Emisor::
-  Rfc (::std::auto_ptr< Rfc_type > x)
+  Rfc (::std::unique_ptr< Rfc_type > x)
   {
-    this->Rfc_.set (x);
+    this->Rfc_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Emisor::Rfc_type > Emisor::
+  detach_Rfc ()
+  {
+    return this->Rfc_.detach ();
   }
 
   const Emisor::Nombre_type& Emisor::
@@ -916,9 +1024,15 @@ namespace cfdi
   }
 
   void Emisor::
-  Nombre (::std::auto_ptr< Nombre_type > x)
+  Nombre (::std::unique_ptr< Nombre_type > x)
   {
-    this->Nombre_.set (x);
+    this->Nombre_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Emisor::Nombre_type > Emisor::
+  detach_Nombre ()
+  {
+    return this->Nombre_.detach ();
   }
 
   const Emisor::RegimenFiscal_type& Emisor::
@@ -940,9 +1054,15 @@ namespace cfdi
   }
 
   void Emisor::
-  RegimenFiscal (::std::auto_ptr< RegimenFiscal_type > x)
+  RegimenFiscal (::std::unique_ptr< RegimenFiscal_type > x)
   {
-    this->RegimenFiscal_.set (x);
+    this->RegimenFiscal_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Emisor::RegimenFiscal_type > Emisor::
+  detach_RegimenFiscal ()
+  {
+    return this->RegimenFiscal_.detach ();
   }
 
   const Emisor::FacAtrAdquirente_optional& Emisor::
@@ -970,9 +1090,9 @@ namespace cfdi
   }
 
   void Emisor::
-  FacAtrAdquirente (::std::auto_ptr< FacAtrAdquirente_type > x)
+  FacAtrAdquirente (::std::unique_ptr< FacAtrAdquirente_type > x)
   {
-    this->FacAtrAdquirente_.set (x);
+    this->FacAtrAdquirente_.set (std::move (x));
   }
 
 
@@ -998,9 +1118,15 @@ namespace cfdi
   }
 
   void Receptor::
-  Rfc (::std::auto_ptr< Rfc_type > x)
+  Rfc (::std::unique_ptr< Rfc_type > x)
   {
-    this->Rfc_.set (x);
+    this->Rfc_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Receptor::Rfc_type > Receptor::
+  detach_Rfc ()
+  {
+    return this->Rfc_.detach ();
   }
 
   const Receptor::Nombre_type& Receptor::
@@ -1022,9 +1148,15 @@ namespace cfdi
   }
 
   void Receptor::
-  Nombre (::std::auto_ptr< Nombre_type > x)
+  Nombre (::std::unique_ptr< Nombre_type > x)
   {
-    this->Nombre_.set (x);
+    this->Nombre_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Receptor::Nombre_type > Receptor::
+  detach_Nombre ()
+  {
+    return this->Nombre_.detach ();
   }
 
   const Receptor::DomicilioFiscalReceptor_type& Receptor::
@@ -1046,9 +1178,15 @@ namespace cfdi
   }
 
   void Receptor::
-  DomicilioFiscalReceptor (::std::auto_ptr< DomicilioFiscalReceptor_type > x)
+  DomicilioFiscalReceptor (::std::unique_ptr< DomicilioFiscalReceptor_type > x)
   {
-    this->DomicilioFiscalReceptor_.set (x);
+    this->DomicilioFiscalReceptor_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Receptor::DomicilioFiscalReceptor_type > Receptor::
+  detach_DomicilioFiscalReceptor ()
+  {
+    return this->DomicilioFiscalReceptor_.detach ();
   }
 
   const Receptor::ResidenciaFiscal_optional& Receptor::
@@ -1076,9 +1214,9 @@ namespace cfdi
   }
 
   void Receptor::
-  ResidenciaFiscal (::std::auto_ptr< ResidenciaFiscal_type > x)
+  ResidenciaFiscal (::std::unique_ptr< ResidenciaFiscal_type > x)
   {
-    this->ResidenciaFiscal_.set (x);
+    this->ResidenciaFiscal_.set (std::move (x));
   }
 
   const Receptor::NumRegIdTrib_optional& Receptor::
@@ -1106,9 +1244,9 @@ namespace cfdi
   }
 
   void Receptor::
-  NumRegIdTrib (::std::auto_ptr< NumRegIdTrib_type > x)
+  NumRegIdTrib (::std::unique_ptr< NumRegIdTrib_type > x)
   {
-    this->NumRegIdTrib_.set (x);
+    this->NumRegIdTrib_.set (std::move (x));
   }
 
   const Receptor::RegimenFiscalReceptor_type& Receptor::
@@ -1130,9 +1268,15 @@ namespace cfdi
   }
 
   void Receptor::
-  RegimenFiscalReceptor (::std::auto_ptr< RegimenFiscalReceptor_type > x)
+  RegimenFiscalReceptor (::std::unique_ptr< RegimenFiscalReceptor_type > x)
   {
-    this->RegimenFiscalReceptor_.set (x);
+    this->RegimenFiscalReceptor_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Receptor::RegimenFiscalReceptor_type > Receptor::
+  detach_RegimenFiscalReceptor ()
+  {
+    return this->RegimenFiscalReceptor_.detach ();
   }
 
   const Receptor::UsoCFDI_type& Receptor::
@@ -1154,9 +1298,15 @@ namespace cfdi
   }
 
   void Receptor::
-  UsoCFDI (::std::auto_ptr< UsoCFDI_type > x)
+  UsoCFDI (::std::unique_ptr< UsoCFDI_type > x)
   {
-    this->UsoCFDI_.set (x);
+    this->UsoCFDI_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Receptor::UsoCFDI_type > Receptor::
+  detach_UsoCFDI ()
+  {
+    return this->UsoCFDI_.detach ();
   }
 
 
@@ -1210,9 +1360,9 @@ namespace cfdi
   }
 
   void Impuestos::
-  Retenciones (::std::auto_ptr< Retenciones_type > x)
+  Retenciones (::std::unique_ptr< Retenciones_type > x)
   {
-    this->Retenciones_.set (x);
+    this->Retenciones_.set (std::move (x));
   }
 
   const Impuestos::Traslados_optional& Impuestos::
@@ -1240,9 +1390,9 @@ namespace cfdi
   }
 
   void Impuestos::
-  Traslados (::std::auto_ptr< Traslados_type > x)
+  Traslados (::std::unique_ptr< Traslados_type > x)
   {
-    this->Traslados_.set (x);
+    this->Traslados_.set (std::move (x));
   }
 
   const Impuestos::TotalImpuestosRetenidos_optional& Impuestos::
@@ -1270,9 +1420,9 @@ namespace cfdi
   }
 
   void Impuestos::
-  TotalImpuestosRetenidos (::std::auto_ptr< TotalImpuestosRetenidos_type > x)
+  TotalImpuestosRetenidos (::std::unique_ptr< TotalImpuestosRetenidos_type > x)
   {
-    this->TotalImpuestosRetenidos_.set (x);
+    this->TotalImpuestosRetenidos_.set (std::move (x));
   }
 
   const Impuestos::TotalImpuestosTrasladados_optional& Impuestos::
@@ -1300,9 +1450,9 @@ namespace cfdi
   }
 
   void Impuestos::
-  TotalImpuestosTrasladados (::std::auto_ptr< TotalImpuestosTrasladados_type > x)
+  TotalImpuestosTrasladados (::std::unique_ptr< TotalImpuestosTrasladados_type > x)
   {
-    this->TotalImpuestosTrasladados_.set (x);
+    this->TotalImpuestosTrasladados_.set (std::move (x));
   }
 
 
@@ -1376,9 +1526,15 @@ namespace cfdi
   }
 
   void CfdiRelacionado::
-  UUID (::std::auto_ptr< UUID_type > x)
+  UUID (::std::unique_ptr< UUID_type > x)
   {
-    this->UUID_.set (x);
+    this->UUID_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< CfdiRelacionado::UUID_type > CfdiRelacionado::
+  detach_UUID ()
+  {
+    return this->UUID_.detach ();
   }
 
 
@@ -1426,9 +1582,9 @@ namespace cfdi
   }
 
   void Concepto::
-  Impuestos (::std::auto_ptr< Impuestos_type > x)
+  Impuestos (::std::unique_ptr< Impuestos_type > x)
   {
-    this->Impuestos_.set (x);
+    this->Impuestos_.set (std::move (x));
   }
 
   const Concepto::ACuentaTerceros_optional& Concepto::
@@ -1456,9 +1612,9 @@ namespace cfdi
   }
 
   void Concepto::
-  ACuentaTerceros (::std::auto_ptr< ACuentaTerceros_type > x)
+  ACuentaTerceros (::std::unique_ptr< ACuentaTerceros_type > x)
   {
-    this->ACuentaTerceros_.set (x);
+    this->ACuentaTerceros_.set (std::move (x));
   }
 
   const Concepto::InformacionAduanera_sequence& Concepto::
@@ -1522,9 +1678,9 @@ namespace cfdi
   }
 
   void Concepto::
-  ComplementoConcepto (::std::auto_ptr< ComplementoConcepto_type > x)
+  ComplementoConcepto (::std::unique_ptr< ComplementoConcepto_type > x)
   {
-    this->ComplementoConcepto_.set (x);
+    this->ComplementoConcepto_.set (std::move (x));
   }
 
   const Concepto::Parte_sequence& Concepto::
@@ -1564,9 +1720,15 @@ namespace cfdi
   }
 
   void Concepto::
-  ClaveProdServ (::std::auto_ptr< ClaveProdServ_type > x)
+  ClaveProdServ (::std::unique_ptr< ClaveProdServ_type > x)
   {
-    this->ClaveProdServ_.set (x);
+    this->ClaveProdServ_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Concepto::ClaveProdServ_type > Concepto::
+  detach_ClaveProdServ ()
+  {
+    return this->ClaveProdServ_.detach ();
   }
 
   const Concepto::NoIdentificacion_optional& Concepto::
@@ -1594,9 +1756,9 @@ namespace cfdi
   }
 
   void Concepto::
-  NoIdentificacion (::std::auto_ptr< NoIdentificacion_type > x)
+  NoIdentificacion (::std::unique_ptr< NoIdentificacion_type > x)
   {
-    this->NoIdentificacion_.set (x);
+    this->NoIdentificacion_.set (std::move (x));
   }
 
   const Concepto::Cantidad_type& Concepto::
@@ -1618,9 +1780,15 @@ namespace cfdi
   }
 
   void Concepto::
-  Cantidad (::std::auto_ptr< Cantidad_type > x)
+  Cantidad (::std::unique_ptr< Cantidad_type > x)
   {
-    this->Cantidad_.set (x);
+    this->Cantidad_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Concepto::Cantidad_type > Concepto::
+  detach_Cantidad ()
+  {
+    return this->Cantidad_.detach ();
   }
 
   const Concepto::ClaveUnidad_type& Concepto::
@@ -1642,9 +1810,15 @@ namespace cfdi
   }
 
   void Concepto::
-  ClaveUnidad (::std::auto_ptr< ClaveUnidad_type > x)
+  ClaveUnidad (::std::unique_ptr< ClaveUnidad_type > x)
   {
-    this->ClaveUnidad_.set (x);
+    this->ClaveUnidad_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Concepto::ClaveUnidad_type > Concepto::
+  detach_ClaveUnidad ()
+  {
+    return this->ClaveUnidad_.detach ();
   }
 
   const Concepto::Unidad_optional& Concepto::
@@ -1672,9 +1846,9 @@ namespace cfdi
   }
 
   void Concepto::
-  Unidad (::std::auto_ptr< Unidad_type > x)
+  Unidad (::std::unique_ptr< Unidad_type > x)
   {
-    this->Unidad_.set (x);
+    this->Unidad_.set (std::move (x));
   }
 
   const Concepto::Descripcion_type& Concepto::
@@ -1696,9 +1870,15 @@ namespace cfdi
   }
 
   void Concepto::
-  Descripcion (::std::auto_ptr< Descripcion_type > x)
+  Descripcion (::std::unique_ptr< Descripcion_type > x)
   {
-    this->Descripcion_.set (x);
+    this->Descripcion_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Concepto::Descripcion_type > Concepto::
+  detach_Descripcion ()
+  {
+    return this->Descripcion_.detach ();
   }
 
   const Concepto::ValorUnitario_type& Concepto::
@@ -1720,9 +1900,15 @@ namespace cfdi
   }
 
   void Concepto::
-  ValorUnitario (::std::auto_ptr< ValorUnitario_type > x)
+  ValorUnitario (::std::unique_ptr< ValorUnitario_type > x)
   {
-    this->ValorUnitario_.set (x);
+    this->ValorUnitario_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Concepto::ValorUnitario_type > Concepto::
+  detach_ValorUnitario ()
+  {
+    return this->ValorUnitario_.detach ();
   }
 
   const Concepto::Importe_type& Concepto::
@@ -1744,9 +1930,15 @@ namespace cfdi
   }
 
   void Concepto::
-  Importe (::std::auto_ptr< Importe_type > x)
+  Importe (::std::unique_ptr< Importe_type > x)
   {
-    this->Importe_.set (x);
+    this->Importe_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Concepto::Importe_type > Concepto::
+  detach_Importe ()
+  {
+    return this->Importe_.detach ();
   }
 
   const Concepto::Descuento_optional& Concepto::
@@ -1774,9 +1966,9 @@ namespace cfdi
   }
 
   void Concepto::
-  Descuento (::std::auto_ptr< Descuento_type > x)
+  Descuento (::std::unique_ptr< Descuento_type > x)
   {
-    this->Descuento_.set (x);
+    this->Descuento_.set (std::move (x));
   }
 
   const Concepto::ObjetoImp_type& Concepto::
@@ -1798,9 +1990,15 @@ namespace cfdi
   }
 
   void Concepto::
-  ObjetoImp (::std::auto_ptr< ObjetoImp_type > x)
+  ObjetoImp (::std::unique_ptr< ObjetoImp_type > x)
   {
-    this->ObjetoImp_.set (x);
+    this->ObjetoImp_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Concepto::ObjetoImp_type > Concepto::
+  detach_ObjetoImp ()
+  {
+    return this->ObjetoImp_.detach ();
   }
 
 
@@ -1880,9 +2078,9 @@ namespace cfdi
   }
 
   void Impuestos1::
-  Traslados (::std::auto_ptr< Traslados_type > x)
+  Traslados (::std::unique_ptr< Traslados_type > x)
   {
-    this->Traslados_.set (x);
+    this->Traslados_.set (std::move (x));
   }
 
   const Impuestos1::Retenciones_optional& Impuestos1::
@@ -1910,9 +2108,9 @@ namespace cfdi
   }
 
   void Impuestos1::
-  Retenciones (::std::auto_ptr< Retenciones_type > x)
+  Retenciones (::std::unique_ptr< Retenciones_type > x)
   {
-    this->Retenciones_.set (x);
+    this->Retenciones_.set (std::move (x));
   }
 
 
@@ -1938,9 +2136,15 @@ namespace cfdi
   }
 
   void ACuentaTerceros::
-  RfcACuentaTerceros (::std::auto_ptr< RfcACuentaTerceros_type > x)
+  RfcACuentaTerceros (::std::unique_ptr< RfcACuentaTerceros_type > x)
   {
-    this->RfcACuentaTerceros_.set (x);
+    this->RfcACuentaTerceros_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< ACuentaTerceros::RfcACuentaTerceros_type > ACuentaTerceros::
+  detach_RfcACuentaTerceros ()
+  {
+    return this->RfcACuentaTerceros_.detach ();
   }
 
   const ACuentaTerceros::NombreACuentaTerceros_type& ACuentaTerceros::
@@ -1962,9 +2166,15 @@ namespace cfdi
   }
 
   void ACuentaTerceros::
-  NombreACuentaTerceros (::std::auto_ptr< NombreACuentaTerceros_type > x)
+  NombreACuentaTerceros (::std::unique_ptr< NombreACuentaTerceros_type > x)
   {
-    this->NombreACuentaTerceros_.set (x);
+    this->NombreACuentaTerceros_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< ACuentaTerceros::NombreACuentaTerceros_type > ACuentaTerceros::
+  detach_NombreACuentaTerceros ()
+  {
+    return this->NombreACuentaTerceros_.detach ();
   }
 
   const ACuentaTerceros::RegimenFiscalACuentaTerceros_type& ACuentaTerceros::
@@ -1986,9 +2196,15 @@ namespace cfdi
   }
 
   void ACuentaTerceros::
-  RegimenFiscalACuentaTerceros (::std::auto_ptr< RegimenFiscalACuentaTerceros_type > x)
+  RegimenFiscalACuentaTerceros (::std::unique_ptr< RegimenFiscalACuentaTerceros_type > x)
   {
-    this->RegimenFiscalACuentaTerceros_.set (x);
+    this->RegimenFiscalACuentaTerceros_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< ACuentaTerceros::RegimenFiscalACuentaTerceros_type > ACuentaTerceros::
+  detach_RegimenFiscalACuentaTerceros ()
+  {
+    return this->RegimenFiscalACuentaTerceros_.detach ();
   }
 
   const ACuentaTerceros::DomicilioFiscalACuentaTerceros_type& ACuentaTerceros::
@@ -2010,9 +2226,15 @@ namespace cfdi
   }
 
   void ACuentaTerceros::
-  DomicilioFiscalACuentaTerceros (::std::auto_ptr< DomicilioFiscalACuentaTerceros_type > x)
+  DomicilioFiscalACuentaTerceros (::std::unique_ptr< DomicilioFiscalACuentaTerceros_type > x)
   {
-    this->DomicilioFiscalACuentaTerceros_.set (x);
+    this->DomicilioFiscalACuentaTerceros_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< ACuentaTerceros::DomicilioFiscalACuentaTerceros_type > ACuentaTerceros::
+  detach_DomicilioFiscalACuentaTerceros ()
+  {
+    return this->DomicilioFiscalACuentaTerceros_.detach ();
   }
 
 
@@ -2038,9 +2260,15 @@ namespace cfdi
   }
 
   void InformacionAduanera::
-  NumeroPedimento (::std::auto_ptr< NumeroPedimento_type > x)
+  NumeroPedimento (::std::unique_ptr< NumeroPedimento_type > x)
   {
-    this->NumeroPedimento_.set (x);
+    this->NumeroPedimento_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< InformacionAduanera::NumeroPedimento_type > InformacionAduanera::
+  detach_NumeroPedimento ()
+  {
+    return this->NumeroPedimento_.detach ();
   }
 
 
@@ -2066,9 +2294,15 @@ namespace cfdi
   }
 
   void CuentaPredial::
-  Numero (::std::auto_ptr< Numero_type > x)
+  Numero (::std::unique_ptr< Numero_type > x)
   {
-    this->Numero_.set (x);
+    this->Numero_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< CuentaPredial::Numero_type > CuentaPredial::
+  detach_Numero ()
+  {
+    return this->Numero_.detach ();
   }
 
 
@@ -2116,9 +2350,15 @@ namespace cfdi
   }
 
   void Parte::
-  ClaveProdServ (::std::auto_ptr< ClaveProdServ_type > x)
+  ClaveProdServ (::std::unique_ptr< ClaveProdServ_type > x)
   {
-    this->ClaveProdServ_.set (x);
+    this->ClaveProdServ_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Parte::ClaveProdServ_type > Parte::
+  detach_ClaveProdServ ()
+  {
+    return this->ClaveProdServ_.detach ();
   }
 
   const Parte::NoIdentificacion_optional& Parte::
@@ -2146,9 +2386,9 @@ namespace cfdi
   }
 
   void Parte::
-  NoIdentificacion (::std::auto_ptr< NoIdentificacion_type > x)
+  NoIdentificacion (::std::unique_ptr< NoIdentificacion_type > x)
   {
-    this->NoIdentificacion_.set (x);
+    this->NoIdentificacion_.set (std::move (x));
   }
 
   const Parte::Cantidad_type& Parte::
@@ -2170,9 +2410,15 @@ namespace cfdi
   }
 
   void Parte::
-  Cantidad (::std::auto_ptr< Cantidad_type > x)
+  Cantidad (::std::unique_ptr< Cantidad_type > x)
   {
-    this->Cantidad_.set (x);
+    this->Cantidad_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Parte::Cantidad_type > Parte::
+  detach_Cantidad ()
+  {
+    return this->Cantidad_.detach ();
   }
 
   const Parte::Unidad_optional& Parte::
@@ -2200,9 +2446,9 @@ namespace cfdi
   }
 
   void Parte::
-  Unidad (::std::auto_ptr< Unidad_type > x)
+  Unidad (::std::unique_ptr< Unidad_type > x)
   {
-    this->Unidad_.set (x);
+    this->Unidad_.set (std::move (x));
   }
 
   const Parte::Descripcion_type& Parte::
@@ -2224,9 +2470,15 @@ namespace cfdi
   }
 
   void Parte::
-  Descripcion (::std::auto_ptr< Descripcion_type > x)
+  Descripcion (::std::unique_ptr< Descripcion_type > x)
   {
-    this->Descripcion_.set (x);
+    this->Descripcion_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Parte::Descripcion_type > Parte::
+  detach_Descripcion ()
+  {
+    return this->Descripcion_.detach ();
   }
 
   const Parte::ValorUnitario_optional& Parte::
@@ -2254,9 +2506,9 @@ namespace cfdi
   }
 
   void Parte::
-  ValorUnitario (::std::auto_ptr< ValorUnitario_type > x)
+  ValorUnitario (::std::unique_ptr< ValorUnitario_type > x)
   {
-    this->ValorUnitario_.set (x);
+    this->ValorUnitario_.set (std::move (x));
   }
 
   const Parte::Importe_optional& Parte::
@@ -2284,9 +2536,9 @@ namespace cfdi
   }
 
   void Parte::
-  Importe (::std::auto_ptr< Importe_type > x)
+  Importe (::std::unique_ptr< Importe_type > x)
   {
-    this->Importe_.set (x);
+    this->Importe_.set (std::move (x));
   }
 
 
@@ -2328,9 +2580,15 @@ namespace cfdi
   }
 
   void Retencion::
-  Impuesto (::std::auto_ptr< Impuesto_type > x)
+  Impuesto (::std::unique_ptr< Impuesto_type > x)
   {
-    this->Impuesto_.set (x);
+    this->Impuesto_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Retencion::Impuesto_type > Retencion::
+  detach_Impuesto ()
+  {
+    return this->Impuesto_.detach ();
   }
 
   const Retencion::Importe_type& Retencion::
@@ -2352,9 +2610,15 @@ namespace cfdi
   }
 
   void Retencion::
-  Importe (::std::auto_ptr< Importe_type > x)
+  Importe (::std::unique_ptr< Importe_type > x)
   {
-    this->Importe_.set (x);
+    this->Importe_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Retencion::Importe_type > Retencion::
+  detach_Importe ()
+  {
+    return this->Importe_.detach ();
   }
 
 
@@ -2380,9 +2644,15 @@ namespace cfdi
   }
 
   void Traslado::
-  Base (::std::auto_ptr< Base_type > x)
+  Base (::std::unique_ptr< Base_type > x)
   {
-    this->Base_.set (x);
+    this->Base_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Traslado::Base_type > Traslado::
+  detach_Base ()
+  {
+    return this->Base_.detach ();
   }
 
   const Traslado::Impuesto_type& Traslado::
@@ -2404,9 +2674,15 @@ namespace cfdi
   }
 
   void Traslado::
-  Impuesto (::std::auto_ptr< Impuesto_type > x)
+  Impuesto (::std::unique_ptr< Impuesto_type > x)
   {
-    this->Impuesto_.set (x);
+    this->Impuesto_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Traslado::Impuesto_type > Traslado::
+  detach_Impuesto ()
+  {
+    return this->Impuesto_.detach ();
   }
 
   const Traslado::TipoFactor_type& Traslado::
@@ -2428,9 +2704,15 @@ namespace cfdi
   }
 
   void Traslado::
-  TipoFactor (::std::auto_ptr< TipoFactor_type > x)
+  TipoFactor (::std::unique_ptr< TipoFactor_type > x)
   {
-    this->TipoFactor_.set (x);
+    this->TipoFactor_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Traslado::TipoFactor_type > Traslado::
+  detach_TipoFactor ()
+  {
+    return this->TipoFactor_.detach ();
   }
 
   const Traslado::TasaOCuota_optional& Traslado::
@@ -2458,9 +2740,9 @@ namespace cfdi
   }
 
   void Traslado::
-  TasaOCuota (::std::auto_ptr< TasaOCuota_type > x)
+  TasaOCuota (::std::unique_ptr< TasaOCuota_type > x)
   {
-    this->TasaOCuota_.set (x);
+    this->TasaOCuota_.set (std::move (x));
   }
 
   const Traslado::Importe_optional& Traslado::
@@ -2488,9 +2770,9 @@ namespace cfdi
   }
 
   void Traslado::
-  Importe (::std::auto_ptr< Importe_type > x)
+  Importe (::std::unique_ptr< Importe_type > x)
   {
-    this->Importe_.set (x);
+    this->Importe_.set (std::move (x));
   }
 
 
@@ -2576,9 +2858,15 @@ namespace cfdi
   }
 
   void InformacionAduanera1::
-  NumeroPedimento (::std::auto_ptr< NumeroPedimento_type > x)
+  NumeroPedimento (::std::unique_ptr< NumeroPedimento_type > x)
   {
-    this->NumeroPedimento_.set (x);
+    this->NumeroPedimento_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< InformacionAduanera1::NumeroPedimento_type > InformacionAduanera1::
+  detach_NumeroPedimento ()
+  {
+    return this->NumeroPedimento_.detach ();
   }
 
 
@@ -2608,9 +2896,15 @@ namespace cfdi
   }
 
   void Traslado1::
-  Base (::std::auto_ptr< Base_type > x)
+  Base (::std::unique_ptr< Base_type > x)
   {
-    this->Base_.set (x);
+    this->Base_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Traslado1::Base_type > Traslado1::
+  detach_Base ()
+  {
+    return this->Base_.detach ();
   }
 
   const Traslado1::Impuesto_type& Traslado1::
@@ -2632,9 +2926,15 @@ namespace cfdi
   }
 
   void Traslado1::
-  Impuesto (::std::auto_ptr< Impuesto_type > x)
+  Impuesto (::std::unique_ptr< Impuesto_type > x)
   {
-    this->Impuesto_.set (x);
+    this->Impuesto_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Traslado1::Impuesto_type > Traslado1::
+  detach_Impuesto ()
+  {
+    return this->Impuesto_.detach ();
   }
 
   const Traslado1::TipoFactor_type& Traslado1::
@@ -2656,9 +2956,15 @@ namespace cfdi
   }
 
   void Traslado1::
-  TipoFactor (::std::auto_ptr< TipoFactor_type > x)
+  TipoFactor (::std::unique_ptr< TipoFactor_type > x)
   {
-    this->TipoFactor_.set (x);
+    this->TipoFactor_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Traslado1::TipoFactor_type > Traslado1::
+  detach_TipoFactor ()
+  {
+    return this->TipoFactor_.detach ();
   }
 
   const Traslado1::TasaOCuota_optional& Traslado1::
@@ -2686,9 +2992,9 @@ namespace cfdi
   }
 
   void Traslado1::
-  TasaOCuota (::std::auto_ptr< TasaOCuota_type > x)
+  TasaOCuota (::std::unique_ptr< TasaOCuota_type > x)
   {
-    this->TasaOCuota_.set (x);
+    this->TasaOCuota_.set (std::move (x));
   }
 
   const Traslado1::Importe_optional& Traslado1::
@@ -2716,9 +3022,9 @@ namespace cfdi
   }
 
   void Traslado1::
-  Importe (::std::auto_ptr< Importe_type > x)
+  Importe (::std::unique_ptr< Importe_type > x)
   {
-    this->Importe_.set (x);
+    this->Importe_.set (std::move (x));
   }
 
 
@@ -2744,9 +3050,15 @@ namespace cfdi
   }
 
   void Retencion1::
-  Base (::std::auto_ptr< Base_type > x)
+  Base (::std::unique_ptr< Base_type > x)
   {
-    this->Base_.set (x);
+    this->Base_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Retencion1::Base_type > Retencion1::
+  detach_Base ()
+  {
+    return this->Base_.detach ();
   }
 
   const Retencion1::Impuesto_type& Retencion1::
@@ -2768,9 +3080,15 @@ namespace cfdi
   }
 
   void Retencion1::
-  Impuesto (::std::auto_ptr< Impuesto_type > x)
+  Impuesto (::std::unique_ptr< Impuesto_type > x)
   {
-    this->Impuesto_.set (x);
+    this->Impuesto_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Retencion1::Impuesto_type > Retencion1::
+  detach_Impuesto ()
+  {
+    return this->Impuesto_.detach ();
   }
 
   const Retencion1::TipoFactor_type& Retencion1::
@@ -2792,9 +3110,15 @@ namespace cfdi
   }
 
   void Retencion1::
-  TipoFactor (::std::auto_ptr< TipoFactor_type > x)
+  TipoFactor (::std::unique_ptr< TipoFactor_type > x)
   {
-    this->TipoFactor_.set (x);
+    this->TipoFactor_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Retencion1::TipoFactor_type > Retencion1::
+  detach_TipoFactor ()
+  {
+    return this->TipoFactor_.detach ();
   }
 
   const Retencion1::TasaOCuota_type& Retencion1::
@@ -2816,9 +3140,15 @@ namespace cfdi
   }
 
   void Retencion1::
-  TasaOCuota (::std::auto_ptr< TasaOCuota_type > x)
+  TasaOCuota (::std::unique_ptr< TasaOCuota_type > x)
   {
-    this->TasaOCuota_.set (x);
+    this->TasaOCuota_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Retencion1::TasaOCuota_type > Retencion1::
+  detach_TasaOCuota ()
+  {
+    return this->TasaOCuota_.detach ();
   }
 
   const Retencion1::Importe_type& Retencion1::
@@ -2840,9 +3170,15 @@ namespace cfdi
   }
 
   void Retencion1::
-  Importe (::std::auto_ptr< Importe_type > x)
+  Importe (::std::unique_ptr< Importe_type > x)
   {
-    this->Importe_.set (x);
+    this->Importe_.set (std::move (x));
+  }
+
+  ::std::unique_ptr< Retencion1::Importe_type > Retencion1::
+  detach_Importe ()
+  {
+    return this->Importe_.detach ();
   }
 
 
@@ -2906,9 +3242,9 @@ namespace cfdi
   }
 
   Comprobante::
-  Comprobante (::std::auto_ptr< Emisor_type > Emisor,
-               ::std::auto_ptr< Receptor_type > Receptor,
-               ::std::auto_ptr< Conceptos_type > Conceptos,
+  Comprobante (::std::unique_ptr< Emisor_type > Emisor,
+               ::std::unique_ptr< Receptor_type > Receptor,
+               ::std::unique_ptr< Conceptos_type > Conceptos,
                const Fecha_type& Fecha,
                const Sello_type& Sello,
                const NoCertificado_type& NoCertificado,
@@ -2922,9 +3258,9 @@ namespace cfdi
   : ::xml_schema::type (),
     InformacionGlobal_ (this),
     CfdiRelacionados_ (this),
-    Emisor_ (Emisor, this),
-    Receptor_ (Receptor, this),
-    Conceptos_ (Conceptos, this),
+    Emisor_ (std::move (Emisor), this),
+    Receptor_ (std::move (Receptor), this),
+    Conceptos_ (std::move (Conceptos), this),
     Impuestos_ (this),
     Complemento_ (this),
     Addenda_ (this),
@@ -3039,12 +3375,12 @@ namespace cfdi
       //
       if (n.name () == "InformacionGlobal" && n.namespace_ () == "http://www.sat.gob.mx/cfd/4")
       {
-        ::std::auto_ptr< InformacionGlobal_type > r (
+        ::std::unique_ptr< InformacionGlobal_type > r (
           InformacionGlobal_traits::create (i, f, this));
 
         if (!this->InformacionGlobal_)
         {
-          this->InformacionGlobal_.set (r);
+          this->InformacionGlobal_.set (::std::move (r));
           continue;
         }
       }
@@ -3053,10 +3389,10 @@ namespace cfdi
       //
       if (n.name () == "CfdiRelacionados" && n.namespace_ () == "http://www.sat.gob.mx/cfd/4")
       {
-        ::std::auto_ptr< CfdiRelacionados_type > r (
+        ::std::unique_ptr< CfdiRelacionados_type > r (
           CfdiRelacionados_traits::create (i, f, this));
 
-        this->CfdiRelacionados_.push_back (r);
+        this->CfdiRelacionados_.push_back (::std::move (r));
         continue;
       }
 
@@ -3064,12 +3400,12 @@ namespace cfdi
       //
       if (n.name () == "Emisor" && n.namespace_ () == "http://www.sat.gob.mx/cfd/4")
       {
-        ::std::auto_ptr< Emisor_type > r (
+        ::std::unique_ptr< Emisor_type > r (
           Emisor_traits::create (i, f, this));
 
         if (!Emisor_.present ())
         {
-          this->Emisor_.set (r);
+          this->Emisor_.set (::std::move (r));
           continue;
         }
       }
@@ -3078,12 +3414,12 @@ namespace cfdi
       //
       if (n.name () == "Receptor" && n.namespace_ () == "http://www.sat.gob.mx/cfd/4")
       {
-        ::std::auto_ptr< Receptor_type > r (
+        ::std::unique_ptr< Receptor_type > r (
           Receptor_traits::create (i, f, this));
 
         if (!Receptor_.present ())
         {
-          this->Receptor_.set (r);
+          this->Receptor_.set (::std::move (r));
           continue;
         }
       }
@@ -3092,12 +3428,12 @@ namespace cfdi
       //
       if (n.name () == "Conceptos" && n.namespace_ () == "http://www.sat.gob.mx/cfd/4")
       {
-        ::std::auto_ptr< Conceptos_type > r (
+        ::std::unique_ptr< Conceptos_type > r (
           Conceptos_traits::create (i, f, this));
 
         if (!Conceptos_.present ())
         {
-          this->Conceptos_.set (r);
+          this->Conceptos_.set (::std::move (r));
           continue;
         }
       }
@@ -3106,12 +3442,12 @@ namespace cfdi
       //
       if (n.name () == "Impuestos" && n.namespace_ () == "http://www.sat.gob.mx/cfd/4")
       {
-        ::std::auto_ptr< Impuestos_type > r (
+        ::std::unique_ptr< Impuestos_type > r (
           Impuestos_traits::create (i, f, this));
 
         if (!this->Impuestos_)
         {
-          this->Impuestos_.set (r);
+          this->Impuestos_.set (::std::move (r));
           continue;
         }
       }
@@ -3120,12 +3456,12 @@ namespace cfdi
       //
       if (n.name () == "Complemento" && n.namespace_ () == "http://www.sat.gob.mx/cfd/4")
       {
-        ::std::auto_ptr< Complemento_type > r (
+        ::std::unique_ptr< Complemento_type > r (
           Complemento_traits::create (i, f, this));
 
         if (!this->Complemento_)
         {
-          this->Complemento_.set (r);
+          this->Complemento_.set (::std::move (r));
           continue;
         }
       }
@@ -3134,12 +3470,12 @@ namespace cfdi
       //
       if (n.name () == "Addenda" && n.namespace_ () == "http://www.sat.gob.mx/cfd/4")
       {
-        ::std::auto_ptr< Addenda_type > r (
+        ::std::unique_ptr< Addenda_type > r (
           Addenda_traits::create (i, f, this));
 
         if (!this->Addenda_)
         {
-          this->Addenda_.set (r);
+          this->Addenda_.set (::std::move (r));
           continue;
         }
       }
@@ -3583,10 +3919,10 @@ namespace cfdi
       //
       if (n.name () == "CfdiRelacionado" && n.namespace_ () == "http://www.sat.gob.mx/cfd/4")
       {
-        ::std::auto_ptr< CfdiRelacionado_type > r (
+        ::std::unique_ptr< CfdiRelacionado_type > r (
           CfdiRelacionado_traits::create (i, f, this));
 
-        this->CfdiRelacionado_.push_back (r);
+        this->CfdiRelacionado_.push_back (::std::move (r));
         continue;
       }
 
@@ -3988,10 +4324,10 @@ namespace cfdi
       //
       if (n.name () == "Concepto" && n.namespace_ () == "http://www.sat.gob.mx/cfd/4")
       {
-        ::std::auto_ptr< Concepto_type > r (
+        ::std::unique_ptr< Concepto_type > r (
           Concepto_traits::create (i, f, this));
 
-        this->Concepto_.push_back (r);
+        this->Concepto_.push_back (::std::move (r));
         continue;
       }
 
@@ -4079,12 +4415,12 @@ namespace cfdi
       //
       if (n.name () == "Retenciones" && n.namespace_ () == "http://www.sat.gob.mx/cfd/4")
       {
-        ::std::auto_ptr< Retenciones_type > r (
+        ::std::unique_ptr< Retenciones_type > r (
           Retenciones_traits::create (i, f, this));
 
         if (!this->Retenciones_)
         {
-          this->Retenciones_.set (r);
+          this->Retenciones_.set (::std::move (r));
           continue;
         }
       }
@@ -4093,12 +4429,12 @@ namespace cfdi
       //
       if (n.name () == "Traslados" && n.namespace_ () == "http://www.sat.gob.mx/cfd/4")
       {
-        ::std::auto_ptr< Traslados_type > r (
+        ::std::unique_ptr< Traslados_type > r (
           Traslados_traits::create (i, f, this));
 
         if (!this->Traslados_)
         {
-          this->Traslados_.set (r);
+          this->Traslados_.set (::std::move (r));
           continue;
         }
       }
@@ -5433,12 +5769,12 @@ namespace cfdi
       //
       if (n.name () == "Impuestos" && n.namespace_ () == "http://www.sat.gob.mx/cfd/4")
       {
-        ::std::auto_ptr< Impuestos_type > r (
+        ::std::unique_ptr< Impuestos_type > r (
           Impuestos_traits::create (i, f, this));
 
         if (!this->Impuestos_)
         {
-          this->Impuestos_.set (r);
+          this->Impuestos_.set (::std::move (r));
           continue;
         }
       }
@@ -5447,12 +5783,12 @@ namespace cfdi
       //
       if (n.name () == "ACuentaTerceros" && n.namespace_ () == "http://www.sat.gob.mx/cfd/4")
       {
-        ::std::auto_ptr< ACuentaTerceros_type > r (
+        ::std::unique_ptr< ACuentaTerceros_type > r (
           ACuentaTerceros_traits::create (i, f, this));
 
         if (!this->ACuentaTerceros_)
         {
-          this->ACuentaTerceros_.set (r);
+          this->ACuentaTerceros_.set (::std::move (r));
           continue;
         }
       }
@@ -5461,10 +5797,10 @@ namespace cfdi
       //
       if (n.name () == "InformacionAduanera" && n.namespace_ () == "http://www.sat.gob.mx/cfd/4")
       {
-        ::std::auto_ptr< InformacionAduanera_type > r (
+        ::std::unique_ptr< InformacionAduanera_type > r (
           InformacionAduanera_traits::create (i, f, this));
 
-        this->InformacionAduanera_.push_back (r);
+        this->InformacionAduanera_.push_back (::std::move (r));
         continue;
       }
 
@@ -5472,10 +5808,10 @@ namespace cfdi
       //
       if (n.name () == "CuentaPredial" && n.namespace_ () == "http://www.sat.gob.mx/cfd/4")
       {
-        ::std::auto_ptr< CuentaPredial_type > r (
+        ::std::unique_ptr< CuentaPredial_type > r (
           CuentaPredial_traits::create (i, f, this));
 
-        this->CuentaPredial_.push_back (r);
+        this->CuentaPredial_.push_back (::std::move (r));
         continue;
       }
 
@@ -5483,12 +5819,12 @@ namespace cfdi
       //
       if (n.name () == "ComplementoConcepto" && n.namespace_ () == "http://www.sat.gob.mx/cfd/4")
       {
-        ::std::auto_ptr< ComplementoConcepto_type > r (
+        ::std::unique_ptr< ComplementoConcepto_type > r (
           ComplementoConcepto_traits::create (i, f, this));
 
         if (!this->ComplementoConcepto_)
         {
-          this->ComplementoConcepto_.set (r);
+          this->ComplementoConcepto_.set (::std::move (r));
           continue;
         }
       }
@@ -5497,10 +5833,10 @@ namespace cfdi
       //
       if (n.name () == "Parte" && n.namespace_ () == "http://www.sat.gob.mx/cfd/4")
       {
-        ::std::auto_ptr< Parte_type > r (
+        ::std::unique_ptr< Parte_type > r (
           Parte_traits::create (i, f, this));
 
-        this->Parte_.push_back (r);
+        this->Parte_.push_back (::std::move (r));
         continue;
       }
 
@@ -5710,10 +6046,10 @@ namespace cfdi
       //
       if (n.name () == "Retencion" && n.namespace_ () == "http://www.sat.gob.mx/cfd/4")
       {
-        ::std::auto_ptr< Retencion_type > r (
+        ::std::unique_ptr< Retencion_type > r (
           Retencion_traits::create (i, f, this));
 
-        this->Retencion_.push_back (r);
+        this->Retencion_.push_back (::std::move (r));
         continue;
       }
 
@@ -5792,10 +6128,10 @@ namespace cfdi
       //
       if (n.name () == "Traslado" && n.namespace_ () == "http://www.sat.gob.mx/cfd/4")
       {
-        ::std::auto_ptr< Traslado_type > r (
+        ::std::unique_ptr< Traslado_type > r (
           Traslado_traits::create (i, f, this));
 
-        this->Traslado_.push_back (r);
+        this->Traslado_.push_back (::std::move (r));
         continue;
       }
 
@@ -5949,12 +6285,12 @@ namespace cfdi
       //
       if (n.name () == "Traslados" && n.namespace_ () == "http://www.sat.gob.mx/cfd/4")
       {
-        ::std::auto_ptr< Traslados_type > r (
+        ::std::unique_ptr< Traslados_type > r (
           Traslados_traits::create (i, f, this));
 
         if (!this->Traslados_)
         {
-          this->Traslados_.set (r);
+          this->Traslados_.set (::std::move (r));
           continue;
         }
       }
@@ -5963,12 +6299,12 @@ namespace cfdi
       //
       if (n.name () == "Retenciones" && n.namespace_ () == "http://www.sat.gob.mx/cfd/4")
       {
-        ::std::auto_ptr< Retenciones_type > r (
+        ::std::unique_ptr< Retenciones_type > r (
           Retenciones_traits::create (i, f, this));
 
         if (!this->Retenciones_)
         {
-          this->Retenciones_.set (r);
+          this->Retenciones_.set (::std::move (r));
           continue;
         }
       }
@@ -6428,10 +6764,10 @@ namespace cfdi
       //
       if (n.name () == "InformacionAduanera" && n.namespace_ () == "http://www.sat.gob.mx/cfd/4")
       {
-        ::std::auto_ptr< InformacionAduanera_type > r (
+        ::std::unique_ptr< InformacionAduanera_type > r (
           InformacionAduanera_traits::create (i, f, this));
 
-        this->InformacionAduanera_.push_back (r);
+        this->InformacionAduanera_.push_back (::std::move (r));
         continue;
       }
 
@@ -7111,10 +7447,10 @@ namespace cfdi
       //
       if (n.name () == "Traslado" && n.namespace_ () == "http://www.sat.gob.mx/cfd/4")
       {
-        ::std::auto_ptr< Traslado_type > r (
+        ::std::unique_ptr< Traslado_type > r (
           Traslado_traits::create (i, f, this));
 
-        this->Traslado_.push_back (r);
+        this->Traslado_.push_back (::std::move (r));
         continue;
       }
 
@@ -7193,10 +7529,10 @@ namespace cfdi
       //
       if (n.name () == "Retencion" && n.namespace_ () == "http://www.sat.gob.mx/cfd/4")
       {
-        ::std::auto_ptr< Retencion_type > r (
+        ::std::unique_ptr< Retencion_type > r (
           Retencion_traits::create (i, f, this));
 
-        this->Retencion_.push_back (r);
+        this->Retencion_.push_back (::std::move (r));
         continue;
       }
 
@@ -8031,13 +8367,683 @@ namespace cfdi
   }
 }
 
+#include <ostream>
+
+namespace cfdi
+{
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Comprobante& i)
+  {
+    if (i.InformacionGlobal ())
+    {
+      o << ::std::endl << "InformacionGlobal: " << *i.InformacionGlobal ();
+    }
+
+    for (Comprobante::CfdiRelacionados_const_iterator
+         b (i.CfdiRelacionados ().begin ()), e (i.CfdiRelacionados ().end ());
+         b != e; ++b)
+    {
+      o << ::std::endl << "CfdiRelacionados: " << *b;
+    }
+
+    o << ::std::endl << "Emisor: " << i.Emisor ();
+    o << ::std::endl << "Receptor: " << i.Receptor ();
+    o << ::std::endl << "Conceptos: " << i.Conceptos ();
+    if (i.Impuestos ())
+    {
+      o << ::std::endl << "Impuestos: " << *i.Impuestos ();
+    }
+
+    if (i.Complemento ())
+    {
+      o << ::std::endl << "Complemento: " << *i.Complemento ();
+    }
+
+    if (i.Addenda ())
+    {
+      o << ::std::endl << "Addenda: " << *i.Addenda ();
+    }
+
+    o << ::std::endl << "Version: " << i.Version ();
+    if (i.Serie ())
+    {
+      o << ::std::endl << "Serie: " << *i.Serie ();
+    }
+
+    if (i.Folio ())
+    {
+      o << ::std::endl << "Folio: " << *i.Folio ();
+    }
+
+    o << ::std::endl << "Fecha: " << i.Fecha ();
+    o << ::std::endl << "Sello: " << i.Sello ();
+    if (i.FormaPago ())
+    {
+      o << ::std::endl << "FormaPago: " << *i.FormaPago ();
+    }
+
+    o << ::std::endl << "NoCertificado: " << i.NoCertificado ();
+    o << ::std::endl << "Certificado: " << i.Certificado ();
+    if (i.CondicionesDePago ())
+    {
+      o << ::std::endl << "CondicionesDePago: " << *i.CondicionesDePago ();
+    }
+
+    o << ::std::endl << "SubTotal: " << i.SubTotal ();
+    if (i.Descuento ())
+    {
+      o << ::std::endl << "Descuento: " << *i.Descuento ();
+    }
+
+    o << ::std::endl << "Moneda: " << i.Moneda ();
+    if (i.TipoCambio ())
+    {
+      o << ::std::endl << "TipoCambio: " << *i.TipoCambio ();
+    }
+
+    o << ::std::endl << "Total: " << i.Total ();
+    o << ::std::endl << "TipoDeComprobante: " << i.TipoDeComprobante ();
+    o << ::std::endl << "Exportacion: " << i.Exportacion ();
+    if (i.MetodoPago ())
+    {
+      o << ::std::endl << "MetodoPago: " << *i.MetodoPago ();
+    }
+
+    o << ::std::endl << "LugarExpedicion: " << i.LugarExpedicion ();
+    if (i.Confirmacion ())
+    {
+      o << ::std::endl << "Confirmacion: " << *i.Confirmacion ();
+    }
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const InformacionGlobal& i)
+  {
+    o << ::std::endl << "Periodicidad: " << i.Periodicidad ();
+    o << ::std::endl << "Meses: " << i.Meses ();
+    o << ::std::endl << "A\xC3\xB1""o: " << i.A_o ();
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const CfdiRelacionados& i)
+  {
+    for (CfdiRelacionados::CfdiRelacionado_const_iterator
+         b (i.CfdiRelacionado ().begin ()), e (i.CfdiRelacionado ().end ());
+         b != e; ++b)
+    {
+      o << ::std::endl << "CfdiRelacionado: " << *b;
+    }
+
+    o << ::std::endl << "TipoRelacion: " << i.TipoRelacion ();
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Emisor& i)
+  {
+    o << ::std::endl << "Rfc: " << i.Rfc ();
+    o << ::std::endl << "Nombre: " << i.Nombre ();
+    o << ::std::endl << "RegimenFiscal: " << i.RegimenFiscal ();
+    if (i.FacAtrAdquirente ())
+    {
+      o << ::std::endl << "FacAtrAdquirente: " << *i.FacAtrAdquirente ();
+    }
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Receptor& i)
+  {
+    o << ::std::endl << "Rfc: " << i.Rfc ();
+    o << ::std::endl << "Nombre: " << i.Nombre ();
+    o << ::std::endl << "DomicilioFiscalReceptor: " << i.DomicilioFiscalReceptor ();
+    if (i.ResidenciaFiscal ())
+    {
+      o << ::std::endl << "ResidenciaFiscal: " << *i.ResidenciaFiscal ();
+    }
+
+    if (i.NumRegIdTrib ())
+    {
+      o << ::std::endl << "NumRegIdTrib: " << *i.NumRegIdTrib ();
+    }
+
+    o << ::std::endl << "RegimenFiscalReceptor: " << i.RegimenFiscalReceptor ();
+    o << ::std::endl << "UsoCFDI: " << i.UsoCFDI ();
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Conceptos& i)
+  {
+    for (Conceptos::Concepto_const_iterator
+         b (i.Concepto ().begin ()), e (i.Concepto ().end ());
+         b != e; ++b)
+    {
+      o << ::std::endl << "Concepto: " << *b;
+    }
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Impuestos& i)
+  {
+    if (i.Retenciones ())
+    {
+      o << ::std::endl << "Retenciones: " << *i.Retenciones ();
+    }
+
+    if (i.Traslados ())
+    {
+      o << ::std::endl << "Traslados: " << *i.Traslados ();
+    }
+
+    if (i.TotalImpuestosRetenidos ())
+    {
+      o << ::std::endl << "TotalImpuestosRetenidos: " << *i.TotalImpuestosRetenidos ();
+    }
+
+    if (i.TotalImpuestosTrasladados ())
+    {
+      o << ::std::endl << "TotalImpuestosTrasladados: " << *i.TotalImpuestosTrasladados ();
+    }
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Complemento&)
+  {
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Addenda&)
+  {
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Version& i)
+  {
+    o << static_cast< const ::xml_schema::string& > (i);
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Serie& i)
+  {
+    o << static_cast< const ::xml_schema::string& > (i);
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Folio& i)
+  {
+    o << static_cast< const ::xml_schema::string& > (i);
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Sello& i)
+  {
+    o << static_cast< const ::xml_schema::string& > (i);
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const NoCertificado& i)
+  {
+    o << static_cast< const ::xml_schema::string& > (i);
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Certificado& i)
+  {
+    o << static_cast< const ::xml_schema::string& > (i);
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const CondicionesDePago& i)
+  {
+    o << static_cast< const ::xml_schema::string& > (i);
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const TipoCambio& i)
+  {
+    o << static_cast< const ::xsd::cxx::tree::fundamental_base< ::xml_schema::decimal, char, ::xml_schema::simple_type, ::xsd::cxx::tree::schema_type::decimal >& > (i);
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Confirmacion& i)
+  {
+    o << static_cast< const ::xml_schema::string& > (i);
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const A_o& i)
+  {
+    o << static_cast< const ::xsd::cxx::tree::fundamental_base< ::xml_schema::short_, char, ::xml_schema::simple_type >& > (i);
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const CfdiRelacionado& i)
+  {
+    o << ::std::endl << "UUID: " << i.UUID ();
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Nombre& i)
+  {
+    o << static_cast< const ::xml_schema::string& > (i);
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const FacAtrAdquirente& i)
+  {
+    o << static_cast< const ::xml_schema::string& > (i);
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const DomicilioFiscalReceptor& i)
+  {
+    o << static_cast< const ::xml_schema::string& > (i);
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const NumRegIdTrib& i)
+  {
+    o << static_cast< const ::xml_schema::string& > (i);
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Concepto& i)
+  {
+    if (i.Impuestos ())
+    {
+      o << ::std::endl << "Impuestos: " << *i.Impuestos ();
+    }
+
+    if (i.ACuentaTerceros ())
+    {
+      o << ::std::endl << "ACuentaTerceros: " << *i.ACuentaTerceros ();
+    }
+
+    for (Concepto::InformacionAduanera_const_iterator
+         b (i.InformacionAduanera ().begin ()), e (i.InformacionAduanera ().end ());
+         b != e; ++b)
+    {
+      o << ::std::endl << "InformacionAduanera: " << *b;
+    }
+
+    for (Concepto::CuentaPredial_const_iterator
+         b (i.CuentaPredial ().begin ()), e (i.CuentaPredial ().end ());
+         b != e; ++b)
+    {
+      o << ::std::endl << "CuentaPredial: " << *b;
+    }
+
+    if (i.ComplementoConcepto ())
+    {
+      o << ::std::endl << "ComplementoConcepto: " << *i.ComplementoConcepto ();
+    }
+
+    for (Concepto::Parte_const_iterator
+         b (i.Parte ().begin ()), e (i.Parte ().end ());
+         b != e; ++b)
+    {
+      o << ::std::endl << "Parte: " << *b;
+    }
+
+    o << ::std::endl << "ClaveProdServ: " << i.ClaveProdServ ();
+    if (i.NoIdentificacion ())
+    {
+      o << ::std::endl << "NoIdentificacion: " << *i.NoIdentificacion ();
+    }
+
+    o << ::std::endl << "Cantidad: " << i.Cantidad ();
+    o << ::std::endl << "ClaveUnidad: " << i.ClaveUnidad ();
+    if (i.Unidad ())
+    {
+      o << ::std::endl << "Unidad: " << *i.Unidad ();
+    }
+
+    o << ::std::endl << "Descripcion: " << i.Descripcion ();
+    o << ::std::endl << "ValorUnitario: " << i.ValorUnitario ();
+    o << ::std::endl << "Importe: " << i.Importe ();
+    if (i.Descuento ())
+    {
+      o << ::std::endl << "Descuento: " << *i.Descuento ();
+    }
+
+    o << ::std::endl << "ObjetoImp: " << i.ObjetoImp ();
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Retenciones& i)
+  {
+    for (Retenciones::Retencion_const_iterator
+         b (i.Retencion ().begin ()), e (i.Retencion ().end ());
+         b != e; ++b)
+    {
+      o << ::std::endl << "Retencion: " << *b;
+    }
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Traslados& i)
+  {
+    for (Traslados::Traslado_const_iterator
+         b (i.Traslado ().begin ()), e (i.Traslado ().end ());
+         b != e; ++b)
+    {
+      o << ::std::endl << "Traslado: " << *b;
+    }
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const UUID& i)
+  {
+    o << static_cast< const ::xml_schema::string& > (i);
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Impuestos1& i)
+  {
+    if (i.Traslados ())
+    {
+      o << ::std::endl << "Traslados: " << *i.Traslados ();
+    }
+
+    if (i.Retenciones ())
+    {
+      o << ::std::endl << "Retenciones: " << *i.Retenciones ();
+    }
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const ACuentaTerceros& i)
+  {
+    o << ::std::endl << "RfcACuentaTerceros: " << i.RfcACuentaTerceros ();
+    o << ::std::endl << "NombreACuentaTerceros: " << i.NombreACuentaTerceros ();
+    o << ::std::endl << "RegimenFiscalACuentaTerceros: " << i.RegimenFiscalACuentaTerceros ();
+    o << ::std::endl << "DomicilioFiscalACuentaTerceros: " << i.DomicilioFiscalACuentaTerceros ();
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const InformacionAduanera& i)
+  {
+    o << ::std::endl << "NumeroPedimento: " << i.NumeroPedimento ();
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const CuentaPredial& i)
+  {
+    o << ::std::endl << "Numero: " << i.Numero ();
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const ComplementoConcepto&)
+  {
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Parte& i)
+  {
+    for (Parte::InformacionAduanera_const_iterator
+         b (i.InformacionAduanera ().begin ()), e (i.InformacionAduanera ().end ());
+         b != e; ++b)
+    {
+      o << ::std::endl << "InformacionAduanera: " << *b;
+    }
+
+    o << ::std::endl << "ClaveProdServ: " << i.ClaveProdServ ();
+    if (i.NoIdentificacion ())
+    {
+      o << ::std::endl << "NoIdentificacion: " << *i.NoIdentificacion ();
+    }
+
+    o << ::std::endl << "Cantidad: " << i.Cantidad ();
+    if (i.Unidad ())
+    {
+      o << ::std::endl << "Unidad: " << *i.Unidad ();
+    }
+
+    o << ::std::endl << "Descripcion: " << i.Descripcion ();
+    if (i.ValorUnitario ())
+    {
+      o << ::std::endl << "ValorUnitario: " << *i.ValorUnitario ();
+    }
+
+    if (i.Importe ())
+    {
+      o << ::std::endl << "Importe: " << *i.Importe ();
+    }
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const NoIdentificacion& i)
+  {
+    o << static_cast< const ::xml_schema::string& > (i);
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Cantidad& i)
+  {
+    o << static_cast< const ::xsd::cxx::tree::fundamental_base< ::xml_schema::decimal, char, ::xml_schema::simple_type, ::xsd::cxx::tree::schema_type::decimal >& > (i);
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Unidad& i)
+  {
+    o << static_cast< const ::xml_schema::string& > (i);
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Descripcion& i)
+  {
+    o << static_cast< const ::xml_schema::string& > (i);
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Retencion& i)
+  {
+    o << ::std::endl << "Impuesto: " << i.Impuesto ();
+    o << ::std::endl << "Importe: " << i.Importe ();
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Traslado& i)
+  {
+    o << ::std::endl << "Base: " << i.Base ();
+    o << ::std::endl << "Impuesto: " << i.Impuesto ();
+    o << ::std::endl << "TipoFactor: " << i.TipoFactor ();
+    if (i.TasaOCuota ())
+    {
+      o << ::std::endl << "TasaOCuota: " << *i.TasaOCuota ();
+    }
+
+    if (i.Importe ())
+    {
+      o << ::std::endl << "Importe: " << *i.Importe ();
+    }
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Traslados1& i)
+  {
+    for (Traslados1::Traslado_const_iterator
+         b (i.Traslado ().begin ()), e (i.Traslado ().end ());
+         b != e; ++b)
+    {
+      o << ::std::endl << "Traslado: " << *b;
+    }
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Retenciones1& i)
+  {
+    for (Retenciones1::Retencion_const_iterator
+         b (i.Retencion ().begin ()), e (i.Retencion ().end ());
+         b != e; ++b)
+    {
+      o << ::std::endl << "Retencion: " << *b;
+    }
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const NombreACuentaTerceros& i)
+  {
+    o << static_cast< const ::xml_schema::string& > (i);
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const DomicilioFiscalACuentaTerceros& i)
+  {
+    o << static_cast< const ::xml_schema::string& > (i);
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const NumeroPedimento& i)
+  {
+    o << static_cast< const ::xml_schema::string& > (i);
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Numero& i)
+  {
+    o << static_cast< const ::xml_schema::string& > (i);
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const InformacionAduanera1& i)
+  {
+    o << ::std::endl << "NumeroPedimento: " << i.NumeroPedimento ();
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const TasaOCuota& i)
+  {
+    o << static_cast< const ::xsd::cxx::tree::fundamental_base< ::xml_schema::decimal, char, ::xml_schema::simple_type, ::xsd::cxx::tree::schema_type::decimal >& > (i);
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Traslado1& i)
+  {
+    o << ::std::endl << "Base: " << i.Base ();
+    o << ::std::endl << "Impuesto: " << i.Impuesto ();
+    o << ::std::endl << "TipoFactor: " << i.TipoFactor ();
+    if (i.TasaOCuota ())
+    {
+      o << ::std::endl << "TasaOCuota: " << *i.TasaOCuota ();
+    }
+
+    if (i.Importe ())
+    {
+      o << ::std::endl << "Importe: " << *i.Importe ();
+    }
+
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Retencion1& i)
+  {
+    o << ::std::endl << "Base: " << i.Base ();
+    o << ::std::endl << "Impuesto: " << i.Impuesto ();
+    o << ::std::endl << "TipoFactor: " << i.TipoFactor ();
+    o << ::std::endl << "TasaOCuota: " << i.TasaOCuota ();
+    o << ::std::endl << "Importe: " << i.Importe ();
+    return o;
+  }
+
+  ::std::ostream&
+  operator<< (::std::ostream& o, const Base& i)
+  {
+    o << static_cast< const ::xsd::cxx::tree::fundamental_base< ::xml_schema::decimal, char, ::xml_schema::simple_type, ::xsd::cxx::tree::schema_type::decimal >& > (i);
+
+    return o;
+  }
+}
+
 #include <istream>
 #include <xsd/cxx/xml/sax/std-input-source.hxx>
 #include <xsd/cxx/tree/error-handler.hxx>
 
 namespace cfdi
 {
-  ::std::auto_ptr< ::cfdi::Comprobante >
+  ::std::unique_ptr< ::cfdi::Comprobante >
   Comprobante_ (const ::std::string& u,
                 ::xml_schema::flags f,
                 const ::xml_schema::properties& p)
@@ -8048,18 +9054,18 @@ namespace cfdi
 
     ::xsd::cxx::tree::error_handler< char > h;
 
-    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+    ::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d (
       ::xsd::cxx::xml::dom::parse< char > (
         u, h, p, f));
 
     h.throw_if_failed< ::xsd::cxx::tree::parsing< char > > ();
 
-    return ::std::auto_ptr< ::cfdi::Comprobante > (
+    return ::std::unique_ptr< ::cfdi::Comprobante > (
       ::cfdi::Comprobante_ (
-        d, f | ::xml_schema::flags::own_dom, p));
+        std::move (d), f | ::xml_schema::flags::own_dom, p));
   }
 
-  ::std::auto_ptr< ::cfdi::Comprobante >
+  ::std::unique_ptr< ::cfdi::Comprobante >
   Comprobante_ (const ::std::string& u,
                 ::xml_schema::error_handler& h,
                 ::xml_schema::flags f,
@@ -8069,37 +9075,37 @@ namespace cfdi
       (f & ::xml_schema::flags::dont_initialize) == 0,
       (f & ::xml_schema::flags::keep_dom) == 0);
 
-    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+    ::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d (
       ::xsd::cxx::xml::dom::parse< char > (
         u, h, p, f));
 
     if (!d.get ())
       throw ::xsd::cxx::tree::parsing< char > ();
 
-    return ::std::auto_ptr< ::cfdi::Comprobante > (
+    return ::std::unique_ptr< ::cfdi::Comprobante > (
       ::cfdi::Comprobante_ (
-        d, f | ::xml_schema::flags::own_dom, p));
+        std::move (d), f | ::xml_schema::flags::own_dom, p));
   }
 
-  ::std::auto_ptr< ::cfdi::Comprobante >
+  ::std::unique_ptr< ::cfdi::Comprobante >
   Comprobante_ (const ::std::string& u,
                 ::xercesc::DOMErrorHandler& h,
                 ::xml_schema::flags f,
                 const ::xml_schema::properties& p)
   {
-    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+    ::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d (
       ::xsd::cxx::xml::dom::parse< char > (
         u, h, p, f));
 
     if (!d.get ())
       throw ::xsd::cxx::tree::parsing< char > ();
 
-    return ::std::auto_ptr< ::cfdi::Comprobante > (
+    return ::std::unique_ptr< ::cfdi::Comprobante > (
       ::cfdi::Comprobante_ (
-        d, f | ::xml_schema::flags::own_dom, p));
+        std::move (d), f | ::xml_schema::flags::own_dom, p));
   }
 
-  ::std::auto_ptr< ::cfdi::Comprobante >
+  ::std::unique_ptr< ::cfdi::Comprobante >
   Comprobante_ (::std::istream& is,
                 ::xml_schema::flags f,
                 const ::xml_schema::properties& p)
@@ -8112,7 +9118,7 @@ namespace cfdi
     return ::cfdi::Comprobante_ (isrc, f, p);
   }
 
-  ::std::auto_ptr< ::cfdi::Comprobante >
+  ::std::unique_ptr< ::cfdi::Comprobante >
   Comprobante_ (::std::istream& is,
                 ::xml_schema::error_handler& h,
                 ::xml_schema::flags f,
@@ -8126,7 +9132,7 @@ namespace cfdi
     return ::cfdi::Comprobante_ (isrc, h, f, p);
   }
 
-  ::std::auto_ptr< ::cfdi::Comprobante >
+  ::std::unique_ptr< ::cfdi::Comprobante >
   Comprobante_ (::std::istream& is,
                 ::xercesc::DOMErrorHandler& h,
                 ::xml_schema::flags f,
@@ -8136,7 +9142,7 @@ namespace cfdi
     return ::cfdi::Comprobante_ (isrc, h, f, p);
   }
 
-  ::std::auto_ptr< ::cfdi::Comprobante >
+  ::std::unique_ptr< ::cfdi::Comprobante >
   Comprobante_ (::std::istream& is,
                 const ::std::string& sid,
                 ::xml_schema::flags f,
@@ -8150,7 +9156,7 @@ namespace cfdi
     return ::cfdi::Comprobante_ (isrc, f, p);
   }
 
-  ::std::auto_ptr< ::cfdi::Comprobante >
+  ::std::unique_ptr< ::cfdi::Comprobante >
   Comprobante_ (::std::istream& is,
                 const ::std::string& sid,
                 ::xml_schema::error_handler& h,
@@ -8165,7 +9171,7 @@ namespace cfdi
     return ::cfdi::Comprobante_ (isrc, h, f, p);
   }
 
-  ::std::auto_ptr< ::cfdi::Comprobante >
+  ::std::unique_ptr< ::cfdi::Comprobante >
   Comprobante_ (::std::istream& is,
                 const ::std::string& sid,
                 ::xercesc::DOMErrorHandler& h,
@@ -8176,73 +9182,73 @@ namespace cfdi
     return ::cfdi::Comprobante_ (isrc, h, f, p);
   }
 
-  ::std::auto_ptr< ::cfdi::Comprobante >
+  ::std::unique_ptr< ::cfdi::Comprobante >
   Comprobante_ (::xercesc::InputSource& i,
                 ::xml_schema::flags f,
                 const ::xml_schema::properties& p)
   {
     ::xsd::cxx::tree::error_handler< char > h;
 
-    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+    ::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d (
       ::xsd::cxx::xml::dom::parse< char > (
         i, h, p, f));
 
     h.throw_if_failed< ::xsd::cxx::tree::parsing< char > > ();
 
-    return ::std::auto_ptr< ::cfdi::Comprobante > (
+    return ::std::unique_ptr< ::cfdi::Comprobante > (
       ::cfdi::Comprobante_ (
-        d, f | ::xml_schema::flags::own_dom, p));
+        std::move (d), f | ::xml_schema::flags::own_dom, p));
   }
 
-  ::std::auto_ptr< ::cfdi::Comprobante >
+  ::std::unique_ptr< ::cfdi::Comprobante >
   Comprobante_ (::xercesc::InputSource& i,
                 ::xml_schema::error_handler& h,
                 ::xml_schema::flags f,
                 const ::xml_schema::properties& p)
   {
-    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+    ::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d (
       ::xsd::cxx::xml::dom::parse< char > (
         i, h, p, f));
 
     if (!d.get ())
       throw ::xsd::cxx::tree::parsing< char > ();
 
-    return ::std::auto_ptr< ::cfdi::Comprobante > (
+    return ::std::unique_ptr< ::cfdi::Comprobante > (
       ::cfdi::Comprobante_ (
-        d, f | ::xml_schema::flags::own_dom, p));
+        std::move (d), f | ::xml_schema::flags::own_dom, p));
   }
 
-  ::std::auto_ptr< ::cfdi::Comprobante >
+  ::std::unique_ptr< ::cfdi::Comprobante >
   Comprobante_ (::xercesc::InputSource& i,
                 ::xercesc::DOMErrorHandler& h,
                 ::xml_schema::flags f,
                 const ::xml_schema::properties& p)
   {
-    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+    ::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d (
       ::xsd::cxx::xml::dom::parse< char > (
         i, h, p, f));
 
     if (!d.get ())
       throw ::xsd::cxx::tree::parsing< char > ();
 
-    return ::std::auto_ptr< ::cfdi::Comprobante > (
+    return ::std::unique_ptr< ::cfdi::Comprobante > (
       ::cfdi::Comprobante_ (
-        d, f | ::xml_schema::flags::own_dom, p));
+        std::move (d), f | ::xml_schema::flags::own_dom, p));
   }
 
-  ::std::auto_ptr< ::cfdi::Comprobante >
+  ::std::unique_ptr< ::cfdi::Comprobante >
   Comprobante_ (const ::xercesc::DOMDocument& doc,
                 ::xml_schema::flags f,
                 const ::xml_schema::properties& p)
   {
     if (f & ::xml_schema::flags::keep_dom)
     {
-      ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+      ::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d (
         static_cast< ::xercesc::DOMDocument* > (doc.cloneNode (true)));
 
-      return ::std::auto_ptr< ::cfdi::Comprobante > (
+      return ::std::unique_ptr< ::cfdi::Comprobante > (
         ::cfdi::Comprobante_ (
-          d, f | ::xml_schema::flags::own_dom, p));
+          std::move (d), f | ::xml_schema::flags::own_dom, p));
     }
 
     const ::xercesc::DOMElement& e (*doc.getDocumentElement ());
@@ -8252,7 +9258,7 @@ namespace cfdi
     if (n.name () == "Comprobante" &&
         n.namespace_ () == "http://www.sat.gob.mx/cfd/4")
     {
-      ::std::auto_ptr< ::cfdi::Comprobante > r (
+      ::std::unique_ptr< ::cfdi::Comprobante > r (
         ::xsd::cxx::tree::traits< ::cfdi::Comprobante, char >::create (
           e, f, 0));
       return r;
@@ -8265,12 +9271,12 @@ namespace cfdi
       "http://www.sat.gob.mx/cfd/4");
   }
 
-  ::std::auto_ptr< ::cfdi::Comprobante >
-  Comprobante_ (::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d,
+  ::std::unique_ptr< ::cfdi::Comprobante >
+  Comprobante_ (::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d,
                 ::xml_schema::flags f,
                 const ::xml_schema::properties&)
   {
-    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > c (
+    ::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > c (
       ((f & ::xml_schema::flags::keep_dom) &&
        !(f & ::xml_schema::flags::own_dom))
       ? static_cast< ::xercesc::DOMDocument* > (d->cloneNode (true))
@@ -8290,7 +9296,7 @@ namespace cfdi
     if (n.name () == "Comprobante" &&
         n.namespace_ () == "http://www.sat.gob.mx/cfd/4")
     {
-      ::std::auto_ptr< ::cfdi::Comprobante > r (
+      ::std::unique_ptr< ::cfdi::Comprobante > r (
         ::xsd::cxx::tree::traits< ::cfdi::Comprobante, char >::create (
           e, f, 0));
       return r;
@@ -8320,7 +9326,7 @@ namespace cfdi
     ::xsd::cxx::xml::auto_initializer i (
       (f & ::xml_schema::flags::dont_initialize) == 0);
 
-    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+    ::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d (
       ::cfdi::Comprobante_ (s, m, f));
 
     ::xsd::cxx::tree::error_handler< char > h;
@@ -8343,7 +9349,7 @@ namespace cfdi
     ::xsd::cxx::xml::auto_initializer i (
       (f & ::xml_schema::flags::dont_initialize) == 0);
 
-    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+    ::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d (
       ::cfdi::Comprobante_ (s, m, f));
     ::xsd::cxx::xml::dom::ostream_format_target t (o);
     if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
@@ -8360,7 +9366,7 @@ namespace cfdi
                 const ::std::string& e,
                 ::xml_schema::flags f)
   {
-    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+    ::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d (
       ::cfdi::Comprobante_ (s, m, f));
     ::xsd::cxx::xml::dom::ostream_format_target t (o);
     if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
@@ -8376,7 +9382,7 @@ namespace cfdi
                 const ::std::string& e,
                 ::xml_schema::flags f)
   {
-    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+    ::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d (
       ::cfdi::Comprobante_ (s, m, f));
 
     ::xsd::cxx::tree::error_handler< char > h;
@@ -8395,7 +9401,7 @@ namespace cfdi
                 const ::std::string& e,
                 ::xml_schema::flags f)
   {
-    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+    ::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d (
       ::cfdi::Comprobante_ (s, m, f));
     if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
     {
@@ -8411,7 +9417,7 @@ namespace cfdi
                 const ::std::string& e,
                 ::xml_schema::flags f)
   {
-    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+    ::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d (
       ::cfdi::Comprobante_ (s, m, f));
     if (!::xsd::cxx::xml::dom::serialize (t, *d, e, h, f))
     {
@@ -8443,12 +9449,12 @@ namespace cfdi
     }
   }
 
-  ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument >
+  ::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument >
   Comprobante_ (const ::cfdi::Comprobante& s,
                 const ::xml_schema::namespace_infomap& m,
                 ::xml_schema::flags f)
   {
-    ::xml_schema::dom::auto_ptr< ::xercesc::DOMDocument > d (
+    ::xml_schema::dom::unique_ptr< ::xercesc::DOMDocument > d (
       ::xsd::cxx::xml::dom::serialize< char > (
         "Comprobante",
         "http://www.sat.gob.mx/cfd/4",

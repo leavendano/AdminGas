@@ -47,6 +47,10 @@
     impuestos: number;
     total: number;
     conceptos: ConceptoItem[] | string; // parsed array or string depending on state
+    xml_timbrado?: string | null;
+    uuid?: string | null;
+    sello?: string | null;
+    status?: string | null;
   }
 
   interface PredefinedConcepto {
@@ -69,6 +73,7 @@
   let selectedFactura = $state<Factura | null>(null);
   let searchQuery = $state('');
   let emisorLoading = $state(true);
+  let stampingIds = $state<Record<number, boolean>>({});
 
   // Form states (Captura)
   let selectedReceptorId = $state<string>('');
@@ -376,6 +381,31 @@
     }
   };
 
+  const stampFactura = async (id: number) => {
+    errorMessage = '';
+    successMessage = '';
+    stampingIds[id] = true;
+    try {
+      const response = await fetch(`http://localhost:8080/factura/${id}/timbrar`, {
+        method: 'POST'
+      });
+      const data = await response.json();
+      if (response.ok) {
+        successMessage = `Factura timbrada con éxito. UUID: ${data.uuid}`;
+        await loadFacturas();
+      } else {
+        errorMessage = data.error || "Ocurrió un error al timbrar la factura.";
+        alert(errorMessage);
+      }
+    } catch (e) {
+      console.error(e);
+      errorMessage = "Error de comunicación con el servidor al intentar timbrar.";
+      alert(errorMessage);
+    } finally {
+      stampingIds[id] = false;
+    }
+  };
+
   const viewDetail = (fac: Factura) => {
     selectedFactura = fac;
     showDetailModal = true;
@@ -468,6 +498,7 @@
             <th class="text-right">Subtotal</th>
             <th class="text-right">Impuestos (IVA)</th>
             <th class="text-right">Total</th>
+            <th>Estado / UUID</th>
             <th class="actions-column">Acciones</th>
           </tr>
         </thead>
@@ -487,18 +518,45 @@
               <td class="text-right">${fac.subtotal.toFixed(2)}</td>
               <td class="text-right">${fac.impuestos.toFixed(2)}</td>
               <td class="text-right font-bold text-primary">${fac.total.toFixed(2)}</td>
+              <td>
+                {#if fac.status === 'timbrada'}
+                  <div class="status-cell">
+                    <span class="badge badge-success"><i class="fa-solid fa-circle-check"></i> Timbrada</span>
+                    <span class="uuid-txt" title={fac.uuid}>{fac.uuid?.substring(0, 8)}...</span>
+                  </div>
+                {:else}
+                  <span class="badge badge-secondary"><i class="fa-solid fa-file-pen"></i> Creada</span>
+                {/if}
+              </td>
               <td class="actions-column">
                 <button class="action-btn view" onclick={() => viewDetail(fac)} title="Ver Detalle">
                   <i class="fa-solid fa-eye"></i>
                 </button>
-                <button class="action-btn delete" onclick={() => deleteFactura(fac.id!)} title="Eliminar">
-                  <i class="fa-solid fa-trash"></i>
-                </button>
+                
+                {#if fac.status === 'timbrada'}
+                  <a href={`http://localhost:8080/factura/${fac.id}/xml`} class="action-btn download" download title="Descargar XML">
+                    <i class="fa-solid fa-file-code"></i>
+                  </a>
+                {:else}
+                  {#if stampingIds[fac.id!]}
+                    <span class="action-spinner" title="Timbrando..."><i class="fa-solid fa-spinner fa-spin"></i></span>
+                  {:else}
+                    <button class="action-btn stamp" onclick={() => stampFactura(fac.id!)} title="Timbrar CFDI">
+                      <i class="fa-solid fa-signature"></i>
+                    </button>
+                  {/if}
+                {/if}
+                
+                {#if fac.status !== 'timbrada'}
+                  <button class="action-btn delete" onclick={() => deleteFactura(fac.id!)} title="Eliminar">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                {/if}
               </td>
             </tr>
           {:else}
             <tr>
-              <td colspan="7" class="empty-state">
+              <td colspan="8" class="empty-state">
                 <i class="fa-solid fa-file-excel empty-icon"></i>
                 <p>No se encontraron facturas registradas en la base de datos.</p>
               </td>
@@ -1694,6 +1752,71 @@
     justify-content: flex-end;
     gap: 12px;
     background: #f8fafc;
+  }
+
+  .badge-success {
+    background-color: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+  }
+  
+  .badge-secondary {
+    background-color: rgba(100, 116, 139, 0.1);
+    color: #64748b;
+    border: 1px solid rgba(100, 116, 139, 0.2);
+  }
+  
+  .status-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  
+  .uuid-txt {
+    font-size: 0.75rem;
+    font-family: monospace;
+    color: #64748b;
+  }
+  
+  .action-btn.stamp {
+    color: #3b82f6;
+    background-color: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+  }
+  
+  .action-btn.stamp:hover {
+    background-color: #3b82f6;
+    color: #ffffff;
+  }
+  
+  .action-btn.download {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #10b981;
+    background-color: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .action-btn.download:hover {
+    background-color: #10b981;
+    color: #ffffff;
+  }
+  
+  .action-spinner {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #3b82f6;
+    width: 2.25rem;
+    height: 2.25rem;
   }
 
   /* Animations */

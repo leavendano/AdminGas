@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/api_server.dir/controllers/CfdiHelper.cc.o"
+  "CMakeFiles/api_server.dir/controllers/CfdiHelper.cc.o.d"
   "CMakeFiles/api_server.dir/controllers/ConceptoController.cc.o"
   "CMakeFiles/api_server.dir/controllers/ConceptoController.cc.o.d"
   "CMakeFiles/api_server.dir/controllers/EmisorController.cc.o"
@@ -21,6 +23,12 @@ file(REMOVE_RECURSE
   "CMakeFiles/api_server.dir/models/Receptor.cc.o.d"
   "CMakeFiles/api_server.dir/models/Todo.cc.o"
   "CMakeFiles/api_server.dir/models/Todo.cc.o.d"
+  "CMakeFiles/api_server.dir/xsd/generated/catCFDI.cpp.o"
+  "CMakeFiles/api_server.dir/xsd/generated/catCFDI.cpp.o.d"
+  "CMakeFiles/api_server.dir/xsd/generated/cfdv40.cpp.o"
+  "CMakeFiles/api_server.dir/xsd/generated/cfdv40.cpp.o.d"
+  "CMakeFiles/api_server.dir/xsd/generated/tdCFDI.cpp.o"
+  "CMakeFiles/api_server.dir/xsd/generated/tdCFDI.cpp.o.d"
   "api_server"
   "api_server.pdb"
 )

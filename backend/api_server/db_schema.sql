@@ -48,6 +48,16 @@ CREATE TABLE IF NOT EXISTS factura (
     subtotal DOUBLE PRECISION NOT NULL,
     impuestos DOUBLE PRECISION NOT NULL,
     total DOUBLE PRECISION NOT NULL,
-    conceptos JSONB NOT NULL
+    conceptos JSONB NOT NULL,
+    xml_timbrado TEXT,
+    uuid VARCHAR(36),
+    sello VARCHAR(500),
+    status VARCHAR(20) DEFAULT 'creada'
 );
+
+-- Updates for existing tables
+ALTER TABLE factura ADD COLUMN IF NOT EXISTS xml_timbrado TEXT;
+ALTER TABLE factura ADD COLUMN IF NOT EXISTS uuid VARCHAR(36);
+ALTER TABLE factura ADD COLUMN IF NOT EXISTS sello VARCHAR(500);
+ALTER TABLE factura ADD COLUMN IF NOT EXISTS status VARCHAR(20) DEFAULT 'creada';
 

@@ -48,6 +48,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake-3.22/Modules/FindPkgConfig.cmake"
   "/usr/share/cmake-3.22/Modules/FindPostgreSQL.cmake"
   "/usr/share/cmake-3.22/Modules/FindThreads.cmake"
+  "/usr/share/cmake-3.22/Modules/FindXercesC.cmake"
   "/usr/share/cmake-3.22/Modules/FindZLIB.cmake"
   "/usr/share/cmake-3.22/Modules/Internal/CheckSourceCompiles.cmake"
   "/usr/share/cmake-3.22/Modules/Internal/CheckSourceRuns.cmake"

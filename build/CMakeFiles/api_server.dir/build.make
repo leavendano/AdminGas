@@ -83,10 +83,24 @@ CMakeFiles/api_server.dir/main.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/api_server.dir/main.cc.s"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lavenda/Projects/AdminGas/backend/api_server/main.cc -o CMakeFiles/api_server.dir/main.cc.s
 
+CMakeFiles/api_server.dir/controllers/CfdiHelper.cc.o: CMakeFiles/api_server.dir/flags.make
+CMakeFiles/api_server.dir/controllers/CfdiHelper.cc.o: /home/lavenda/Projects/AdminGas/backend/api_server/controllers/CfdiHelper.cc
+CMakeFiles/api_server.dir/controllers/CfdiHelper.cc.o: CMakeFiles/api_server.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lavenda/Projects/AdminGas/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/api_server.dir/controllers/CfdiHelper.cc.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/api_server.dir/controllers/CfdiHelper.cc.o -MF CMakeFiles/api_server.dir/controllers/CfdiHelper.cc.o.d -o CMakeFiles/api_server.dir/controllers/CfdiHelper.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/controllers/CfdiHelper.cc
+
+CMakeFiles/api_server.dir/controllers/CfdiHelper.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/api_server.dir/controllers/CfdiHelper.cc.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lavenda/Projects/AdminGas/backend/api_server/controllers/CfdiHelper.cc > CMakeFiles/api_server.dir/controllers/CfdiHelper.cc.i
+
+CMakeFiles/api_server.dir/controllers/CfdiHelper.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/api_server.dir/controllers/CfdiHelper.cc.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lavenda/Projects/AdminGas/backend/api_server/controllers/CfdiHelper.cc -o CMakeFiles/api_server.dir/controllers/CfdiHelper.cc.s
+
 CMakeFiles/api_server.dir/controllers/ConceptoController.cc.o: CMakeFiles/api_server.dir/flags.make
 CMakeFiles/api_server.dir/controllers/ConceptoController.cc.o: /home/lavenda/Projects/AdminGas/backend/api_server/controllers/ConceptoController.cc
 CMakeFiles/api_server.dir/controllers/ConceptoController.cc.o: CMakeFiles/api_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lavenda/Projects/AdminGas/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/api_server.dir/controllers/ConceptoController.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lavenda/Projects/AdminGas/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/api_server.dir/controllers/ConceptoController.cc.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/api_server.dir/controllers/ConceptoController.cc.o -MF CMakeFiles/api_server.dir/controllers/ConceptoController.cc.o.d -o CMakeFiles/api_server.dir/controllers/ConceptoController.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/controllers/ConceptoController.cc
 
 CMakeFiles/api_server.dir/controllers/ConceptoController.cc.i: cmake_force
@@ -100,7 +114,7 @@ CMakeFiles/api_server.dir/controllers/ConceptoController.cc.s: cmake_force
 CMakeFiles/api_server.dir/controllers/EmisorController.cc.o: CMakeFiles/api_server.dir/flags.make
 CMakeFiles/api_server.dir/controllers/EmisorController.cc.o: /home/lavenda/Projects/AdminGas/backend/api_server/controllers/EmisorController.cc
 CMakeFiles/api_server.dir/controllers/EmisorController.cc.o: CMakeFiles/api_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lavenda/Projects/AdminGas/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/api_server.dir/controllers/EmisorController.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lavenda/Projects/AdminGas/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/api_server.dir/controllers/EmisorController.cc.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/api_server.dir/controllers/EmisorController.cc.o -MF CMakeFiles/api_server.dir/controllers/EmisorController.cc.o.d -o CMakeFiles/api_server.dir/controllers/EmisorController.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/controllers/EmisorController.cc
 
 CMakeFiles/api_server.dir/controllers/EmisorController.cc.i: cmake_force
@@ -114,7 +128,7 @@ CMakeFiles/api_server.dir/controllers/EmisorController.cc.s: cmake_force
 CMakeFiles/api_server.dir/controllers/FacturaController.cc.o: CMakeFiles/api_server.dir/flags.make
 CMakeFiles/api_server.dir/controllers/FacturaController.cc.o: /home/lavenda/Projects/AdminGas/backend/api_server/controllers/FacturaController.cc
 CMakeFiles/api_server.dir/controllers/FacturaController.cc.o: CMakeFiles/api_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lavenda/Projects/AdminGas/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/api_server.dir/controllers/FacturaController.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lavenda/Projects/AdminGas/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/api_server.dir/controllers/FacturaController.cc.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/api_server.dir/controllers/FacturaController.cc.o -MF CMakeFiles/api_server.dir/controllers/FacturaController.cc.o.d -o CMakeFiles/api_server.dir/controllers/FacturaController.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/controllers/FacturaController.cc
 
 CMakeFiles/api_server.dir/controllers/FacturaController.cc.i: cmake_force
@@ -128,7 +142,7 @@ CMakeFiles/api_server.dir/controllers/FacturaController.cc.s: cmake_force
 CMakeFiles/api_server.dir/controllers/ReceptorController.cc.o: CMakeFiles/api_server.dir/flags.make
 CMakeFiles/api_server.dir/controllers/ReceptorController.cc.o: /home/lavenda/Projects/AdminGas/backend/api_server/controllers/ReceptorController.cc
 CMakeFiles/api_server.dir/controllers/ReceptorController.cc.o: CMakeFiles/api_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lavenda/Projects/AdminGas/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/api_server.dir/controllers/ReceptorController.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lavenda/Projects/AdminGas/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/api_server.dir/controllers/ReceptorController.cc.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/api_server.dir/controllers/ReceptorController.cc.o -MF CMakeFiles/api_server.dir/controllers/ReceptorController.cc.o.d -o CMakeFiles/api_server.dir/controllers/ReceptorController.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/controllers/ReceptorController.cc
 
 CMakeFiles/api_server.dir/controllers/ReceptorController.cc.i: cmake_force
@@ -142,7 +156,7 @@ CMakeFiles/api_server.dir/controllers/ReceptorController.cc.s: cmake_force
 CMakeFiles/api_server.dir/controllers/TodoController.cc.o: CMakeFiles/api_server.dir/flags.make
 CMakeFiles/api_server.dir/controllers/TodoController.cc.o: /home/lavenda/Projects/AdminGas/backend/api_server/controllers/TodoController.cc
 CMakeFiles/api_server.dir/controllers/TodoController.cc.o: CMakeFiles/api_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lavenda/Projects/AdminGas/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/api_server.dir/controllers/TodoController.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lavenda/Projects/AdminGas/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/api_server.dir/controllers/TodoController.cc.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/api_server.dir/controllers/TodoController.cc.o -MF CMakeFiles/api_server.dir/controllers/TodoController.cc.o.d -o CMakeFiles/api_server.dir/controllers/TodoController.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/controllers/TodoController.cc
 
 CMakeFiles/api_server.dir/controllers/TodoController.cc.i: cmake_force
@@ -156,7 +170,7 @@ CMakeFiles/api_server.dir/controllers/TodoController.cc.s: cmake_force
 CMakeFiles/api_server.dir/models/Concepto.cc.o: CMakeFiles/api_server.dir/flags.make
 CMakeFiles/api_server.dir/models/Concepto.cc.o: /home/lavenda/Projects/AdminGas/backend/api_server/models/Concepto.cc
 CMakeFiles/api_server.dir/models/Concepto.cc.o: CMakeFiles/api_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lavenda/Projects/AdminGas/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/api_server.dir/models/Concepto.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lavenda/Projects/AdminGas/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/api_server.dir/models/Concepto.cc.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/api_server.dir/models/Concepto.cc.o -MF CMakeFiles/api_server.dir/models/Concepto.cc.o.d -o CMakeFiles/api_server.dir/models/Concepto.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/models/Concepto.cc
 
 CMakeFiles/api_server.dir/models/Concepto.cc.i: cmake_force
@@ -170,7 +184,7 @@ CMakeFiles/api_server.dir/models/Concepto.cc.s: cmake_force
 CMakeFiles/api_server.dir/models/Emisor.cc.o: CMakeFiles/api_server.dir/flags.make
 CMakeFiles/api_server.dir/models/Emisor.cc.o: /home/lavenda/Projects/AdminGas/backend/api_server/models/Emisor.cc
 CMakeFiles/api_server.dir/models/Emisor.cc.o: CMakeFiles/api_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lavenda/Projects/AdminGas/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/api_server.dir/models/Emisor.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lavenda/Projects/AdminGas/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/api_server.dir/models/Emisor.cc.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/api_server.dir/models/Emisor.cc.o -MF CMakeFiles/api_server.dir/models/Emisor.cc.o.d -o CMakeFiles/api_server.dir/models/Emisor.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/models/Emisor.cc
 
 CMakeFiles/api_server.dir/models/Emisor.cc.i: cmake_force
@@ -184,7 +198,7 @@ CMakeFiles/api_server.dir/models/Emisor.cc.s: cmake_force
 CMakeFiles/api_server.dir/models/Factura.cc.o: CMakeFiles/api_server.dir/flags.make
 CMakeFiles/api_server.dir/models/Factura.cc.o: /home/lavenda/Projects/AdminGas/backend/api_server/models/Factura.cc
 CMakeFiles/api_server.dir/models/Factura.cc.o: CMakeFiles/api_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lavenda/Projects/AdminGas/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/api_server.dir/models/Factura.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lavenda/Projects/AdminGas/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/api_server.dir/models/Factura.cc.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/api_server.dir/models/Factura.cc.o -MF CMakeFiles/api_server.dir/models/Factura.cc.o.d -o CMakeFiles/api_server.dir/models/Factura.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/models/Factura.cc
 
 CMakeFiles/api_server.dir/models/Factura.cc.i: cmake_force
@@ -198,7 +212,7 @@ CMakeFiles/api_server.dir/models/Factura.cc.s: cmake_force
 CMakeFiles/api_server.dir/models/Receptor.cc.o: CMakeFiles/api_server.dir/flags.make
 CMakeFiles/api_server.dir/models/Receptor.cc.o: /home/lavenda/Projects/AdminGas/backend/api_server/models/Receptor.cc
 CMakeFiles/api_server.dir/models/Receptor.cc.o: CMakeFiles/api_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lavenda/Projects/AdminGas/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/api_server.dir/models/Receptor.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lavenda/Projects/AdminGas/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/api_server.dir/models/Receptor.cc.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/api_server.dir/models/Receptor.cc.o -MF CMakeFiles/api_server.dir/models/Receptor.cc.o.d -o CMakeFiles/api_server.dir/models/Receptor.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/models/Receptor.cc
 
 CMakeFiles/api_server.dir/models/Receptor.cc.i: cmake_force
@@ -212,7 +226,7 @@ CMakeFiles/api_server.dir/models/Receptor.cc.s: cmake_force
 CMakeFiles/api_server.dir/models/Todo.cc.o: CMakeFiles/api_server.dir/flags.make
 CMakeFiles/api_server.dir/models/Todo.cc.o: /home/lavenda/Projects/AdminGas/backend/api_server/models/Todo.cc
 CMakeFiles/api_server.dir/models/Todo.cc.o: CMakeFiles/api_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lavenda/Projects/AdminGas/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/api_server.dir/models/Todo.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lavenda/Projects/AdminGas/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/api_server.dir/models/Todo.cc.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/api_server.dir/models/Todo.cc.o -MF CMakeFiles/api_server.dir/models/Todo.cc.o.d -o CMakeFiles/api_server.dir/models/Todo.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/models/Todo.cc
 
 CMakeFiles/api_server.dir/models/Todo.cc.i: cmake_force
@@ -223,9 +237,52 @@ CMakeFiles/api_server.dir/models/Todo.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/api_server.dir/models/Todo.cc.s"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lavenda/Projects/AdminGas/backend/api_server/models/Todo.cc -o CMakeFiles/api_server.dir/models/Todo.cc.s
 
+CMakeFiles/api_server.dir/xsd/generated/catCFDI.cpp.o: CMakeFiles/api_server.dir/flags.make
+CMakeFiles/api_server.dir/xsd/generated/catCFDI.cpp.o: /home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated/catCFDI.cpp
+CMakeFiles/api_server.dir/xsd/generated/catCFDI.cpp.o: CMakeFiles/api_server.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lavenda/Projects/AdminGas/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/api_server.dir/xsd/generated/catCFDI.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/api_server.dir/xsd/generated/catCFDI.cpp.o -MF CMakeFiles/api_server.dir/xsd/generated/catCFDI.cpp.o.d -o CMakeFiles/api_server.dir/xsd/generated/catCFDI.cpp.o -c /home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated/catCFDI.cpp
+
+CMakeFiles/api_server.dir/xsd/generated/catCFDI.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/api_server.dir/xsd/generated/catCFDI.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated/catCFDI.cpp > CMakeFiles/api_server.dir/xsd/generated/catCFDI.cpp.i
+
+CMakeFiles/api_server.dir/xsd/generated/catCFDI.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/api_server.dir/xsd/generated/catCFDI.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated/catCFDI.cpp -o CMakeFiles/api_server.dir/xsd/generated/catCFDI.cpp.s
+
+CMakeFiles/api_server.dir/xsd/generated/cfdv40.cpp.o: CMakeFiles/api_server.dir/flags.make
+CMakeFiles/api_server.dir/xsd/generated/cfdv40.cpp.o: /home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated/cfdv40.cpp
+CMakeFiles/api_server.dir/xsd/generated/cfdv40.cpp.o: CMakeFiles/api_server.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lavenda/Projects/AdminGas/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/api_server.dir/xsd/generated/cfdv40.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/api_server.dir/xsd/generated/cfdv40.cpp.o -MF CMakeFiles/api_server.dir/xsd/generated/cfdv40.cpp.o.d -o CMakeFiles/api_server.dir/xsd/generated/cfdv40.cpp.o -c /home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated/cfdv40.cpp
+
+CMakeFiles/api_server.dir/xsd/generated/cfdv40.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/api_server.dir/xsd/generated/cfdv40.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated/cfdv40.cpp > CMakeFiles/api_server.dir/xsd/generated/cfdv40.cpp.i
+
+CMakeFiles/api_server.dir/xsd/generated/cfdv40.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/api_server.dir/xsd/generated/cfdv40.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated/cfdv40.cpp -o CMakeFiles/api_server.dir/xsd/generated/cfdv40.cpp.s
+
+CMakeFiles/api_server.dir/xsd/generated/tdCFDI.cpp.o: CMakeFiles/api_server.dir/flags.make
+CMakeFiles/api_server.dir/xsd/generated/tdCFDI.cpp.o: /home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated/tdCFDI.cpp
+CMakeFiles/api_server.dir/xsd/generated/tdCFDI.cpp.o: CMakeFiles/api_server.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lavenda/Projects/AdminGas/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/api_server.dir/xsd/generated/tdCFDI.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/api_server.dir/xsd/generated/tdCFDI.cpp.o -MF CMakeFiles/api_server.dir/xsd/generated/tdCFDI.cpp.o.d -o CMakeFiles/api_server.dir/xsd/generated/tdCFDI.cpp.o -c /home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated/tdCFDI.cpp
+
+CMakeFiles/api_server.dir/xsd/generated/tdCFDI.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/api_server.dir/xsd/generated/tdCFDI.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated/tdCFDI.cpp > CMakeFiles/api_server.dir/xsd/generated/tdCFDI.cpp.i
+
+CMakeFiles/api_server.dir/xsd/generated/tdCFDI.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/api_server.dir/xsd/generated/tdCFDI.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated/tdCFDI.cpp -o CMakeFiles/api_server.dir/xsd/generated/tdCFDI.cpp.s
+
 # Object files for target api_server
 api_server_OBJECTS = \
 "CMakeFiles/api_server.dir/main.cc.o" \
+"CMakeFiles/api_server.dir/controllers/CfdiHelper.cc.o" \
 "CMakeFiles/api_server.dir/controllers/ConceptoController.cc.o" \
 "CMakeFiles/api_server.dir/controllers/EmisorController.cc.o" \
 "CMakeFiles/api_server.dir/controllers/FacturaController.cc.o" \
@@ -235,12 +292,16 @@ api_server_OBJECTS = \
 "CMakeFiles/api_server.dir/models/Emisor.cc.o" \
 "CMakeFiles/api_server.dir/models/Factura.cc.o" \
 "CMakeFiles/api_server.dir/models/Receptor.cc.o" \
-"CMakeFiles/api_server.dir/models/Todo.cc.o"
+"CMakeFiles/api_server.dir/models/Todo.cc.o" \
+"CMakeFiles/api_server.dir/xsd/generated/catCFDI.cpp.o" \
+"CMakeFiles/api_server.dir/xsd/generated/cfdv40.cpp.o" \
+"CMakeFiles/api_server.dir/xsd/generated/tdCFDI.cpp.o"
 
 # External object files for target api_server
 api_server_EXTERNAL_OBJECTS =
 
 api_server: CMakeFiles/api_server.dir/main.cc.o
+api_server: CMakeFiles/api_server.dir/controllers/CfdiHelper.cc.o
 api_server: CMakeFiles/api_server.dir/controllers/ConceptoController.cc.o
 api_server: CMakeFiles/api_server.dir/controllers/EmisorController.cc.o
 api_server: CMakeFiles/api_server.dir/controllers/FacturaController.cc.o
@@ -251,8 +312,12 @@ api_server: CMakeFiles/api_server.dir/models/Emisor.cc.o
 api_server: CMakeFiles/api_server.dir/models/Factura.cc.o
 api_server: CMakeFiles/api_server.dir/models/Receptor.cc.o
 api_server: CMakeFiles/api_server.dir/models/Todo.cc.o
+api_server: CMakeFiles/api_server.dir/xsd/generated/catCFDI.cpp.o
+api_server: CMakeFiles/api_server.dir/xsd/generated/cfdv40.cpp.o
+api_server: CMakeFiles/api_server.dir/xsd/generated/tdCFDI.cpp.o
 api_server: CMakeFiles/api_server.dir/build.make
 api_server: /usr/local/lib/libdrogon.a
+api_server: /usr/lib/x86_64-linux-gnu/libxerces-c.so
 api_server: /usr/local/lib/libtrantor.a
 api_server: /usr/lib/x86_64-linux-gnu/libssl.so
 api_server: /usr/lib/x86_64-linux-gnu/libcrypto.so
@@ -263,8 +328,11 @@ api_server: /usr/lib/x86_64-linux-gnu/libbrotlienc.so
 api_server: /usr/lib/x86_64-linux-gnu/libbrotlicommon.so
 api_server: /usr/lib/x86_64-linux-gnu/libpq.so
 api_server: /usr/lib/x86_64-linux-gnu/libz.so
+api_server: /usr/lib/x86_64-linux-gnu/libexslt.so
+api_server: /usr/lib/x86_64-linux-gnu/libxslt.so
+api_server: /usr/lib/x86_64-linux-gnu/libxml2.so
 api_server: CMakeFiles/api_server.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/lavenda/Projects/AdminGas/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX executable api_server"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/lavenda/Projects/AdminGas/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Linking CXX executable api_server"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/api_server.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

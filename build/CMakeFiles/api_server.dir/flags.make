@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/g++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -isystem /usr/include/jsoncpp
+CXX_INCLUDES = -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -I/home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated -isystem /usr/include/jsoncpp -isystem /usr/include/libxml2
 
 CXX_FLAGS = -g -std=c++17
 

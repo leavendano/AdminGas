@@ -142,6 +142,30 @@ api_server_test/fast:
 	$(MAKE) $(MAKESILENT) -f test/CMakeFiles/api_server_test.dir/build.make test/CMakeFiles/api_server_test.dir/build
 .PHONY : api_server_test/fast
 
+controllers/CfdiHelper.o: controllers/CfdiHelper.cc.o
+.PHONY : controllers/CfdiHelper.o
+
+# target to build an object file
+controllers/CfdiHelper.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/api_server.dir/build.make CMakeFiles/api_server.dir/controllers/CfdiHelper.cc.o
+.PHONY : controllers/CfdiHelper.cc.o
+
+controllers/CfdiHelper.i: controllers/CfdiHelper.cc.i
+.PHONY : controllers/CfdiHelper.i
+
+# target to preprocess a source file
+controllers/CfdiHelper.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/api_server.dir/build.make CMakeFiles/api_server.dir/controllers/CfdiHelper.cc.i
+.PHONY : controllers/CfdiHelper.cc.i
+
+controllers/CfdiHelper.s: controllers/CfdiHelper.cc.s
+.PHONY : controllers/CfdiHelper.s
+
+# target to generate assembly for a file
+controllers/CfdiHelper.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/api_server.dir/build.make CMakeFiles/api_server.dir/controllers/CfdiHelper.cc.s
+.PHONY : controllers/CfdiHelper.cc.s
+
 controllers/ConceptoController.o: controllers/ConceptoController.cc.o
 .PHONY : controllers/ConceptoController.o
 
@@ -406,6 +430,78 @@ models/Todo.cc.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/api_server.dir/build.make CMakeFiles/api_server.dir/models/Todo.cc.s
 .PHONY : models/Todo.cc.s
 
+xsd/generated/catCFDI.o: xsd/generated/catCFDI.cpp.o
+.PHONY : xsd/generated/catCFDI.o
+
+# target to build an object file
+xsd/generated/catCFDI.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/api_server.dir/build.make CMakeFiles/api_server.dir/xsd/generated/catCFDI.cpp.o
+.PHONY : xsd/generated/catCFDI.cpp.o
+
+xsd/generated/catCFDI.i: xsd/generated/catCFDI.cpp.i
+.PHONY : xsd/generated/catCFDI.i
+
+# target to preprocess a source file
+xsd/generated/catCFDI.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/api_server.dir/build.make CMakeFiles/api_server.dir/xsd/generated/catCFDI.cpp.i
+.PHONY : xsd/generated/catCFDI.cpp.i
+
+xsd/generated/catCFDI.s: xsd/generated/catCFDI.cpp.s
+.PHONY : xsd/generated/catCFDI.s
+
+# target to generate assembly for a file
+xsd/generated/catCFDI.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/api_server.dir/build.make CMakeFiles/api_server.dir/xsd/generated/catCFDI.cpp.s
+.PHONY : xsd/generated/catCFDI.cpp.s
+
+xsd/generated/cfdv40.o: xsd/generated/cfdv40.cpp.o
+.PHONY : xsd/generated/cfdv40.o
+
+# target to build an object file
+xsd/generated/cfdv40.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/api_server.dir/build.make CMakeFiles/api_server.dir/xsd/generated/cfdv40.cpp.o
+.PHONY : xsd/generated/cfdv40.cpp.o
+
+xsd/generated/cfdv40.i: xsd/generated/cfdv40.cpp.i
+.PHONY : xsd/generated/cfdv40.i
+
+# target to preprocess a source file
+xsd/generated/cfdv40.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/api_server.dir/build.make CMakeFiles/api_server.dir/xsd/generated/cfdv40.cpp.i
+.PHONY : xsd/generated/cfdv40.cpp.i
+
+xsd/generated/cfdv40.s: xsd/generated/cfdv40.cpp.s
+.PHONY : xsd/generated/cfdv40.s
+
+# target to generate assembly for a file
+xsd/generated/cfdv40.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/api_server.dir/build.make CMakeFiles/api_server.dir/xsd/generated/cfdv40.cpp.s
+.PHONY : xsd/generated/cfdv40.cpp.s
+
+xsd/generated/tdCFDI.o: xsd/generated/tdCFDI.cpp.o
+.PHONY : xsd/generated/tdCFDI.o
+
+# target to build an object file
+xsd/generated/tdCFDI.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/api_server.dir/build.make CMakeFiles/api_server.dir/xsd/generated/tdCFDI.cpp.o
+.PHONY : xsd/generated/tdCFDI.cpp.o
+
+xsd/generated/tdCFDI.i: xsd/generated/tdCFDI.cpp.i
+.PHONY : xsd/generated/tdCFDI.i
+
+# target to preprocess a source file
+xsd/generated/tdCFDI.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/api_server.dir/build.make CMakeFiles/api_server.dir/xsd/generated/tdCFDI.cpp.i
+.PHONY : xsd/generated/tdCFDI.cpp.i
+
+xsd/generated/tdCFDI.s: xsd/generated/tdCFDI.cpp.s
+.PHONY : xsd/generated/tdCFDI.s
+
+# target to generate assembly for a file
+xsd/generated/tdCFDI.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/api_server.dir/build.make CMakeFiles/api_server.dir/xsd/generated/tdCFDI.cpp.s
+.PHONY : xsd/generated/tdCFDI.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -416,6 +512,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... api_server"
 	@echo "... api_server_test"
+	@echo "... controllers/CfdiHelper.o"
+	@echo "... controllers/CfdiHelper.i"
+	@echo "... controllers/CfdiHelper.s"
 	@echo "... controllers/ConceptoController.o"
 	@echo "... controllers/ConceptoController.i"
 	@echo "... controllers/ConceptoController.s"
@@ -449,6 +548,15 @@ help:
 	@echo "... models/Todo.o"
 	@echo "... models/Todo.i"
 	@echo "... models/Todo.s"
+	@echo "... xsd/generated/catCFDI.o"
+	@echo "... xsd/generated/catCFDI.i"
+	@echo "... xsd/generated/catCFDI.s"
+	@echo "... xsd/generated/cfdv40.o"
+	@echo "... xsd/generated/cfdv40.i"
+	@echo "... xsd/generated/cfdv40.s"
+	@echo "... xsd/generated/tdCFDI.o"
+	@echo "... xsd/generated/tdCFDI.i"
+	@echo "... xsd/generated/tdCFDI.s"
 .PHONY : help
 
 
