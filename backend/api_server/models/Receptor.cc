@@ -19,6 +19,7 @@ const std::string Receptor::Cols::_nombre = "\"nombre\"";
 const std::string Receptor::Cols::_domicilio_fiscal_receptor = "\"domicilio_fiscal_receptor\"";
 const std::string Receptor::Cols::_regimen_fiscal_receptor = "\"regimen_fiscal_receptor\"";
 const std::string Receptor::Cols::_uso_cfdi = "\"uso_cfdi\"";
+const std::string Receptor::Cols::_email = "\"email\"";
 const std::string Receptor::primaryKeyName = "id";
 const bool Receptor::hasPrimaryKey = true;
 const std::string Receptor::tableName = "\"receptor\"";
@@ -29,7 +30,8 @@ const std::vector<typename Receptor::MetaData> Receptor::metaData_={
 {"nombre","std::string","character varying",255,0,0,1},
 {"domicilio_fiscal_receptor","std::string","character varying",5,0,0,1},
 {"regimen_fiscal_receptor","std::string","character varying",3,0,0,1},
-{"uso_cfdi","std::string","character varying",3,0,0,1}
+{"uso_cfdi","std::string","character varying",3,0,0,1},
+{"email","std::string","character varying",255,0,0,0}
 };
 const std::string &Receptor::getColumnName(size_t index) noexcept(false)
 {
@@ -64,11 +66,15 @@ Receptor::Receptor(const Row &r, const ssize_t indexOffset) noexcept
         {
             usoCfdi_=std::make_shared<std::string>(r["uso_cfdi"].as<std::string>());
         }
+        if(!r["email"].isNull())
+        {
+            email_=std::make_shared<std::string>(r["email"].as<std::string>());
+        }
     }
     else
     {
         size_t offset = (size_t)indexOffset;
-        if(offset + 6 > r.size())
+        if(offset + 7 > r.size())
         {
             LOG_FATAL << "Invalid SQL result for this model";
             return;
@@ -104,13 +110,18 @@ Receptor::Receptor(const Row &r, const ssize_t indexOffset) noexcept
         {
             usoCfdi_=std::make_shared<std::string>(r[index].as<std::string>());
         }
+        index = offset + 6;
+        if(!r[index].isNull())
+        {
+            email_=std::make_shared<std::string>(r[index].as<std::string>());
+        }
     }
 
 }
 
 Receptor::Receptor(const Json::Value &pJson, const std::vector<std::string> &pMasqueradingVector) noexcept(false)
 {
-    if(pMasqueradingVector.size() != 6)
+    if(pMasqueradingVector.size() != 7)
     {
         LOG_ERROR << "Bad masquerading vector";
         return;
@@ -161,6 +172,14 @@ Receptor::Receptor(const Json::Value &pJson, const std::vector<std::string> &pMa
         if(!pJson[pMasqueradingVector[5]].isNull())
         {
             usoCfdi_=std::make_shared<std::string>(pJson[pMasqueradingVector[5]].asString());
+        }
+    }
+    if(!pMasqueradingVector[6].empty() && pJson.isMember(pMasqueradingVector[6]))
+    {
+        dirtyFlag_[6] = true;
+        if(!pJson[pMasqueradingVector[6]].isNull())
+        {
+            email_=std::make_shared<std::string>(pJson[pMasqueradingVector[6]].asString());
         }
     }
 }
@@ -215,12 +234,20 @@ Receptor::Receptor(const Json::Value &pJson) noexcept(false)
             usoCfdi_=std::make_shared<std::string>(pJson["uso_cfdi"].asString());
         }
     }
+    if(pJson.isMember("email"))
+    {
+        dirtyFlag_[6]=true;
+        if(!pJson["email"].isNull())
+        {
+            email_=std::make_shared<std::string>(pJson["email"].asString());
+        }
+    }
 }
 
 void Receptor::updateByMasqueradedJson(const Json::Value &pJson,
                                             const std::vector<std::string> &pMasqueradingVector) noexcept(false)
 {
-    if(pMasqueradingVector.size() != 6)
+    if(pMasqueradingVector.size() != 7)
     {
         LOG_ERROR << "Bad masquerading vector";
         return;
@@ -272,6 +299,14 @@ void Receptor::updateByMasqueradedJson(const Json::Value &pJson,
             usoCfdi_=std::make_shared<std::string>(pJson[pMasqueradingVector[5]].asString());
         }
     }
+    if(!pMasqueradingVector[6].empty() && pJson.isMember(pMasqueradingVector[6]))
+    {
+        dirtyFlag_[6] = true;
+        if(!pJson[pMasqueradingVector[6]].isNull())
+        {
+            email_=std::make_shared<std::string>(pJson[pMasqueradingVector[6]].asString());
+        }
+    }
 }
 
 void Receptor::updateByJson(const Json::Value &pJson) noexcept(false)
@@ -321,6 +356,14 @@ void Receptor::updateByJson(const Json::Value &pJson) noexcept(false)
         if(!pJson["uso_cfdi"].isNull())
         {
             usoCfdi_=std::make_shared<std::string>(pJson["uso_cfdi"].asString());
+        }
+    }
+    if(pJson.isMember("email"))
+    {
+        dirtyFlag_[6] = true;
+        if(!pJson["email"].isNull())
+        {
+            email_=std::make_shared<std::string>(pJson["email"].asString());
         }
     }
 }
@@ -457,6 +500,33 @@ void Receptor::setUsoCfdi(std::string &&pUsoCfdi) noexcept
     dirtyFlag_[5] = true;
 }
 
+const std::string &Receptor::getValueOfEmail() const noexcept
+{
+    static const std::string defaultValue = std::string();
+    if(email_)
+        return *email_;
+    return defaultValue;
+}
+const std::shared_ptr<std::string> &Receptor::getEmail() const noexcept
+{
+    return email_;
+}
+void Receptor::setEmail(const std::string &pEmail) noexcept
+{
+    email_ = std::make_shared<std::string>(pEmail);
+    dirtyFlag_[6] = true;
+}
+void Receptor::setEmail(std::string &&pEmail) noexcept
+{
+    email_ = std::make_shared<std::string>(std::move(pEmail));
+    dirtyFlag_[6] = true;
+}
+void Receptor::setEmailToNull() noexcept
+{
+    email_.reset();
+    dirtyFlag_[6] = true;
+}
+
 void Receptor::updateId(const uint64_t id)
 {
 }
@@ -468,7 +538,8 @@ const std::vector<std::string> &Receptor::insertColumns() noexcept
         "nombre",
         "domicilio_fiscal_receptor",
         "regimen_fiscal_receptor",
-        "uso_cfdi"
+        "uso_cfdi",
+        "email"
     };
     return inCols;
 }
@@ -530,6 +601,17 @@ void Receptor::outputArgs(drogon::orm::internal::SqlBinder &binder) const
             binder << nullptr;
         }
     }
+    if(dirtyFlag_[6])
+    {
+        if(getEmail())
+        {
+            binder << getValueOfEmail();
+        }
+        else
+        {
+            binder << nullptr;
+        }
+    }
 }
 
 const std::vector<std::string> Receptor::updateColumns() const
@@ -554,6 +636,10 @@ const std::vector<std::string> Receptor::updateColumns() const
     if(dirtyFlag_[5])
     {
         ret.push_back(getColumnName(5));
+    }
+    if(dirtyFlag_[6])
+    {
+        ret.push_back(getColumnName(6));
     }
     return ret;
 }
@@ -615,6 +701,17 @@ void Receptor::updateArgs(drogon::orm::internal::SqlBinder &binder) const
             binder << nullptr;
         }
     }
+    if(dirtyFlag_[6])
+    {
+        if(getEmail())
+        {
+            binder << getValueOfEmail();
+        }
+        else
+        {
+            binder << nullptr;
+        }
+    }
 }
 Json::Value Receptor::toJson() const
 {
@@ -667,6 +764,14 @@ Json::Value Receptor::toJson() const
     {
         ret["uso_cfdi"]=Json::Value();
     }
+    if(getEmail())
+    {
+        ret["email"]=getValueOfEmail();
+    }
+    else
+    {
+        ret["email"]=Json::Value();
+    }
     return ret;
 }
 
@@ -679,7 +784,7 @@ Json::Value Receptor::toMasqueradedJson(
     const std::vector<std::string> &pMasqueradingVector) const
 {
     Json::Value ret;
-    if(pMasqueradingVector.size() == 6)
+    if(pMasqueradingVector.size() == 7)
     {
         if(!pMasqueradingVector[0].empty())
         {
@@ -747,6 +852,17 @@ Json::Value Receptor::toMasqueradedJson(
                 ret[pMasqueradingVector[5]]=Json::Value();
             }
         }
+        if(!pMasqueradingVector[6].empty())
+        {
+            if(getEmail())
+            {
+                ret[pMasqueradingVector[6]]=getValueOfEmail();
+            }
+            else
+            {
+                ret[pMasqueradingVector[6]]=Json::Value();
+            }
+        }
         return ret;
     }
     LOG_ERROR << "Masquerade failed";
@@ -797,6 +913,14 @@ Json::Value Receptor::toMasqueradedJson(
     else
     {
         ret["uso_cfdi"]=Json::Value();
+    }
+    if(getEmail())
+    {
+        ret["email"]=getValueOfEmail();
+    }
+    else
+    {
+        ret["email"]=Json::Value();
     }
     return ret;
 }
@@ -858,13 +982,18 @@ bool Receptor::validateJsonForCreation(const Json::Value &pJson, std::string &er
         err="The uso_cfdi column cannot be null";
         return false;
     }
+    if(pJson.isMember("email"))
+    {
+        if(!validJsonOfField(6, "email", pJson["email"], err, true))
+            return false;
+    }
     return true;
 }
 bool Receptor::validateMasqueradedJsonForCreation(const Json::Value &pJson,
                                                   const std::vector<std::string> &pMasqueradingVector,
                                                   std::string &err)
 {
-    if(pMasqueradingVector.size() != 6)
+    if(pMasqueradingVector.size() != 7)
     {
         err = "Bad masquerading vector";
         return false;
@@ -943,6 +1072,14 @@ bool Receptor::validateMasqueradedJsonForCreation(const Json::Value &pJson,
             return false;
         }
       }
+      if(!pMasqueradingVector[6].empty())
+      {
+          if(pJson.isMember(pMasqueradingVector[6]))
+          {
+              if(!validJsonOfField(6, pMasqueradingVector[6], pJson[pMasqueradingVector[6]], err, true))
+                  return false;
+          }
+      }
     }
     catch(const Json::LogicError &e)
     {
@@ -988,13 +1125,18 @@ bool Receptor::validateJsonForUpdate(const Json::Value &pJson, std::string &err)
         if(!validJsonOfField(5, "uso_cfdi", pJson["uso_cfdi"], err, false))
             return false;
     }
+    if(pJson.isMember("email"))
+    {
+        if(!validJsonOfField(6, "email", pJson["email"], err, false))
+            return false;
+    }
     return true;
 }
 bool Receptor::validateMasqueradedJsonForUpdate(const Json::Value &pJson,
                                                 const std::vector<std::string> &pMasqueradingVector,
                                                 std::string &err)
 {
-    if(pMasqueradingVector.size() != 6)
+    if(pMasqueradingVector.size() != 7)
     {
         err = "Bad masquerading vector";
         return false;
@@ -1033,6 +1175,11 @@ bool Receptor::validateMasqueradedJsonForUpdate(const Json::Value &pJson,
       if(!pMasqueradingVector[5].empty() && pJson.isMember(pMasqueradingVector[5]))
       {
           if(!validJsonOfField(5, pMasqueradingVector[5], pJson[pMasqueradingVector[5]], err, false))
+              return false;
+      }
+      if(!pMasqueradingVector[6].empty() && pJson.isMember(pMasqueradingVector[6]))
+      {
+          if(!validJsonOfField(6, pMasqueradingVector[6], pJson[pMasqueradingVector[6]], err, false))
               return false;
       }
     }
@@ -1164,6 +1311,25 @@ bool Receptor::validJsonOfField(size_t index,
                 err="String length exceeds limit for the " +
                     fieldName +
                     " field (the maximum value is 3)";
+                return false;
+            }
+
+            break;
+        case 6:
+            if(pJson.isNull())
+            {
+                return true;
+            }
+            if(!pJson.isString())
+            {
+                err="Type error in the "+fieldName+" field";
+                return false;
+            }
+            if(pJson.isString() && std::strlen(pJson.asCString()) > 255)
+            {
+                err="String length exceeds limit for the " +
+                    fieldName +
+                    " field (the maximum value is 255)";
                 return false;
             }
 

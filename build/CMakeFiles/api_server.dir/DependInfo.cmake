@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/lavenda/Projects/AdminGas/backend/api_server/controllers/AuthController.cc" "CMakeFiles/api_server.dir/controllers/AuthController.cc.o" "gcc" "CMakeFiles/api_server.dir/controllers/AuthController.cc.o.d"
   "/home/lavenda/Projects/AdminGas/backend/api_server/controllers/CfdiHelper.cc" "CMakeFiles/api_server.dir/controllers/CfdiHelper.cc.o" "gcc" "CMakeFiles/api_server.dir/controllers/CfdiHelper.cc.o.d"
   "/home/lavenda/Projects/AdminGas/backend/api_server/controllers/ConceptoController.cc" "CMakeFiles/api_server.dir/controllers/ConceptoController.cc.o" "gcc" "CMakeFiles/api_server.dir/controllers/ConceptoController.cc.o.d"
   "/home/lavenda/Projects/AdminGas/backend/api_server/controllers/EmisorController.cc" "CMakeFiles/api_server.dir/controllers/EmisorController.cc.o" "gcc" "CMakeFiles/api_server.dir/controllers/EmisorController.cc.o.d"

@@ -6,6 +6,11 @@
 },
 {
   "directory": "/home/lavenda/Projects/AdminGas/build",
+  "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -I/home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated -isystem /usr/include/jsoncpp -isystem /usr/include/libxml2 -g -std=c++17 -o CMakeFiles/api_server.dir/controllers/AuthController.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/controllers/AuthController.cc",
+  "file": "/home/lavenda/Projects/AdminGas/backend/api_server/controllers/AuthController.cc"
+},
+{
+  "directory": "/home/lavenda/Projects/AdminGas/build",
   "command": "/usr/bin/g++  -I/home/lavenda/Projects/AdminGas/backend/api_server -I/home/lavenda/Projects/AdminGas/backend/api_server/models -I/home/lavenda/Projects/AdminGas/backend/api_server/xsd/generated -isystem /usr/include/jsoncpp -isystem /usr/include/libxml2 -g -std=c++17 -o CMakeFiles/api_server.dir/controllers/CfdiHelper.cc.o -c /home/lavenda/Projects/AdminGas/backend/api_server/controllers/CfdiHelper.cc",
   "file": "/home/lavenda/Projects/AdminGas/backend/api_server/controllers/CfdiHelper.cc"
 },

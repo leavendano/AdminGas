@@ -20,8 +20,8 @@
     ],
     "app": {
         "number_of_threads": 1,
-        "enable_session": false,
-        "session_timeout": 0,
+        "enable_session": true,
+        "session_timeout": 3600,
         "session_same_site": "Null",
         "session_cookie_key": "JSESSIONID",
         "session_max_age": -1,

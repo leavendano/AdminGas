@@ -1,14 +1,44 @@
 <script lang="ts">
 	import favicon from "$lib/assets/favicon.svg";
 	import { page } from "$app/stores";
+	import { onMount } from "svelte";
 
 	let { children } = $props();
 
 	let isSidebarOpen = $state(true);
+	let loading = $state(true);
+	let user = $state<{ name: string; email: string } | null>(null);
+	let showProfileMenu = $state(false);
 
 	const toggleSidebar = () => {
 		isSidebarOpen = !isSidebarOpen;
 	};
+
+	const toggleProfileMenu = () => {
+		showProfileMenu = !showProfileMenu;
+	};
+
+	onMount(async () => {
+		try {
+			const res = await fetch("http://localhost:8080/auth/status", {
+				credentials: "include"
+			});
+			if (res.ok) {
+				const data = await res.json();
+				if (data.authenticated) {
+					user = { name: data.name, email: data.email };
+					loading = false;
+				} else {
+					window.location.href = "http://localhost:8080/login";
+				}
+			} else {
+				window.location.href = "http://localhost:8080/login";
+			}
+		} catch (err) {
+			console.error("Error checking auth status:", err);
+			window.location.href = "http://localhost:8080/login";
+		}
+	});
 </script>
 
 <svelte:head>
@@ -43,94 +73,125 @@
 	</style>
 </svelte:head>
 
-<div class="layout">
-	<!-- Menú Lateral (Sidebar) -->
-	<aside class="sidebar {isSidebarOpen ? 'open' : 'closed'}">
-		<div class="sidebar-header">
-			<span class="icon"
-				><i class="fa-solid fa-file-invoice-dollar"></i></span
-			>
-			<span class="text">Facturación</span>
-		</div>
-		<nav class="sidebar-nav">
-			<a href="/" class={$page.url.pathname === "/" ? "active" : ""}>
-				<span class="icon"><i class="fa-solid fa-house"></i></span>
-				<span class="text">Inicio</span>
-			</a>
-			<a
-				href="/receptores"
-				class={$page.url.pathname.startsWith("/receptores")
-					? "active"
-					: ""}
-			>
-				<span class="icon"><i class="fa-solid fa-users"></i></span>
-				<span class="text">Receptores</span>
-			</a>
-			<a
-				href="/conceptos"
-				class={$page.url.pathname.startsWith("/conceptos")
-					? "active"
-					: ""}
-			>
-				<span class="icon"><i class="fa-solid fa-tags"></i></span>
-				<span class="text">Conceptos</span>
-			</a>
-			<a
-				href="/emisor"
-				class={$page.url.pathname.startsWith("/emisor") ? "active" : ""}
-			>
-				<span class="icon"><i class="fa-solid fa-building"></i></span>
-				<span class="text">Emisor</span>
-			</a>
-			<a
-				href="/facturas"
-				class={$page.url.pathname.startsWith("/facturas")
-					? "active"
-					: ""}
-			>
+{#if loading}
+	<div class="loading-overlay">
+		<div class="spinner"></div>
+		<p>Iniciando sesión segura...</p>
+	</div>
+{:else}
+	<div class="layout">
+		<!-- Menú Lateral (Sidebar) -->
+		<aside class="sidebar {isSidebarOpen ? 'open' : 'closed'}">
+			<div class="sidebar-header">
 				<span class="icon"
 					><i class="fa-solid fa-file-invoice-dollar"></i></span
 				>
-				<span class="text">Facturas</span>
-			</a>
-		</nav>
-	</aside>
-
-	<!-- Contenedor Principal -->
-	<div class="main-wrapper {isSidebarOpen ? 'shifted' : 'full'}">
-		<!-- Barra Superior (Topbar) -->
-		<header class="topbar">
-			<button
-				class="hamburger"
-				onclick={toggleSidebar}
-				aria-label="Alternar menú"
-			>
-				<svg
-					viewBox="0 0 24 24"
-					width="24"
-					height="24"
-					stroke="currentColor"
-					stroke-width="2"
-					fill="none"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-				>
-					<line x1="3" y1="12" x2="21" y2="12"></line>
-					<line x1="3" y1="6" x2="21" y2="6"></line>
-					<line x1="3" y1="18" x2="21" y2="18"></line>
-				</svg>
-			</button>
-			<div class="topbar-actions">
-				<div class="profile-pic" title="Perfil de Usuario">A</div>
+				<span class="text">Facturación</span>
 			</div>
-		</header>
+			<nav class="sidebar-nav">
+				<a href="/" class={$page.url.pathname === "/" ? "active" : ""}>
+					<span class="icon"><i class="fa-solid fa-house"></i></span>
+					<span class="text">Inicio</span>
+				</a>
+				<a
+					href="/receptores"
+					class={$page.url.pathname.startsWith("/receptores")
+						? "active"
+						: ""}
+				>
+					<span class="icon"><i class="fa-solid fa-users"></i></span>
+					<span class="text">Receptores</span>
+				</a>
+				<a
+					href="/conceptos"
+					class={$page.url.pathname.startsWith("/conceptos")
+						? "active"
+						: ""}
+				>
+					<span class="icon"><i class="fa-solid fa-tags"></i></span>
+					<span class="text">Conceptos</span>
+				</a>
+				<a
+					href="/emisor"
+					class={$page.url.pathname.startsWith("/emisor") ? "active" : ""}
+				>
+					<span class="icon"><i class="fa-solid fa-building"></i></span>
+					<span class="text">Emisor</span>
+				</a>
+				<a
+					href="/facturas"
+					class={$page.url.pathname.startsWith("/facturas")
+						? "active"
+						: ""}
+				>
+					<span class="icon"
+						><i class="fa-solid fa-file-invoice-dollar"></i></span
+					>
+					<span class="text">Facturas</span>
+				</a>
+			</nav>
+		</aside>
 
-		<!-- Contenido de la Página -->
-		<main class="content">
-			{@render children()}
-		</main>
+		<!-- Contenedor Principal -->
+		<div class="main-wrapper {isSidebarOpen ? 'shifted' : 'full'}">
+			<!-- Barra Superior (Topbar) -->
+			<header class="topbar">
+				<button
+					class="hamburger"
+					onclick={toggleSidebar}
+					aria-label="Alternar menú"
+				>
+					<svg
+						viewBox="0 0 24 24"
+						width="24"
+						height="24"
+						stroke="currentColor"
+						stroke-width="2"
+						fill="none"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					>
+						<line x1="3" y1="12" x2="21" y2="12"></line>
+						<line x1="3" y1="6" x2="21" y2="6"></line>
+						<line x1="3" y1="18" x2="21" y2="18"></line>
+					</svg>
+				</button>
+				<div class="topbar-actions">
+					{#if user}
+						<span class="user-info-text">{user.name}</span>
+					{/if}
+					<div
+						class="profile-pic"
+						title="Perfil de Usuario"
+						onclick={toggleProfileMenu}
+						role="button"
+						tabindex="0"
+						onkeydown={(e) => e.key === "Enter" && toggleProfileMenu()}
+					>
+						{user ? user.name.charAt(0).toUpperCase() : "A"}
+					</div>
+					{#if showProfileMenu}
+						<div class="profile-menu">
+							<div class="profile-menu-header">
+								<strong>{user?.name}</strong>
+								<span>{user?.email}</span>
+							</div>
+							<hr />
+							<a href="http://localhost:8080/logout" class="logout-link">
+								<i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+							</a>
+						</div>
+					{/if}
+				</div>
+			</header>
+
+			<!-- Contenido de la Página -->
+			<main class="content">
+				{@render children()}
+			</main>
+		</div>
 	</div>
-</div>
+{/if}
 
 <style>
 	.layout {
@@ -374,5 +435,126 @@
 		padding: 32px;
 		flex: 1;
 		overflow-y: auto;
+	}
+
+	/* OIDC Authentication and Profile styles */
+	.loading-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		z-index: 9999;
+	}
+
+	.spinner {
+		width: 50px;
+		height: 50px;
+		border: 3px solid rgba(56, 189, 248, 0.1);
+		border-top-color: #38bdf8;
+		border-radius: 50%;
+		animation: spin 1s linear infinite;
+		margin-bottom: 20px;
+	}
+
+	.loading-overlay p {
+		color: #94a3b8;
+		font-family: inherit;
+		font-size: 1.1rem;
+		font-weight: 500;
+		letter-spacing: 0.5px;
+		margin: 0;
+	}
+
+	@keyframes spin {
+		to {
+			transform: rotate(360deg);
+		}
+	}
+
+	.topbar-actions {
+		position: relative;
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+
+	.user-info-text {
+		color: #4a5568;
+		font-weight: 600;
+		font-size: 0.95rem;
+	}
+
+	.profile-menu {
+		position: absolute;
+		top: 50px;
+		right: 0;
+		width: 220px;
+		background: white;
+		border-radius: 12px;
+		box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+		border: 1px solid #e2e8f0;
+		padding: 16px;
+		display: flex;
+		flex-direction: column;
+		z-index: 1010;
+		animation: fadeIn 0.2s ease-out;
+		text-align: left;
+	}
+
+	.profile-menu-header {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		margin-bottom: 12px;
+	}
+
+	.profile-menu-header strong {
+		color: #1e293b;
+		font-size: 0.95rem;
+	}
+
+	.profile-menu-header span {
+		color: #64748b;
+		font-size: 0.8rem;
+	}
+
+	.profile-menu hr {
+		border: none;
+		border-top: 1px solid #f1f5f9;
+		margin: 0 0 12px 0;
+	}
+
+	.logout-link {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		color: #ef4444;
+		text-decoration: none;
+		font-weight: 600;
+		font-size: 0.9rem;
+		padding: 8px;
+		border-radius: 6px;
+		transition: background-color 0.2s;
+	}
+
+	.logout-link:hover {
+		background-color: #fef2f2;
+	}
+
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+			transform: translateY(-10px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
 	}
 </style>

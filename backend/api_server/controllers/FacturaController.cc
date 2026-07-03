@@ -7,6 +7,9 @@
 #include <ctime>
 #include <memory>
 #include <json/json.h>
+#include <fstream>
+#include <chrono>
+#include <cstdlib>
 
 using namespace drogon_model::admingas;
 using admingas::CfdiHelper;
@@ -368,6 +371,232 @@ void FacturaController::getXml(const HttpRequestPtr &req,
         resp->setBody(factura.getValueOfXmlTimbrado());
         resp->addHeader("Content-Type", "application/xml; charset=utf-8");
         resp->addHeader("Content-Disposition", "attachment; filename=\"CFDI_" + id + "_" + factura.getValueOfUuid() + ".xml\"");
+        callback(resp);
+        
+    } catch (const drogon::orm::DrogonDbException &e) {
+        Json::Value error;
+        error["error"] = e.base().what();
+        auto resp = HttpResponse::newHttpJsonResponse(error);
+        resp->setStatusCode(k500InternalServerError);
+        callback(resp);
+    } catch (const std::exception &e) {
+        Json::Value error;
+        error["error"] = e.what();
+        auto resp = HttpResponse::newHttpJsonResponse(error);
+        resp->setStatusCode(k400BadRequest);
+        callback(resp);
+    }
+}
+
+void FacturaController::getPdf(const HttpRequestPtr &req,
+                               std::function<void(const HttpResponsePtr &)> &&callback,
+                               std::string &&id)
+{
+    auto dbClient = app().getDbClient();
+    drogon::orm::Mapper<Factura> mp(dbClient);
+    
+    try {
+        auto factura = mp.findByPrimaryKey(std::stoi(id));
+        
+        if (factura.getValueOfStatus() != "timbrada" || factura.getValueOfXmlTimbrado().empty()) {
+            Json::Value error;
+            error["error"] = "La factura no se encuentra timbrada o no cuenta con XML.";
+            auto resp = HttpResponse::newHttpJsonResponse(error);
+            resp->setStatusCode(k404NotFound);
+            callback(resp);
+            return;
+        }
+        
+        // Generate unique temporary filenames in the uploads folder
+        std::string randSuffix = std::to_string(std::chrono::system_clock::now().time_since_epoch().count());
+        std::string xmlTempPath = "./uploads/temp_" + id + "_" + randSuffix + ".xml";
+        std::string pdfTempPath = "./uploads/temp_" + id + "_" + randSuffix + ".pdf";
+        
+        // Write the xml_timbrado contents to the temp file
+        std::ofstream xmlFile(xmlTempPath);
+        if (!xmlFile.is_open()) {
+            Json::Value error;
+            error["error"] = "No se pudo crear el archivo XML temporal en el servidor.";
+            auto resp = HttpResponse::newHttpJsonResponse(error);
+            resp->setStatusCode(k500InternalServerError);
+            callback(resp);
+            return;
+        }
+        xmlFile << factura.getValueOfXmlTimbrado();
+        xmlFile.close();
+        
+        // Run Python subprocess to render PDF
+        std::string cmd = "python3 ./cfdi_to_pdf.py " + xmlTempPath + " " + pdfTempPath;
+        int retCode = std::system(cmd.c_str());
+        
+        // Remove temporary XML file
+        std::remove(xmlTempPath.c_str());
+        
+        if (retCode != 0) {
+            std::remove(pdfTempPath.c_str());
+            Json::Value error;
+            error["error"] = "Error en el motor de generación de PDF.";
+            auto resp = HttpResponse::newHttpJsonResponse(error);
+            resp->setStatusCode(k500InternalServerError);
+            callback(resp);
+            return;
+        }
+        
+        // Read the generated PDF bytes
+        std::ifstream pdfFile(pdfTempPath, std::ios::binary | std::ios::ate);
+        if (!pdfFile.is_open()) {
+            std::remove(pdfTempPath.c_str());
+            Json::Value error;
+            error["error"] = "No se pudo leer el archivo PDF temporal generado.";
+            auto resp = HttpResponse::newHttpJsonResponse(error);
+            resp->setStatusCode(k500InternalServerError);
+            callback(resp);
+            return;
+        }
+        
+        std::streamsize size = pdfFile.tellg();
+        pdfFile.seekg(0, std::ios::beg);
+        
+        std::vector<char> buffer(size);
+        if (!pdfFile.read(buffer.data(), size)) {
+            pdfFile.close();
+            std::remove(pdfTempPath.c_str());
+            Json::Value error;
+            error["error"] = "Error al leer los bytes del PDF temporal.";
+            auto resp = HttpResponse::newHttpJsonResponse(error);
+            resp->setStatusCode(k500InternalServerError);
+            callback(resp);
+            return;
+        }
+        pdfFile.close();
+        
+        // Remove temporary PDF file
+        std::remove(pdfTempPath.c_str());
+        
+        // Return PDF as download stream
+        auto resp = HttpResponse::newHttpResponse();
+        resp->setBody(std::string(buffer.begin(), buffer.end()));
+        resp->addHeader("Content-Type", "application/pdf");
+        resp->addHeader("Content-Disposition", "attachment; filename=\"CFDI_" + id + "_" + factura.getValueOfUuid() + ".pdf\"");
+        callback(resp);
+        
+    } catch (const drogon::orm::DrogonDbException &e) {
+        Json::Value error;
+        error["error"] = e.base().what();
+        auto resp = HttpResponse::newHttpJsonResponse(error);
+        resp->setStatusCode(k500InternalServerError);
+        callback(resp);
+    } catch (const std::exception &e) {
+        Json::Value error;
+        error["error"] = e.what();
+        auto resp = HttpResponse::newHttpJsonResponse(error);
+        resp->setStatusCode(k400BadRequest);
+        callback(resp);
+    }
+}
+
+void FacturaController::sendEmail(const HttpRequestPtr &req,
+                                  std::function<void(const HttpResponsePtr &)> &&callback,
+                                  std::string &&id)
+{
+    auto dbClient = app().getDbClient();
+    
+    try {
+        int facturaId = std::stoi(id);
+        
+        // 1. Fetch factura
+        drogon::orm::Mapper<Factura> mpFactura(dbClient);
+        auto factura = mpFactura.findByPrimaryKey(facturaId);
+        
+        if (factura.getValueOfStatus() != "timbrada" || factura.getValueOfXmlTimbrado().empty()) {
+            Json::Value error;
+            error["error"] = "La factura no se encuentra timbrada o no cuenta con XML.";
+            auto resp = HttpResponse::newHttpJsonResponse(error);
+            resp->setStatusCode(k400BadRequest);
+            callback(resp);
+            return;
+        }
+        
+        // 2. Fetch recipient email from receptor (or body override)
+        std::string recipientEmail = "";
+        auto jsonPtr = req->getJsonObject();
+        if (jsonPtr && jsonPtr->isMember("email") && !(*jsonPtr)["email"].isNull()) {
+            recipientEmail = (*jsonPtr)["email"].asString();
+        }
+        
+        if (recipientEmail.empty()) {
+            if (factura.getReceptorId()) {
+                drogon::orm::Mapper<Receptor> mpReceptor(dbClient);
+                auto receptor = mpReceptor.findByPrimaryKey(*(factura.getReceptorId()));
+                recipientEmail = receptor.getValueOfEmail();
+            }
+        }
+        
+        if (recipientEmail.empty()) {
+            Json::Value error;
+            error["error"] = "El receptor no cuenta con un correo electrónico registrado y no se proporcionó uno alternativo.";
+            auto resp = HttpResponse::newHttpJsonResponse(error);
+            resp->setStatusCode(k400BadRequest);
+            callback(resp);
+            return;
+        }
+        
+        // 3. Write temp XML
+        std::string randSuffix = std::to_string(std::chrono::system_clock::now().time_since_epoch().count());
+        std::string xmlTempPath = "./uploads/temp_mail_" + id + "_" + randSuffix + ".xml";
+        std::string pdfTempPath = "./uploads/temp_mail_" + id + "_" + randSuffix + ".pdf";
+        
+        std::ofstream xmlFile(xmlTempPath);
+        if (!xmlFile.is_open()) {
+            Json::Value error;
+            error["error"] = "No se pudo crear el archivo XML temporal para el correo.";
+            auto resp = HttpResponse::newHttpJsonResponse(error);
+            resp->setStatusCode(k500InternalServerError);
+            callback(resp);
+            return;
+        }
+        xmlFile << factura.getValueOfXmlTimbrado();
+        xmlFile.close();
+        
+        // 4. Generate PDF using cfdi_to_pdf.py
+        std::string pdfCmd = "python3 ./cfdi_to_pdf.py " + xmlTempPath + " " + pdfTempPath;
+        int pdfRet = std::system(pdfCmd.c_str());
+        if (pdfRet != 0) {
+            std::remove(xmlTempPath.c_str());
+            std::remove(pdfTempPath.c_str());
+            Json::Value error;
+            error["error"] = "Error al generar la representación impresa PDF de la factura.";
+            auto resp = HttpResponse::newHttpJsonResponse(error);
+            resp->setStatusCode(k500InternalServerError);
+            callback(resp);
+            return;
+        }
+        
+        // 5. Send email using send_email.py
+        std::string mailCmd = "python3 ./send_email.py --email " + recipientEmail + 
+                              " --xml " + xmlTempPath + 
+                              " --pdf " + pdfTempPath + 
+                              " --uuid " + factura.getValueOfUuid();
+                              
+        int mailRet = std::system(mailCmd.c_str());
+        
+        // Cleanup temp files
+        std::remove(xmlTempPath.c_str());
+        std::remove(pdfTempPath.c_str());
+        
+        if (mailRet != 0) {
+            Json::Value error;
+            error["error"] = "Error al enviar el correo a través de SMTP. Verifique la dirección o el servidor.";
+            auto resp = HttpResponse::newHttpJsonResponse(error);
+            resp->setStatusCode(k500InternalServerError);
+            callback(resp);
+            return;
+        }
+        
+        Json::Value ret;
+        ret["success"] = true;
+        ret["recipient"] = recipientEmail;
+        auto resp = HttpResponse::newHttpJsonResponse(ret);
         callback(resp);
         
     } catch (const drogon::orm::DrogonDbException &e) {

@@ -9,6 +9,7 @@ int main() {
         resp->addHeader("Access-Control-Allow-Origin", "http://localhost:5173");
         resp->addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         resp->addHeader("Access-Control-Allow-Headers", "Content-Type");
+        resp->addHeader("Access-Control-Allow-Credentials", "true");
     });
     
     drogon::app().registerPreRoutingAdvice([](const drogon::HttpRequestPtr &req, drogon::FilterCallback &&defer, drogon::FilterChainCallback &&chain) {
@@ -17,6 +18,7 @@ int main() {
             resp->addHeader("Access-Control-Allow-Origin", "http://localhost:5173");
             resp->addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
             resp->addHeader("Access-Control-Allow-Headers", "Content-Type");
+            resp->addHeader("Access-Control-Allow-Credentials", "true");
             defer(resp);
             return;
         }

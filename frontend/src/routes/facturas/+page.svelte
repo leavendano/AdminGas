@@ -28,6 +28,7 @@
     domicilio_fiscal_receptor: string;
     regimen_fiscal_receptor: string;
     uso_cfdi: string;
+    email?: string | null;
   }
 
   interface Factura {
@@ -74,6 +75,7 @@
   let searchQuery = $state('');
   let emisorLoading = $state(true);
   let stampingIds = $state<Record<number, boolean>>({});
+  let sendingEmailIds = $state<Record<number, boolean>>({});
 
   // Form states (Captura)
   let selectedReceptorId = $state<string>('');
@@ -406,6 +408,43 @@
     }
   };
 
+  const sendEmail = async (id: number) => {
+    const customEmail = prompt("Ingrese el correo electrónico del destinatario (deje en blanco para usar el del receptor):");
+    if (customEmail === null) return; // User cancelled
+    
+    errorMessage = '';
+    successMessage = '';
+    sendingEmailIds[id] = true;
+    
+    try {
+      const payload: Record<string, string> = {};
+      if (customEmail.trim() !== '') {
+        payload.email = customEmail.trim();
+      }
+      
+      const response = await fetch(`http://localhost:8080/factura/${id}/email`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      
+      const data = await response.json();
+      if (response.ok) {
+        successMessage = `Comprobantes enviados exitosamente a ${data.recipient}`;
+        alert(successMessage);
+      } else {
+        errorMessage = data.error || 'Ocurrió un error al intentar enviar el correo.';
+        alert(errorMessage);
+      }
+    } catch (e) {
+      console.error(e);
+      errorMessage = 'Error de comunicación con el servidor al intentar enviar correo.';
+      alert(errorMessage);
+    } finally {
+      sendingEmailIds[id] = false;
+    }
+  };
+
   const viewDetail = (fac: Factura) => {
     selectedFactura = fac;
     showDetailModal = true;
@@ -508,7 +547,7 @@
               <td class="folio-col">
                 <strong>FAC-{fac.id?.toString().padStart(4, '0')}</strong>
               </td>
-              <td><span class="date-badge"><i class="fa-solid fa-calendar-day"></i> {fac.fecha}</span></td>
+              <td><span class="date-badge">{fac.fecha}</span></td>
               <td>
                 <div class="receptor-cell">
                   <span class="receptor-name">{fac.receptor_nombre}</span>
@@ -529,29 +568,41 @@
                 {/if}
               </td>
               <td class="actions-column">
-                <button class="action-btn view" onclick={() => viewDetail(fac)} title="Ver Detalle">
-                  <i class="fa-solid fa-eye"></i>
-                </button>
-                
-                {#if fac.status === 'timbrada'}
-                  <a href={`http://localhost:8080/factura/${fac.id}/xml`} class="action-btn download" download title="Descargar XML">
-                    <i class="fa-solid fa-file-code"></i>
-                  </a>
-                {:else}
-                  {#if stampingIds[fac.id!]}
-                    <span class="action-spinner" title="Timbrando..."><i class="fa-solid fa-spinner fa-spin"></i></span>
+                <div class="actions-wrapper">
+                  <button class="action-btn view" onclick={() => viewDetail(fac)} title="Ver Detalle">
+                    <i class="fa-solid fa-eye"></i>
+                  </button>
+                  
+                  {#if fac.status === 'timbrada'}
+                    <a href={`http://localhost:8080/factura/${fac.id}/xml`} class="action-btn download" download title="Descargar XML">
+                      <i class="fa-solid fa-file-code"></i>
+                    </a>
+                    <a href={`http://localhost:8080/factura/${fac.id}/pdf`} class="action-btn download-pdf" download title="Descargar PDF">
+                      <i class="fa-solid fa-file-pdf"></i>
+                    </a>
+                    {#if sendingEmailIds[fac.id!]}
+                      <span class="action-spinner" title="Enviando correo..."><i class="fa-solid fa-spinner fa-spin"></i></span>
+                    {:else}
+                      <button class="action-btn email" onclick={() => sendEmail(fac.id!)} title="Enviar por Correo">
+                        <i class="fa-solid fa-paper-plane"></i>
+                      </button>
+                    {/if}
                   {:else}
-                    <button class="action-btn stamp" onclick={() => stampFactura(fac.id!)} title="Timbrar CFDI">
-                      <i class="fa-solid fa-signature"></i>
+                    {#if stampingIds[fac.id!]}
+                      <span class="action-spinner" title="Timbrando..."><i class="fa-solid fa-spinner fa-spin"></i></span>
+                    {:else}
+                      <button class="action-btn stamp" onclick={() => stampFactura(fac.id!)} title="Timbrar CFDI">
+                        <i class="fa-solid fa-signature"></i>
+                      </button>
+                    {/if}
+                  {/if}
+                  
+                  {#if fac.status !== 'timbrada'}
+                    <button class="action-btn delete" onclick={() => deleteFactura(fac.id!)} title="Eliminar">
+                      <i class="fa-solid fa-trash"></i>
                     </button>
                   {/if}
-                {/if}
-                
-                {#if fac.status !== 'timbrada'}
-                  <button class="action-btn delete" onclick={() => deleteFactura(fac.id!)} title="Eliminar">
-                    <i class="fa-solid fa-trash"></i>
-                  </button>
-                {/if}
+                </div>
               </td>
             </tr>
           {:else}
@@ -1113,11 +1164,11 @@
   .date-badge {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 4px 8px;
+    white-space: nowrap;
+    padding: 3px 6px;
     background: #f1f5f9;
     border-radius: 6px;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: #475569;
     font-weight: 600;
   }
@@ -1172,34 +1223,53 @@
   /* Actions column */
   .actions-column {
     text-align: right;
-    width: 120px;
+    width: 200px;
+  }
+
+  .actions-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    width: 100%;
   }
 
   .action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background: none;
-    border: none;
+    border: 1px solid transparent;
     cursor: pointer;
     font-size: 1rem;
-    padding: 8px;
-    border-radius: 6px;
-    transition: all 0.2s;
-    margin-left: 4px;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.375rem;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    box-sizing: border-box;
   }
 
   .action-btn.view {
     color: #4facfe;
+    background-color: rgba(79, 172, 254, 0.1);
+    border: 1px solid rgba(79, 172, 254, 0.2);
   }
 
   .action-btn.view:hover {
-    background: rgba(79, 172, 254, 0.1);
+    background-color: #4facfe;
+    color: #ffffff;
   }
 
   .action-btn.delete {
-    color: #e53e3e;
+    color: #ef4444;
+    background-color: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
   }
 
   .action-btn.delete:hover {
-    background: rgba(229, 62, 62, 0.1);
+    background-color: #ef4444;
+    color: #ffffff;
   }
 
   /* Capture modal customizations */
@@ -1791,22 +1861,35 @@
   }
   
   .action-btn.download {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
     color: #10b981;
     background-color: rgba(16, 185, 129, 0.1);
     border: 1px solid rgba(16, 185, 129, 0.2);
-    width: 2.25rem;
-    height: 2.25rem;
-    border-radius: 0.375rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
   }
   
   .action-btn.download:hover {
     background-color: #10b981;
+    color: #ffffff;
+  }
+
+  .action-btn.download-pdf {
+    color: #ef4444;
+    background-color: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+  }
+  
+  .action-btn.download-pdf:hover {
+    background-color: #ef4444;
+    color: #ffffff;
+  }
+
+  .action-btn.email {
+    color: #6366f1;
+    background-color: rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+  }
+  
+  .action-btn.email:hover {
+    background-color: #6366f1;
     color: #ffffff;
   }
   

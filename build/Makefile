@@ -142,6 +142,30 @@ api_server_test/fast:
 	$(MAKE) $(MAKESILENT) -f test/CMakeFiles/api_server_test.dir/build.make test/CMakeFiles/api_server_test.dir/build
 .PHONY : api_server_test/fast
 
+controllers/AuthController.o: controllers/AuthController.cc.o
+.PHONY : controllers/AuthController.o
+
+# target to build an object file
+controllers/AuthController.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/api_server.dir/build.make CMakeFiles/api_server.dir/controllers/AuthController.cc.o
+.PHONY : controllers/AuthController.cc.o
+
+controllers/AuthController.i: controllers/AuthController.cc.i
+.PHONY : controllers/AuthController.i
+
+# target to preprocess a source file
+controllers/AuthController.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/api_server.dir/build.make CMakeFiles/api_server.dir/controllers/AuthController.cc.i
+.PHONY : controllers/AuthController.cc.i
+
+controllers/AuthController.s: controllers/AuthController.cc.s
+.PHONY : controllers/AuthController.s
+
+# target to generate assembly for a file
+controllers/AuthController.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/api_server.dir/build.make CMakeFiles/api_server.dir/controllers/AuthController.cc.s
+.PHONY : controllers/AuthController.cc.s
+
 controllers/CfdiHelper.o: controllers/CfdiHelper.cc.o
 .PHONY : controllers/CfdiHelper.o
 
@@ -512,6 +536,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... api_server"
 	@echo "... api_server_test"
+	@echo "... controllers/AuthController.o"
+	@echo "... controllers/AuthController.i"
+	@echo "... controllers/AuthController.s"
 	@echo "... controllers/CfdiHelper.o"
 	@echo "... controllers/CfdiHelper.i"
 	@echo "... controllers/CfdiHelper.s"

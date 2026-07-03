@@ -50,6 +50,7 @@ class Receptor
         static const std::string _domicilio_fiscal_receptor;
         static const std::string _regimen_fiscal_receptor;
         static const std::string _uso_cfdi;
+        static const std::string _email;
     };
 
     static const int primaryKeyNumber;
@@ -154,8 +155,18 @@ class Receptor
     void setUsoCfdi(const std::string &pUsoCfdi) noexcept;
     void setUsoCfdi(std::string &&pUsoCfdi) noexcept;
 
+    /**  For column email  */
+    ///Get the value of the column email, returns the default value if the column is null
+    const std::string &getValueOfEmail() const noexcept;
+    ///Return a shared_ptr object pointing to the column const value, or an empty shared_ptr object if the column is null
+    const std::shared_ptr<std::string> &getEmail() const noexcept;
+    ///Set the value of the column email
+    void setEmail(const std::string &pEmail) noexcept;
+    void setEmail(std::string &&pEmail) noexcept;
+    void setEmailToNull() noexcept;
 
-    static size_t getColumnNumber() noexcept {  return 6;  }
+
+    static size_t getColumnNumber() noexcept {  return 7;  }
     static const std::string &getColumnName(size_t index) noexcept(false);
 
     Json::Value toJson() const;
@@ -183,6 +194,7 @@ class Receptor
     std::shared_ptr<std::string> domicilioFiscalReceptor_;
     std::shared_ptr<std::string> regimenFiscalReceptor_;
     std::shared_ptr<std::string> usoCfdi_;
+    std::shared_ptr<std::string> email_;
     struct MetaData
     {
         const std::string colName_;
@@ -194,7 +206,7 @@ class Receptor
         const bool notNull_;
     };
     static const std::vector<MetaData> metaData_;
-    bool dirtyFlag_[6]={ false };
+    bool dirtyFlag_[7]={ false };
   public:
     static const std::string &sqlForFindingByPrimaryKey()
     {
@@ -239,6 +251,11 @@ class Receptor
             sql += "uso_cfdi,";
             ++parametersCount;
         }
+        if(dirtyFlag_[6])
+        {
+            sql += "email,";
+            ++parametersCount;
+        }
         needSelection=true;
         if(parametersCount > 0)
         {
@@ -273,6 +290,11 @@ class Receptor
             sql.append(placeholderStr, n);
         }
         if(dirtyFlag_[5])
+        {
+            n = snprintf(placeholderStr,sizeof(placeholderStr),"$%d,",placeholder++);
+            sql.append(placeholderStr, n);
+        }
+        if(dirtyFlag_[6])
         {
             n = snprintf(placeholderStr,sizeof(placeholderStr),"$%d,",placeholder++);
             sql.append(placeholderStr, n);

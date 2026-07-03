@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/api_server.dir/controllers/AuthController.cc.o"
+  "CMakeFiles/api_server.dir/controllers/AuthController.cc.o.d"
   "CMakeFiles/api_server.dir/controllers/CfdiHelper.cc.o"
   "CMakeFiles/api_server.dir/controllers/CfdiHelper.cc.o.d"
   "CMakeFiles/api_server.dir/controllers/ConceptoController.cc.o"

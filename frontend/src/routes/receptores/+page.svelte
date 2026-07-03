@@ -8,6 +8,7 @@
     domicilio_fiscal_receptor: string;
     regimen_fiscal_receptor: string;
     uso_cfdi: string;
+    email?: string | null;
   }
 
   let receptors: Receptor[] = $state([]);
@@ -22,6 +23,7 @@
   let domicilioFiscalReceptor = $state('');
   let regimenFiscalReceptor = $state('601');
   let usoCfdi = $state('G03');
+  let email = $state('');
   let errorMessage = $state('');
 
   // SAT Catalogs
@@ -75,6 +77,7 @@
     domicilioFiscalReceptor = '';
     regimenFiscalReceptor = '601';
     usoCfdi = 'G03';
+    email = '';
     errorMessage = '';
     showModal = true;
   };
@@ -87,6 +90,7 @@
     domicilioFiscalReceptor = rec.domicilio_fiscal_receptor;
     regimenFiscalReceptor = rec.regimen_fiscal_receptor;
     usoCfdi = rec.uso_cfdi;
+    email = rec.email || '';
     errorMessage = '';
     showModal = true;
   };
@@ -107,6 +111,11 @@
     if (!cleanCp) return 'El Domicilio Fiscal (Código Postal) es requerido';
     if (cleanCp.length !== 5 || isNaN(Number(cleanCp))) return 'El Domicilio Fiscal debe ser un Código Postal de 5 dígitos';
 
+    const cleanEmail = email.trim();
+    if (cleanEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
+      return 'Formato de correo electrónico inválido';
+    }
+
     return null;
   };
 
@@ -122,7 +131,8 @@
       nombre: nombre.trim().toUpperCase(), // SAT CFDI 4.0 matching is strictly uppercase without regimes like SA de CV (ideally)
       domicilio_fiscal_receptor: domicilioFiscalReceptor.trim(),
       regimen_fiscal_receptor: regimenFiscalReceptor,
-      uso_cfdi: usoCfdi
+      uso_cfdi: usoCfdi,
+      email: email.trim() || null
     };
 
     try {
@@ -234,6 +244,11 @@
                 <span class="avatar">{rec.nombre.substring(0,2)}</span>
                 <div class="nombre-details">
                   <span class="main-name">{rec.nombre}</span>
+                  {#if rec.email}
+                    <span class="email-details" style="display: block; font-size: 0.75rem; color: #64748b; margin-top: 2px;">
+                      <i class="fa-solid fa-envelope"></i> {rec.email}
+                    </span>
+                  {/if}
                 </div>
               </td>
               <td><span class="badge rfc-badge">{rec.rfc}</span></td>
@@ -315,6 +330,17 @@
                 placeholder="Código Postal (5 dígitos)"
                 maxlength="5"
                 required
+                class="form-control"
+              />
+            </div>
+
+            <div class="form-group col-span-2">
+              <label for="email">Correo Electrónico (para envío de CFDI)</label>
+              <input
+                id="email"
+                type="email"
+                bind:value={email}
+                placeholder="ejemplo@correo.com"
                 class="form-control"
               />
             </div>
