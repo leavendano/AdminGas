@@ -20,7 +20,7 @@
 
 	onMount(async () => {
 		try {
-			const res = await fetch("http://localhost:8080/auth/status", {
+			const res = await fetch("/auth/status", {
 				credentials: "include"
 			});
 			if (res.ok) {
@@ -29,14 +29,14 @@
 					user = { name: data.name, email: data.email };
 					loading = false;
 				} else {
-					window.location.href = "http://localhost:8080/login";
+					window.location.href = "/login";
 				}
 			} else {
-				window.location.href = "http://localhost:8080/login";
+				window.location.href = "/login";
 			}
 		} catch (err) {
 			console.error("Error checking auth status:", err);
-			window.location.href = "http://localhost:8080/login";
+			window.location.href = "/login";
 		}
 	});
 </script>
@@ -177,7 +177,7 @@
 								<span>{user?.email}</span>
 							</div>
 							<hr />
-							<a href="http://localhost:8080/logout" class="logout-link">
+							<a href="/logout" class="logout-link">
 								<i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
 							</a>
 						</div>

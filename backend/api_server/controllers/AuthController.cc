@@ -79,8 +79,11 @@ void AuthController::login(const HttpRequestPtr &req,
 
     // Save in session
     auto session = req->getSession();
-    session->insert("state", state);
-    session->insert("code_verifier", code_verifier);
+    session->modify([state, code_verifier](drogon::Session::SessionMap &map) {
+        map["state"] = state;
+        map["code_verifier"] = code_verifier;
+    });
+    LOG_INFO << "login: Created session " << session->sessionId() << " with state=" << state;
 
     // Calculate PKCE challenge
     std::string hashed = sha256(code_verifier);
@@ -106,8 +109,18 @@ void AuthController::callback(const HttpRequestPtr &req,
     auto state = req->getParameter("state");
     auto session = req->getSession();
 
+    LOG_INFO << "callback: Received state=" << state << " from OIDC. Current session ID=" << session->sessionId();
+    if (session->find("state")) {
+        LOG_INFO << "callback: Found state in session: " << session->get<std::string>("state");
+    } else {
+        LOG_WARN << "callback: No state found in session!";
+    }
+
     // CSRF protection: check state matches session
     if (state.empty() || !session->find("state") || session->get<std::string>("state") != state) {
+        LOG_ERROR << "CSRF state mismatch or expired session. request_state=" << state 
+                  << ", session_state=" << (session->find("state") ? session->get<std::string>("state") : "NOT_FOUND")
+                  << ", session_id=" << session->sessionId();
         auto resp = HttpResponse::newHttpResponse();
         resp->setStatusCode(k400BadRequest);
         resp->setBody("CSRF state mismatch or expired session");
@@ -178,18 +191,19 @@ void AuthController::callback(const HttpRequestPtr &req,
                 return;
             }
 
-            // Save user details in session
-            session->insert("user_authenticated", true);
-            session->insert("access_token", access_token);
-
             Json::StreamWriterBuilder builder;
             std::string user_info_str = Json::writeString(builder, *uJson);
-            session->insert("user_info", user_info_str);
-
             std::string name = uJson->isMember("name") ? (*uJson)["name"].asString() : "";
             std::string email = uJson->isMember("email") ? (*uJson)["email"].asString() : "";
-            session->insert("user_name", name);
-            session->insert("user_email", email);
+
+            // Save user details in session
+            session->modify([access_token, user_info_str, name, email](drogon::Session::SessionMap &map) {
+                map["user_authenticated"] = true;
+                map["access_token"] = access_token;
+                map["user_info"] = user_info_str;
+                map["user_name"] = name;
+                map["user_email"] = email;
+            });
 
             // Redirect to frontend dashboard
             auto redirectResp = HttpResponse::newRedirectionResponse("http://localhost:5173/");
@@ -290,7 +304,7 @@ void AuthController::logout(const HttpRequestPtr &req,
     auto session = req->getSession();
     session->clear();
 
-    std::string redirectUrl = OPENID_URL + "/connect/logout?post_logout_redirect_uri=http://localhost:8080/signout-callback-oidc";
+    std::string redirectUrl = OPENID_URL + "/connect/logout?post_logout_redirect_uri=http://localhost:5173/signout-callback-oidc";
     auto resp = HttpResponse::newRedirectionResponse(redirectUrl);
     callback(resp);
 }

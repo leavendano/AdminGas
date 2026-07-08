@@ -9,7 +9,7 @@ El sistema está configurado para conectarse con un servidor OpenID Connect con 
 - **URL del servidor OpenID**: `https://localhost:7001`
 - **Client ID**: `facturacion`
 - **Client Secret**: `Cfdi-49725`
-- **Redirect URI**: `http://localhost:8080/callback`
+- **Redirect URI**: `https://localhost:8080/callback`
 
 ### Modificar la configuración
 
@@ -20,7 +20,7 @@ Si necesitas cambiar estos parámetros, edita el archivo [controllers/AuthContro
 const std::string OPENID_URL = "https://localhost:7001";
 const std::string CLIENT_ID = "facturacion";
 const std::string CLIENT_SECRET = "Cfdi-49725";
-const std::string REDIRECT_URI = "http://localhost:8080/callback";
+const std::string REDIRECT_URI = "https://localhost:8080/callback";
 ```
 
 **NOTA**: Actualmente el cliente HTTP está configurado para NO usar HTTPS (línea 57 de AuthController.cc). Si tu servidor OpenID usa HTTPS, cambia el tercer parámetro a `true`:

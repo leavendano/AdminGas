@@ -64,6 +64,7 @@ class Factura
         static const std::string _uuid;
         static const std::string _sello;
         static const std::string _status;
+        static const std::string _forma_pago;
     };
 
     static const int primaryKeyNumber;
@@ -294,8 +295,18 @@ class Factura
     void setStatus(std::string &&pStatus) noexcept;
     void setStatusToNull() noexcept;
 
+    /**  For column forma_pago  */
+    ///Get the value of the column forma_pago, returns the default value if the column is null
+    const std::string &getValueOfFormaPago() const noexcept;
+    ///Return a shared_ptr object pointing to the column const value, or an empty shared_ptr object if the column is null
+    const std::shared_ptr<std::string> &getFormaPago() const noexcept;
+    ///Set the value of the column forma_pago
+    void setFormaPago(const std::string &pFormaPago) noexcept;
+    void setFormaPago(std::string &&pFormaPago) noexcept;
+    void setFormaPagoToNull() noexcept;
 
-    static size_t getColumnNumber() noexcept {  return 20;  }
+
+    static size_t getColumnNumber() noexcept {  return 21;  }
     static const std::string &getColumnName(size_t index) noexcept(false);
 
     Json::Value toJson() const;
@@ -337,6 +348,7 @@ class Factura
     std::shared_ptr<std::string> uuid_;
     std::shared_ptr<std::string> sello_;
     std::shared_ptr<std::string> status_;
+    std::shared_ptr<std::string> formaPago_;
     struct MetaData
     {
         const std::string colName_;
@@ -348,7 +360,7 @@ class Factura
         const bool notNull_;
     };
     static const std::vector<MetaData> metaData_;
-    bool dirtyFlag_[20]={ false };
+    bool dirtyFlag_[21]={ false };
   public:
     static const std::string &sqlForFindingByPrimaryKey()
     {
@@ -464,6 +476,11 @@ class Factura
         {
             needSelection=true;
         }
+        if(dirtyFlag_[20])
+        {
+            sql += "forma_pago,";
+            ++parametersCount;
+        }
         needSelection=true;
         if(parametersCount > 0)
         {
@@ -575,6 +592,11 @@ class Factura
         else
         {
             sql +="default,";
+        }
+        if(dirtyFlag_[20])
+        {
+            n = snprintf(placeholderStr,sizeof(placeholderStr),"$%d,",placeholder++);
+            sql.append(placeholderStr, n);
         }
         if(parametersCount > 0)
         {

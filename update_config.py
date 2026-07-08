@@ -8,7 +8,9 @@ replacement = """
         {
             "address": "0.0.0.0",
             "port": 8080,
-            "https": false
+            "https": true,
+            "cert": "server.crt",
+            "key": "server.key"
         }
     ],
     "db_clients": [

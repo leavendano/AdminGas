@@ -35,7 +35,7 @@ private:
   const std::string OPENID_URL = "https://localhost:7001";
   const std::string CLIENT_ID = "facturacion";
   const std::string CLIENT_SECRET = "Cfdi-49725";
-  const std::string REDIRECT_URI = "http://localhost:8080/callback";
+  const std::string REDIRECT_URI = "http://localhost:5173/callback";
 
   // Security and Hashing Helpers
   std::string generateRandomHex(size_t length);

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount } from "svelte";
 
   interface Receptor {
     id?: number;
@@ -12,58 +12,77 @@
   }
 
   let receptors: Receptor[] = $state([]);
-  let searchQuery = $state('');
+  let searchQuery = $state("");
   let isEditing = $state(false);
   let showModal = $state(false);
   let currentReceptorId = $state<number | null>(null);
 
   // Form states
-  let rfc = $state('');
-  let nombre = $state('');
-  let domicilioFiscalReceptor = $state('');
-  let regimenFiscalReceptor = $state('601');
-  let usoCfdi = $state('G03');
-  let email = $state('');
-  let errorMessage = $state('');
+  let rfc = $state("");
+  let nombre = $state("");
+  let domicilioFiscalReceptor = $state("");
+  let regimenFiscalReceptor = $state("601");
+  let usoCfdi = $state("G03");
+  let email = $state("");
+  let errorMessage = $state("");
 
   // SAT Catalogs
   const regimenes = [
-    { code: '601', desc: '601 - General de Ley Personas Morales' },
-    { code: '603', desc: '603 - Personas Morales con Fines no Lucrativos' },
-    { code: '605', desc: '605 - Sueldos y Salarios e Ingresos Asimilados a Salarios' },
-    { code: '606', desc: '606 - Arrendamiento' },
-    { code: '608', desc: '608 - Demás ingresos' },
-    { code: '612', desc: '612 - Actividades Empresariales y Profesionales' },
-    { code: '621', desc: '621 - Incorporación Fiscal' },
-    { code: '625', desc: '625 - Actividades Agrícolas, Ganaderas, Silvícolas y Pesqueras' },
-    { code: '626', desc: '626 - Régimen Simplificado de Confianza (RESICO)' }
+    { code: "601", desc: "601 - General de Ley Personas Morales" },
+    { code: "603", desc: "603 - Personas Morales con Fines no Lucrativos" },
+    {
+      code: "605",
+      desc: "605 - Sueldos y Salarios e Ingresos Asimilados a Salarios",
+    },
+    { code: "606", desc: "606 - Arrendamiento" },
+    { code: "608", desc: "608 - Demás ingresos" },
+    { code: "612", desc: "612 - Actividades Empresariales y Profesionales" },
+    { code: "616", desc: "616 - Sin Obligaciones Fiscales" },
+    { code: "621", desc: "621 - Incorporación Fiscal" },
+    {
+      code: "625",
+      desc: "625 - Actividades Agrícolas, Ganaderas, Silvícolas y Pesqueras",
+    },
+    { code: "626", desc: "626 - Régimen Simplificado de Confianza (RESICO)" },
   ];
 
   const usosCfdi = [
-    { code: 'G01', desc: 'G01 - Adquisición de mercancías' },
-    { code: 'G02', desc: 'G02 - Devoluciones, descuentos o bonificaciones' },
-    { code: 'G03', desc: 'G03 - Gastos en general' },
-    { code: 'I01', desc: 'I01 - Construcciones' },
-    { code: 'I02', desc: 'I02 - Mobiliario y equipo de oficina por inversiones' },
-    { code: 'I03', desc: 'I03 - Equipo de transporte por inversiones' },
-    { code: 'I04', desc: 'I04 - Equipo de cómputo y accesorios por inversiones' },
-    { code: 'I08', desc: 'I08 - Otra maquinaria y equipo por inversiones' },
-    { code: 'D01', desc: 'D01 - Honorarios médicos, dentales y gastos hospitalarios' },
-    { code: 'D02', desc: 'D02 - Gastos médicos por incapacidad o discapacidad' },
-    { code: 'D10', desc: 'D10 - Premios por seguros de gastos médicos' },
-    { code: 'CP01', desc: 'CP01 - Pagos' },
-    { code: 'CN01', desc: 'CN01 - Nómina' },
-    { code: 'S01', desc: 'S01 - Sin efectos fiscales' }
+    { code: "G01", desc: "G01 - Adquisición de mercancías" },
+    { code: "G02", desc: "G02 - Devoluciones, descuentos o bonificaciones" },
+    { code: "G03", desc: "G03 - Gastos en general" },
+    { code: "I01", desc: "I01 - Construcciones" },
+    {
+      code: "I02",
+      desc: "I02 - Mobiliario y equipo de oficina por inversiones",
+    },
+    { code: "I03", desc: "I03 - Equipo de transporte por inversiones" },
+    {
+      code: "I04",
+      desc: "I04 - Equipo de cómputo y accesorios por inversiones",
+    },
+    { code: "I08", desc: "I08 - Otra maquinaria y equipo por inversiones" },
+    {
+      code: "D01",
+      desc: "D01 - Honorarios médicos, dentales y gastos hospitalarios",
+    },
+    {
+      code: "D02",
+      desc: "D02 - Gastos médicos por incapacidad o discapacidad",
+    },
+    { code: "D10", desc: "D10 - Premios por seguros de gastos médicos" },
+    { code: "CP01", desc: "CP01 - Pagos" },
+    { code: "CN01", desc: "CN01 - Nómina" },
+    { code: "S01", desc: "S01 - Sin efectos fiscales" },
   ];
 
   const loadReceptors = async () => {
     try {
-      const response = await fetch('http://localhost:8080/receptor');
+      const response = await fetch("/receptor");
       if (response.ok) {
         receptors = await response.json();
       }
     } catch (error) {
-      console.error('Error cargando receptores:', error);
+      console.error("Error cargando receptores:", error);
     }
   };
 
@@ -72,13 +91,13 @@
   const openAddModal = () => {
     isEditing = false;
     currentReceptorId = null;
-    rfc = '';
-    nombre = '';
-    domicilioFiscalReceptor = '';
-    regimenFiscalReceptor = '601';
-    usoCfdi = 'G03';
-    email = '';
-    errorMessage = '';
+    rfc = "";
+    nombre = "";
+    domicilioFiscalReceptor = "";
+    regimenFiscalReceptor = "601";
+    usoCfdi = "G03";
+    email = "";
+    errorMessage = "";
     showModal = true;
   };
 
@@ -90,30 +109,33 @@
     domicilioFiscalReceptor = rec.domicilio_fiscal_receptor;
     regimenFiscalReceptor = rec.regimen_fiscal_receptor;
     usoCfdi = rec.uso_cfdi;
-    email = rec.email || '';
-    errorMessage = '';
+    email = rec.email || "";
+    errorMessage = "";
     showModal = true;
   };
 
   const validateForm = () => {
     // Basic CFDI 4.0 validation
     const cleanRfc = rfc.trim().toUpperCase();
-    if (!cleanRfc) return 'El RFC es requerido';
-    if (cleanRfc.length < 12 || cleanRfc.length > 13) return 'El RFC debe tener 12 (moral) o 13 (física) caracteres';
-    
+    if (!cleanRfc) return "El RFC es requerido";
+    if (cleanRfc.length < 12 || cleanRfc.length > 13)
+      return "El RFC debe tener 12 (moral) o 13 (física) caracteres";
+
     // RFC regex check
     const rfcRegex = /^[A-Z&Ñ]{3,4}[0-9]{6}[A-Z0-9]{3}$/;
-    if (!rfcRegex.test(cleanRfc)) return 'Formato de RFC inválido (Ej: VECJ880326XXX o GACM750824YYY)';
+    if (!rfcRegex.test(cleanRfc))
+      return "Formato de RFC inválido (Ej: VECJ880326XXX o GACM750824YYY)";
 
-    if (!nombre.trim()) return 'El Nombre o Razón Social es requerido';
-    
+    if (!nombre.trim()) return "El Nombre o Razón Social es requerido";
+
     const cleanCp = domicilioFiscalReceptor.trim();
-    if (!cleanCp) return 'El Domicilio Fiscal (Código Postal) es requerido';
-    if (cleanCp.length !== 5 || isNaN(Number(cleanCp))) return 'El Domicilio Fiscal debe ser un Código Postal de 5 dígitos';
+    if (!cleanCp) return "El Domicilio Fiscal (Código Postal) es requerido";
+    if (cleanCp.length !== 5 || isNaN(Number(cleanCp)))
+      return "El Domicilio Fiscal debe ser un Código Postal de 5 dígitos";
 
     const cleanEmail = email.trim();
     if (cleanEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
-      return 'Formato de correo electrónico inválido';
+      return "Formato de correo electrónico inválido";
     }
 
     return null;
@@ -132,22 +154,22 @@
       domicilio_fiscal_receptor: domicilioFiscalReceptor.trim(),
       regimen_fiscal_receptor: regimenFiscalReceptor,
       uso_cfdi: usoCfdi,
-      email: email.trim() || null
+      email: email.trim() || null,
     };
 
     try {
       let response;
       if (isEditing && currentReceptorId !== null) {
-        response = await fetch(`http://localhost:8080/receptor/${currentReceptorId}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
+        response = await fetch(`/receptor/${currentReceptorId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
         });
       } else {
-        response = await fetch('http://localhost:8080/receptor', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
+        response = await fetch("/receptor", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
         });
       }
 
@@ -156,25 +178,25 @@
         await loadReceptors();
       } else {
         const data = await response.json();
-        errorMessage = data.error || 'Error al guardar el receptor';
+        errorMessage = data.error || "Error al guardar el receptor";
       }
     } catch (err) {
       console.error(err);
-      errorMessage = 'Error de conexión con el servidor';
+      errorMessage = "Error de conexión con el servidor";
     }
   };
 
   const deleteReceptor = async (id: number) => {
-    if (!confirm('¿Está seguro de eliminar este receptor?')) return;
+    if (!confirm("¿Está seguro de eliminar este receptor?")) return;
     try {
-      const response = await fetch(`http://localhost:8080/receptor/${id}`, {
-        method: 'DELETE'
+      const response = await fetch(`/receptor/${id}`, {
+        method: "DELETE",
       });
       if (response.ok) {
         await loadReceptors();
       }
     } catch (error) {
-      console.error('Error al borrar:', error);
+      console.error("Error al borrar:", error);
     }
   };
 
@@ -183,8 +205,8 @@
     receptors.filter(
       (r) =>
         r.nombre.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        r.rfc.toLowerCase().includes(searchQuery.toLowerCase())
-    )
+        r.rfc.toLowerCase().includes(searchQuery.toLowerCase()),
+    ),
   );
 
   const getRegimenDesc = (code: string) => {
@@ -200,7 +222,10 @@
   <header class="page-header">
     <div>
       <h1>Catálogo de Receptores (Clientes)</h1>
-      <p class="subtitle">Administra los clientes y su información fiscal obligatoria para CFDI 4.0</p>
+      <p class="subtitle">
+        Administra los clientes y su información fiscal obligatoria para CFDI
+        4.0
+      </p>
     </div>
     <button class="btn btn-primary" onclick={openAddModal}>
       <i class="fa-solid fa-plus"></i> Nuevo Receptor
@@ -219,7 +244,10 @@
       />
     </div>
     <div class="stats-badge">
-      <i class="fa-solid fa-address-book"></i> {filteredReceptors.length} Registrado{filteredReceptors.length !== 1 ? 's' : ''}
+      <i class="fa-solid fa-address-book"></i>
+      {filteredReceptors.length} Registrado{filteredReceptors.length !== 1
+        ? "s"
+        : ""}
     </div>
   </div>
 
@@ -241,25 +269,44 @@
           {#each filteredReceptors as rec}
             <tr class="table-row">
               <td class="td-nombre">
-                <span class="avatar">{rec.nombre.substring(0,2)}</span>
+                <span class="avatar">{rec.nombre.substring(0, 2)}</span>
                 <div class="nombre-details">
                   <span class="main-name">{rec.nombre}</span>
                   {#if rec.email}
-                    <span class="email-details" style="display: block; font-size: 0.75rem; color: #64748b; margin-top: 2px;">
-                      <i class="fa-solid fa-envelope"></i> {rec.email}
+                    <span
+                      class="email-details"
+                      style="display: block; font-size: 0.75rem; color: #64748b; margin-top: 2px;"
+                    >
+                      <i class="fa-solid fa-envelope"></i>
+                      {rec.email}
                     </span>
                   {/if}
                 </div>
               </td>
               <td><span class="badge rfc-badge">{rec.rfc}</span></td>
-              <td><span class="badge cp-badge"><i class="fa-solid fa-location-dot"></i> {rec.domicilio_fiscal_receptor}</span></td>
-              <td class="text-secondary">{getRegimenDesc(rec.regimen_fiscal_receptor)}</td>
+              <td
+                ><span class="badge cp-badge"
+                  ><i class="fa-solid fa-location-dot"></i>
+                  {rec.domicilio_fiscal_receptor}</span
+                ></td
+              >
+              <td class="text-secondary"
+                >{getRegimenDesc(rec.regimen_fiscal_receptor)}</td
+              >
               <td class="text-secondary">{getUsoDesc(rec.uso_cfdi)}</td>
               <td class="actions-column">
-                <button class="action-btn edit" onclick={() => openEditModal(rec)} title="Editar">
+                <button
+                  class="action-btn edit"
+                  onclick={() => openEditModal(rec)}
+                  title="Editar"
+                >
                   <i class="fa-solid fa-pen"></i>
                 </button>
-                <button class="action-btn delete" onclick={() => deleteReceptor(rec.id!)} title="Eliminar">
+                <button
+                  class="action-btn delete"
+                  onclick={() => deleteReceptor(rec.id!)}
+                  title="Eliminar"
+                >
                   <i class="fa-solid fa-trash"></i>
                 </button>
               </td>
@@ -268,7 +315,9 @@
             <tr>
               <td colspan="6" class="empty-state">
                 <i class="fa-solid fa-inbox empty-icon"></i>
-                <p>No se encontraron receptores que coincidan con la búsqueda.</p>
+                <p>
+                  No se encontraron receptores que coincidan con la búsqueda.
+                </p>
               </td>
             </tr>
           {/each}
@@ -280,24 +329,43 @@
 
 <!-- Modal Form -->
 {#if showModal}
-  <div class="modal-overlay animate-fade-in" onclick={() => showModal = false} role="presentation">
-    <div class="modal-card animate-scale-up" onclick={(e) => e.stopPropagation()} role="presentation">
+  <div
+    class="modal-overlay animate-fade-in"
+    onclick={() => (showModal = false)}
+    role="presentation"
+  >
+    <div
+      class="modal-card animate-scale-up"
+      onclick={(e) => e.stopPropagation()}
+      role="presentation"
+    >
       <header class="modal-header">
-        <h2>{isEditing ? 'Editar Receptor' : 'Agregar Nuevo Receptor'}</h2>
-        <button class="close-btn" onclick={() => showModal = false}>&times;</button>
+        <h2>{isEditing ? "Editar Receptor" : "Agregar Nuevo Receptor"}</h2>
+        <button class="close-btn" onclick={() => (showModal = false)}
+          >&times;</button
+        >
       </header>
 
-      <form onsubmit={(e) => { e.preventDefault(); saveReceptor(); }}>
+      <form
+        onsubmit={(e) => {
+          e.preventDefault();
+          saveReceptor();
+        }}
+      >
         <div class="modal-body">
           {#if errorMessage}
             <div class="alert alert-danger animate-shake">
-              <i class="fa-solid fa-triangle-exclamation"></i> {errorMessage}
+              <i class="fa-solid fa-triangle-exclamation"></i>
+              {errorMessage}
             </div>
           {/if}
 
           <div class="form-grid">
             <div class="form-group col-span-2">
-              <label for="nombre">Nombre o Razón Social (Exacto como Constancia de Situación Fiscal)</label>
+              <label for="nombre"
+                >Nombre o Razón Social (Exacto como Constancia de Situación
+                Fiscal)</label
+              >
               <input
                 id="nombre"
                 type="text"
@@ -347,7 +415,11 @@
 
             <div class="form-group col-span-2">
               <label for="regimen">Régimen Fiscal Receptor</label>
-              <select id="regimen" bind:value={regimenFiscalReceptor} class="form-control">
+              <select
+                id="regimen"
+                bind:value={regimenFiscalReceptor}
+                class="form-control"
+              >
                 {#each regimenes as reg}
                   <option value={reg.code}>{reg.desc}</option>
                 {/each}
@@ -366,7 +438,11 @@
         </div>
 
         <footer class="modal-footer">
-          <button type="button" class="btn btn-secondary" onclick={() => showModal = false}>Cancelar</button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            onclick={() => (showModal = false)}>Cancelar</button
+          >
           <button type="submit" class="btn btn-primary">
             <i class="fa-solid fa-floppy-disk"></i> Guardar Receptor
           </button>
@@ -651,7 +727,7 @@
     border-radius: 14px;
     width: 100%;
     max-width: 650px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     overflow: hidden;
   }
 
@@ -766,12 +842,22 @@
   }
 
   @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 
   @keyframes scaleUp {
-    from { transform: scale(0.95); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+    from {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
   }
 </style>

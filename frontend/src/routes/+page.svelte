@@ -6,7 +6,7 @@
 
   const loadTodos = async () => {
     try {
-      const response = await fetch('http://localhost:8080/todo');
+      const response = await fetch('/todo');
       if (response.ok) {
         todos = await response.json();
       }
@@ -20,7 +20,7 @@
   const addTodo = async () => {
     if (!newTitle.trim()) return;
     try {
-      const response = await fetch('http://localhost:8080/todo', {
+      const response = await fetch('/todo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: newTitle, completed: false })
@@ -36,7 +36,7 @@
 
   const toggleTodo = async (todo: any) => {
     try {
-      const response = await fetch(`http://localhost:8080/todo/${todo.id}`, {
+      const response = await fetch(`/todo/${todo.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ completed: !todo.completed })
@@ -51,7 +51,7 @@
 
   const deleteTodo = async (id: number) => {
     try {
-      const response = await fetch(`http://localhost:8080/todo/${id}`, {
+      const response = await fetch(`/todo/${id}`, {
         method: 'DELETE'
       });
       if (response.ok) {

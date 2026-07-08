@@ -339,11 +339,12 @@ def build_pdf(data, output_path):
                   
     emisor_para = Paragraph(emisor_desc, style_normal)
     
-    factura_desc = f"<font size=14><b>FACTURA</b></font><br/>" \
-                   f"<b>Folio:</b> {data['serie']} {data['folio']}<br/>" \
-                   f"<b>Folio Fiscal (UUID):</b> {data['uuid']}<br/>" \
-                   f"<b>Lugar de Expedición:</b> {data['lugar_expedicion']}<br/>" \
-                   f"<b>Fecha de Emisión:</b> {data['fecha']}"
+    factura_desc = f"<font size=14><b>FACTURA</b></font><br/>"
+    if data.get('folio'):
+        factura_desc += f"<b>Folio:</b> {data.get('serie', '')} {data['folio']}<br/>"
+    factura_desc += f"<b>Folio Fiscal (UUID):</b> {data['uuid']}<br/>" \
+                    f"<b>Lugar de Expedición:</b> {data['lugar_expedicion']}<br/>" \
+                    f"<b>Fecha de Emisión:</b> {data['fecha']}"
                    
     factura_para = Paragraph(factura_desc, style_normal)
     

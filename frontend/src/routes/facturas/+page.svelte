@@ -52,6 +52,7 @@
     uuid?: string | null;
     sello?: string | null;
     status?: string | null;
+    forma_pago?: string;
   }
 
   interface PredefinedConcepto {
@@ -83,6 +84,21 @@
   
   // Date state: defaults to today
   let invoiceDate = $state(new Date().toISOString().split('T')[0]);
+
+  // Payment method (Forma de pago) state and catalog
+  let selectedFormaPago = $state("03"); // default to 03 (Transferencia)
+  const formasPago = [
+    { code: "01", desc: "01 - Efectivo" },
+    { code: "03", desc: "03 - Transferencia electrónica de fondos (SPEI)" },
+    { code: "04", desc: "04 - Tarjeta de crédito" },
+    { code: "28", desc: "28 - Tarjeta de débito" }
+  ];
+
+  const getFormaPagoDesc = (code?: string) => {
+    if (!code) return '03 - Transferencia electrónica de fondos (SPEI)';
+    const found = formasPago.find(fp => fp.code === code);
+    return found ? found.desc : `${code} - Desconocido`;
+  };
   let dateWarning = $derived.by(() => {
     if (!invoiceDate) return '';
     const selected = new Date(invoiceDate + 'T12:00:00'); // Midday to avoid timezone offset
@@ -139,7 +155,7 @@
   const loadEmisor = async () => {
     emisorLoading = true;
     try {
-      const response = await fetch("http://localhost:8080/emisor");
+      const response = await fetch("/emisor");
       if (response.ok) {
         const list: Emisor[] = await response.json();
         if (list.length > 0) {
@@ -157,7 +173,7 @@
 
   const loadReceptors = async () => {
     try {
-      const response = await fetch("http://localhost:8080/receptor");
+      const response = await fetch("/receptor");
       if (response.ok) {
         receptores = await response.json();
       }
@@ -168,7 +184,7 @@
 
   const loadPredefinedConceptos = async () => {
     try {
-      const response = await fetch("http://localhost:8080/concepto");
+      const response = await fetch("/concepto");
       if (response.ok) {
         predefinedConceptos = await response.json();
       }
@@ -179,7 +195,7 @@
 
   const loadFacturas = async () => {
     try {
-      const response = await fetch("http://localhost:8080/factura");
+      const response = await fetch("/factura");
       if (response.ok) {
         const data: Factura[] = await response.json();
         // Parse "conceptos" JSON strings if returned as string from API
@@ -235,19 +251,19 @@
 
   // Live total calculations for the concepts captured in current invoice
   let calculatedSubtotal = $derived(
-    currentConceptos.reduce((sum, item) => sum + item.subtotal, 0)
+    Math.round(currentConceptos.reduce((sum, item) => sum + item.subtotal, 0) * 100) / 100
   );
   let calculatedImpuestos = $derived(
-    currentConceptos.reduce((sum, item) => sum + item.impuesto, 0)
+    Math.round(currentConceptos.reduce((sum, item) => sum + item.impuesto, 0) * 100) / 100
   );
   let calculatedTotal = $derived(
-    calculatedSubtotal + calculatedImpuestos
+    Math.round((calculatedSubtotal + calculatedImpuestos) * 100) / 100
   );
 
   // Line item computations
-  let computedLineSubtotal = $derived(lineValorUnitario * lineCantidad);
-  let computedLineImpuesto = $derived(computedLineSubtotal * (lineIvaPorcentaje / 100));
-  let computedLineTotal = $derived(computedLineSubtotal + computedLineImpuesto);
+  let computedLineSubtotal = $derived(Math.round((lineValorUnitario * lineCantidad) * 100) / 100);
+  let computedLineImpuesto = $derived(Math.round((computedLineSubtotal * (lineIvaPorcentaje / 100)) * 100) / 100);
+  let computedLineTotal = $derived(Math.round((computedLineSubtotal + computedLineImpuesto) * 100) / 100);
 
   // Actions
   const addConceptLine = () => {
@@ -272,8 +288,8 @@
       clave_prod_serv: lineClaveProd,
       clave_unidad: lineClaveUnidad || 'LTR',
       descripcion: lineDescripcion.trim(),
-      valor_unitario: lineValorUnitario,
-      cantidad: lineCantidad,
+      valor_unitario: Math.round(lineValorUnitario * 100) / 100,
+      cantidad: Math.round(lineCantidad * 100) / 100,
       iva_porcentaje: lineIvaPorcentaje,
       subtotal: computedLineSubtotal,
       impuesto: computedLineImpuesto,
@@ -304,6 +320,7 @@
     errorMessage = '';
     successMessage = '';
     selectedReceptorId = '';
+    selectedFormaPago = '03';
     invoiceDate = new Date().toISOString().split('T')[0];
     currentConceptos = [];
     showCaptureModal = true;
@@ -340,6 +357,7 @@
       receptor_uso_cfdi: selectedReceptor.uso_cfdi,
       
       fecha: invoiceDate,
+      forma_pago: selectedFormaPago,
       subtotal: calculatedSubtotal,
       impuestos: calculatedImpuestos,
       total: calculatedTotal,
@@ -347,7 +365,7 @@
     };
 
     try {
-      const response = await fetch("http://localhost:8080/factura", {
+      const response = await fetch("/factura", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -370,7 +388,7 @@
   const deleteFactura = async (id: number) => {
     if (!confirm("¿Está seguro de eliminar esta factura? (Se eliminará permanentemente de la base de datos)")) return;
     try {
-      const response = await fetch(`http://localhost:8080/factura/${id}`, {
+      const response = await fetch(`/factura/${id}`, {
         method: 'DELETE'
       });
       if (response.ok) {
@@ -388,7 +406,7 @@
     successMessage = '';
     stampingIds[id] = true;
     try {
-      const response = await fetch(`http://localhost:8080/factura/${id}/timbrar`, {
+      const response = await fetch(`/factura/${id}/timbrar`, {
         method: 'POST'
       });
       const data = await response.json();
@@ -422,7 +440,7 @@
         payload.email = customEmail.trim();
       }
       
-      const response = await fetch(`http://localhost:8080/factura/${id}/email`, {
+      const response = await fetch(`/factura/${id}/email`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -574,10 +592,10 @@
                   </button>
                   
                   {#if fac.status === 'timbrada'}
-                    <a href={`http://localhost:8080/factura/${fac.id}/xml`} class="action-btn download" download title="Descargar XML">
+                    <a href={`/factura/${fac.id}/xml`} class="action-btn download" download title="Descargar XML">
                       <i class="fa-solid fa-file-code"></i>
                     </a>
-                    <a href={`http://localhost:8080/factura/${fac.id}/pdf`} class="action-btn download-pdf" download title="Descargar PDF">
+                    <a href={`/factura/${fac.id}/pdf`} class="action-btn download-pdf" download title="Descargar PDF">
                       <i class="fa-solid fa-file-pdf"></i>
                     </a>
                     {#if sendingEmailIds[fac.id!]}
@@ -659,6 +677,14 @@
                 {#if dateWarning}
                   <span class="warning-text"><i class="fa-solid fa-triangle-exclamation"></i> {dateWarning}</span>
                 {/if}
+              </div>
+              <div class="form-group">
+                <label for="forma_pago">Forma de Pago</label>
+                <select id="forma_pago" bind:value={selectedFormaPago} class="form-control" required>
+                  {#each formasPago as fp}
+                    <option value={fp.code}>{fp.desc}</option>
+                  {/each}
+                </select>
               </div>
             </div>
           </div>
@@ -916,6 +942,10 @@
           <div>
             <span class="party-label">Fecha de Emisión</span>
             <span class="party-val font-bold"><i class="fa-solid fa-calendar"></i> {selectedFactura.fecha}</span>
+          </div>
+          <div>
+            <span class="party-label">Forma de Pago</span>
+            <span class="party-val"><span class="badge payment-badge">{getFormaPagoDesc(selectedFactura.forma_pago)}</span></span>
           </div>
           <div>
             <span class="party-label">Tipo de Comprobante</span>
@@ -1307,7 +1337,7 @@
 
   .section-grid {
     display: grid;
-    grid-template-columns: 1.5fr 1fr;
+    grid-template-columns: 1.2fr 1fr 1fr;
     gap: 20px;
   }
 
@@ -1412,6 +1442,9 @@
     }
     .col-span-3 {
       grid-column: span 2;
+    }
+    .section-grid {
+      grid-template-columns: 1fr;
     }
   }
 
@@ -1634,6 +1667,11 @@
   .version-badge {
     background: #e0f2fe;
     color: #0369a1;
+  }
+
+  .payment-badge {
+    background: #fef3c7;
+    color: #d97706;
   }
 
   .concept-detail-table-wrapper {

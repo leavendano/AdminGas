@@ -33,6 +33,7 @@ const std::string Factura::Cols::_xml_timbrado = "\"xml_timbrado\"";
 const std::string Factura::Cols::_uuid = "\"uuid\"";
 const std::string Factura::Cols::_sello = "\"sello\"";
 const std::string Factura::Cols::_status = "\"status\"";
+const std::string Factura::Cols::_forma_pago = "\"forma_pago\"";
 const std::string Factura::primaryKeyName = "id";
 const bool Factura::hasPrimaryKey = true;
 const std::string Factura::tableName = "\"factura\"";
@@ -57,7 +58,8 @@ const std::vector<typename Factura::MetaData> Factura::metaData_={
 {"xml_timbrado","std::string","text",0,0,0,0},
 {"uuid","std::string","character varying",36,0,0,0},
 {"sello","std::string","character varying",500,0,0,0},
-{"status","std::string","character varying",20,0,0,0}
+{"status","std::string","character varying",20,0,0,0},
+{"forma_pago","std::string","character varying",10,0,0,0}
 };
 const std::string &Factura::getColumnName(size_t index) noexcept(false)
 {
@@ -153,11 +155,15 @@ Factura::Factura(const Row &r, const ssize_t indexOffset) noexcept
         {
             status_=std::make_shared<std::string>(r["status"].as<std::string>());
         }
+        if(!r["forma_pago"].isNull())
+        {
+            formaPago_=std::make_shared<std::string>(r["forma_pago"].as<std::string>());
+        }
     }
     else
     {
         size_t offset = (size_t)indexOffset;
-        if(offset + 20 > r.size())
+        if(offset + 21 > r.size())
         {
             LOG_FATAL << "Invalid SQL result for this model";
             return;
@@ -268,13 +274,18 @@ Factura::Factura(const Row &r, const ssize_t indexOffset) noexcept
         {
             status_=std::make_shared<std::string>(r[index].as<std::string>());
         }
+        index = offset + 20;
+        if(!r[index].isNull())
+        {
+            formaPago_=std::make_shared<std::string>(r[index].as<std::string>());
+        }
     }
 
 }
 
 Factura::Factura(const Json::Value &pJson, const std::vector<std::string> &pMasqueradingVector) noexcept(false)
 {
-    if(pMasqueradingVector.size() != 20)
+    if(pMasqueradingVector.size() != 21)
     {
         LOG_ERROR << "Bad masquerading vector";
         return;
@@ -442,6 +453,14 @@ Factura::Factura(const Json::Value &pJson, const std::vector<std::string> &pMasq
         if(!pJson[pMasqueradingVector[19]].isNull())
         {
             status_=std::make_shared<std::string>(pJson[pMasqueradingVector[19]].asString());
+        }
+    }
+    if(!pMasqueradingVector[20].empty() && pJson.isMember(pMasqueradingVector[20]))
+    {
+        dirtyFlag_[20] = true;
+        if(!pJson[pMasqueradingVector[20]].isNull())
+        {
+            formaPago_=std::make_shared<std::string>(pJson[pMasqueradingVector[20]].asString());
         }
     }
 }
@@ -613,12 +632,20 @@ Factura::Factura(const Json::Value &pJson) noexcept(false)
             status_=std::make_shared<std::string>(pJson["status"].asString());
         }
     }
+    if(pJson.isMember("forma_pago"))
+    {
+        dirtyFlag_[20]=true;
+        if(!pJson["forma_pago"].isNull())
+        {
+            formaPago_=std::make_shared<std::string>(pJson["forma_pago"].asString());
+        }
+    }
 }
 
 void Factura::updateByMasqueradedJson(const Json::Value &pJson,
                                             const std::vector<std::string> &pMasqueradingVector) noexcept(false)
 {
-    if(pMasqueradingVector.size() != 20)
+    if(pMasqueradingVector.size() != 21)
     {
         LOG_ERROR << "Bad masquerading vector";
         return;
@@ -787,6 +814,14 @@ void Factura::updateByMasqueradedJson(const Json::Value &pJson,
             status_=std::make_shared<std::string>(pJson[pMasqueradingVector[19]].asString());
         }
     }
+    if(!pMasqueradingVector[20].empty() && pJson.isMember(pMasqueradingVector[20]))
+    {
+        dirtyFlag_[20] = true;
+        if(!pJson[pMasqueradingVector[20]].isNull())
+        {
+            formaPago_=std::make_shared<std::string>(pJson[pMasqueradingVector[20]].asString());
+        }
+    }
 }
 
 void Factura::updateByJson(const Json::Value &pJson) noexcept(false)
@@ -953,6 +988,14 @@ void Factura::updateByJson(const Json::Value &pJson) noexcept(false)
         if(!pJson["status"].isNull())
         {
             status_=std::make_shared<std::string>(pJson["status"].asString());
+        }
+    }
+    if(pJson.isMember("forma_pago"))
+    {
+        dirtyFlag_[20] = true;
+        if(!pJson["forma_pago"].isNull())
+        {
+            formaPago_=std::make_shared<std::string>(pJson["forma_pago"].asString());
         }
     }
 }
@@ -1397,6 +1440,33 @@ void Factura::setStatusToNull() noexcept
     dirtyFlag_[19] = true;
 }
 
+const std::string &Factura::getValueOfFormaPago() const noexcept
+{
+    static const std::string defaultValue = std::string();
+    if(formaPago_)
+        return *formaPago_;
+    return defaultValue;
+}
+const std::shared_ptr<std::string> &Factura::getFormaPago() const noexcept
+{
+    return formaPago_;
+}
+void Factura::setFormaPago(const std::string &pFormaPago) noexcept
+{
+    formaPago_ = std::make_shared<std::string>(pFormaPago);
+    dirtyFlag_[20] = true;
+}
+void Factura::setFormaPago(std::string &&pFormaPago) noexcept
+{
+    formaPago_ = std::make_shared<std::string>(std::move(pFormaPago));
+    dirtyFlag_[20] = true;
+}
+void Factura::setFormaPagoToNull() noexcept
+{
+    formaPago_.reset();
+    dirtyFlag_[20] = true;
+}
+
 void Factura::updateId(const uint64_t id)
 {
 }
@@ -1422,7 +1492,8 @@ const std::vector<std::string> &Factura::insertColumns() noexcept
         "xml_timbrado",
         "uuid",
         "sello",
-        "status"
+        "status",
+        "forma_pago"
     };
     return inCols;
 }
@@ -1638,6 +1709,17 @@ void Factura::outputArgs(drogon::orm::internal::SqlBinder &binder) const
             binder << nullptr;
         }
     }
+    if(dirtyFlag_[20])
+    {
+        if(getFormaPago())
+        {
+            binder << getValueOfFormaPago();
+        }
+        else
+        {
+            binder << nullptr;
+        }
+    }
 }
 
 const std::vector<std::string> Factura::updateColumns() const
@@ -1718,6 +1800,10 @@ const std::vector<std::string> Factura::updateColumns() const
     if(dirtyFlag_[19])
     {
         ret.push_back(getColumnName(19));
+    }
+    if(dirtyFlag_[20])
+    {
+        ret.push_back(getColumnName(20));
     }
     return ret;
 }
@@ -1933,6 +2019,17 @@ void Factura::updateArgs(drogon::orm::internal::SqlBinder &binder) const
             binder << nullptr;
         }
     }
+    if(dirtyFlag_[20])
+    {
+        if(getFormaPago())
+        {
+            binder << getValueOfFormaPago();
+        }
+        else
+        {
+            binder << nullptr;
+        }
+    }
 }
 Json::Value Factura::toJson() const
 {
@@ -2097,6 +2194,14 @@ Json::Value Factura::toJson() const
     {
         ret["status"]=Json::Value();
     }
+    if(getFormaPago())
+    {
+        ret["forma_pago"]=getValueOfFormaPago();
+    }
+    else
+    {
+        ret["forma_pago"]=Json::Value();
+    }
     return ret;
 }
 
@@ -2109,7 +2214,7 @@ Json::Value Factura::toMasqueradedJson(
     const std::vector<std::string> &pMasqueradingVector) const
 {
     Json::Value ret;
-    if(pMasqueradingVector.size() == 20)
+    if(pMasqueradingVector.size() == 21)
     {
         if(!pMasqueradingVector[0].empty())
         {
@@ -2331,6 +2436,17 @@ Json::Value Factura::toMasqueradedJson(
                 ret[pMasqueradingVector[19]]=Json::Value();
             }
         }
+        if(!pMasqueradingVector[20].empty())
+        {
+            if(getFormaPago())
+            {
+                ret[pMasqueradingVector[20]]=getValueOfFormaPago();
+            }
+            else
+            {
+                ret[pMasqueradingVector[20]]=Json::Value();
+            }
+        }
         return ret;
     }
     LOG_ERROR << "Masquerade failed";
@@ -2493,6 +2609,14 @@ Json::Value Factura::toMasqueradedJson(
     else
     {
         ret["status"]=Json::Value();
+    }
+    if(getFormaPago())
+    {
+        ret["forma_pago"]=getValueOfFormaPago();
+    }
+    else
+    {
+        ret["forma_pago"]=Json::Value();
     }
     return ret;
 }
@@ -2664,13 +2788,18 @@ bool Factura::validateJsonForCreation(const Json::Value &pJson, std::string &err
         if(!validJsonOfField(19, "status", pJson["status"], err, true))
             return false;
     }
+    if(pJson.isMember("forma_pago"))
+    {
+        if(!validJsonOfField(20, "forma_pago", pJson["forma_pago"], err, true))
+            return false;
+    }
     return true;
 }
 bool Factura::validateMasqueradedJsonForCreation(const Json::Value &pJson,
                                                  const std::vector<std::string> &pMasqueradingVector,
                                                  std::string &err)
 {
-    if(pMasqueradingVector.size() != 20)
+    if(pMasqueradingVector.size() != 21)
     {
         err = "Bad masquerading vector";
         return false;
@@ -2901,6 +3030,14 @@ bool Factura::validateMasqueradedJsonForCreation(const Json::Value &pJson,
                   return false;
           }
       }
+      if(!pMasqueradingVector[20].empty())
+      {
+          if(pJson.isMember(pMasqueradingVector[20]))
+          {
+              if(!validJsonOfField(20, pMasqueradingVector[20], pJson[pMasqueradingVector[20]], err, true))
+                  return false;
+          }
+      }
     }
     catch(const Json::LogicError &e)
     {
@@ -3016,13 +3153,18 @@ bool Factura::validateJsonForUpdate(const Json::Value &pJson, std::string &err)
         if(!validJsonOfField(19, "status", pJson["status"], err, false))
             return false;
     }
+    if(pJson.isMember("forma_pago"))
+    {
+        if(!validJsonOfField(20, "forma_pago", pJson["forma_pago"], err, false))
+            return false;
+    }
     return true;
 }
 bool Factura::validateMasqueradedJsonForUpdate(const Json::Value &pJson,
                                                const std::vector<std::string> &pMasqueradingVector,
                                                std::string &err)
 {
-    if(pMasqueradingVector.size() != 20)
+    if(pMasqueradingVector.size() != 21)
     {
         err = "Bad masquerading vector";
         return false;
@@ -3131,6 +3273,11 @@ bool Factura::validateMasqueradedJsonForUpdate(const Json::Value &pJson,
       if(!pMasqueradingVector[19].empty() && pJson.isMember(pMasqueradingVector[19]))
       {
           if(!validJsonOfField(19, pMasqueradingVector[19], pJson[pMasqueradingVector[19]], err, false))
+              return false;
+      }
+      if(!pMasqueradingVector[20].empty() && pJson.isMember(pMasqueradingVector[20]))
+      {
+          if(!validJsonOfField(20, pMasqueradingVector[20], pJson[pMasqueradingVector[20]], err, false))
               return false;
       }
     }
@@ -3472,6 +3619,25 @@ bool Factura::validJsonOfField(size_t index,
                 err="String length exceeds limit for the " +
                     fieldName +
                     " field (the maximum value is 20)";
+                return false;
+            }
+
+            break;
+        case 20:
+            if(pJson.isNull())
+            {
+                return true;
+            }
+            if(!pJson.isString())
+            {
+                err="Type error in the "+fieldName+" field";
+                return false;
+            }
+            if(pJson.isString() && std::strlen(pJson.asCString()) > 10)
+            {
+                err="String length exceeds limit for the " +
+                    fieldName +
+                    " field (the maximum value is 10)";
                 return false;
             }
 

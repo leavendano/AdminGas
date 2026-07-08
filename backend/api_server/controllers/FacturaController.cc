@@ -10,6 +10,7 @@
 #include <fstream>
 #include <chrono>
 #include <cstdlib>
+#include <cmath>
 
 using namespace drogon_model::admingas;
 using admingas::CfdiHelper;
@@ -100,19 +101,57 @@ void FacturaController::create(const HttpRequestPtr &req,
             factura.setFecha(trantor::Date::date());
         }
         
-        factura.setSubtotal((*jsonPtr)["subtotal"].asDouble());
-        factura.setImpuestos((*jsonPtr)["impuestos"].asDouble());
-        factura.setTotal((*jsonPtr)["total"].asDouble());
+        // Payment method (Forma de pago)
+        if (jsonPtr->isMember("forma_pago") && !(*jsonPtr)["forma_pago"].isNull()) {
+            factura.setFormaPago((*jsonPtr)["forma_pago"].asString());
+        } else {
+            factura.setFormaPago("03"); // default to 03 (Transferencia)
+        }
         
-        // Concepts serialization
+        // Round to 2 decimals
+        double subtotal = std::round((*jsonPtr)["subtotal"].asDouble() * 100.0) / 100.0;
+        double impuestos = std::round((*jsonPtr)["impuestos"].asDouble() * 100.0) / 100.0;
+        double total = std::round((*jsonPtr)["total"].asDouble() * 100.0) / 100.0;
+
+        factura.setSubtotal(subtotal);
+        factura.setImpuestos(impuestos);
+        factura.setTotal(total);
+        
+        // Concepts serialization with rounding
+        Json::Value conceptosArray(Json::arrayValue);
         if (jsonPtr->isMember("conceptos")) {
             if ((*jsonPtr)["conceptos"].isString()) {
-                factura.setConceptos((*jsonPtr)["conceptos"].asString());
-            } else {
-                Json::StreamWriterBuilder writer;
-                std::string conceptsStr = Json::writeString(writer, (*jsonPtr)["conceptos"]);
-                factura.setConceptos(conceptsStr);
+                Json::CharReaderBuilder reader;
+                std::string conceptsStr = (*jsonPtr)["conceptos"].asString();
+                std::string readerErr;
+                std::unique_ptr<Json::CharReader> const jsonReader(reader.newCharReader());
+                jsonReader->parse(conceptsStr.c_str(), conceptsStr.c_str() + conceptsStr.size(), &conceptosArray, &readerErr);
+            } else if ((*jsonPtr)["conceptos"].isArray()) {
+                conceptosArray = (*jsonPtr)["conceptos"];
             }
+        }
+        
+        if (conceptosArray.isArray()) {
+            for (auto &concept : conceptosArray) {
+                if (concept.isMember("valor_unitario")) {
+                    concept["valor_unitario"] = std::round(concept["valor_unitario"].asDouble() * 100.0) / 100.0;
+                }
+                if (concept.isMember("subtotal")) {
+                    concept["subtotal"] = std::round(concept["subtotal"].asDouble() * 100.0) / 100.0;
+                }
+                if (concept.isMember("impuesto")) {
+                    concept["impuesto"] = std::round(concept["impuesto"].asDouble() * 100.0) / 100.0;
+                }
+                if (concept.isMember("total")) {
+                    concept["total"] = std::round(concept["total"].asDouble() * 100.0) / 100.0;
+                }
+                if (concept.isMember("cantidad")) {
+                    concept["cantidad"] = std::round(concept["cantidad"].asDouble() * 100.0) / 100.0;
+                }
+            }
+            Json::StreamWriterBuilder writer;
+            std::string conceptsStr = Json::writeString(writer, conceptosArray);
+            factura.setConceptos(conceptsStr);
         } else {
             factura.setConceptos("[]");
         }

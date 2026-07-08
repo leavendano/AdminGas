@@ -59,7 +59,7 @@
 
   const loadEmisor = async () => {
     try {
-      const response = await fetch("http://localhost:8080/emisor");
+      const response = await fetch("/emisor");
       if (response.ok) {
         const list: Emisor[] = await response.json();
         if (list.length > 0) {
@@ -134,13 +134,13 @@
     try {
       let response;
       if (emisor && emisor.id) {
-        response = await fetch(`http://localhost:8080/emisor/${emisor.id}`, {
+        response = await fetch(`/emisor/${emisor.id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
       } else {
-        response = await fetch("http://localhost:8080/emisor", {
+        response = await fetch("/emisor", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
@@ -278,7 +278,7 @@
         payload.llave_nombre = keyFile.name;
       }
 
-      const response = await fetch(`http://localhost:8080/emisor/${emisor.id}`, {
+      const response = await fetch(`/emisor/${emisor.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

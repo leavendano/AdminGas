@@ -42,7 +42,7 @@
 
   const loadConceptos = async () => {
     try {
-      const response = await fetch('http://localhost:8080/concepto');
+      const response = await fetch('/concepto');
       if (response.ok) {
         conceptos = await response.json();
       }
@@ -117,13 +117,13 @@
     try {
       let response;
       if (isEditing && currentConceptId !== null) {
-        response = await fetch(`http://localhost:8080/concepto/${currentConceptId}`, {
+        response = await fetch(`/concepto/${currentConceptId}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
       } else {
-        response = await fetch('http://localhost:8080/concepto', {
+        response = await fetch('/concepto', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
@@ -146,7 +146,7 @@
   const deleteConcepto = async (id: number) => {
     if (!confirm('¿Está seguro de eliminar este concepto?')) return;
     try {
-      const response = await fetch(`http://localhost:8080/concepto/${id}`, {
+      const response = await fetch(`/concepto/${id}`, {
         method: 'DELETE'
       });
       if (response.ok) {
