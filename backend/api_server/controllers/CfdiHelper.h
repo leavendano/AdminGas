@@ -55,6 +55,26 @@ public:
         const std::string& xmlFirmado,
         std::function<void(CfdiResult)>&& callback
     );
+
+    struct CancelResult {
+        bool success;
+        std::string acuse;
+        std::string estatusUUID;
+        std::string estatusCancelacion;
+        std::string error;
+    };
+
+    // 6. Envía una solicitud de cancelación de CFDI a Finkok
+    static void cancelarFinkok(
+        const std::string& uuid,
+        const std::string& motivo,
+        const std::string& folioSustitucion,
+        const std::string& emisorRfc,
+        const std::string& certificadoBase64,
+        const std::string& llaveBase64,
+        const std::string& llavePassword,
+        std::function<void(CancelResult)>&& callback
+    );
 };
 
 } // namespace admingas

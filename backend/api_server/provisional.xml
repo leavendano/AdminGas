@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/4" Certificado="" Exportacion="01" Fecha="2026-07-08T17:40:49" FormaPago="01" LugarExpedicion="30790" MetodoPago="PUE" Moneda="MXN" NoCertificado="00001000000721764411" Sello="" SubTotal="10.74" TipoDeComprobante="I" Total="11.6" Version="4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd">
+<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/4" Certificado="" Exportacion="01" Fecha="2026-07-09T21:20:02" FormaPago="01" LugarExpedicion="30790" MetodoPago="PUE" Moneda="MXN" NoCertificado="00001000000721764411" Sello="" SubTotal="1" TipoDeComprobante="I" Total="1.16" Version="4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd">
   <cfdi:Emisor Nombre="JUAN GABRIEL AVENDAÑO MAYORGA" RegimenFiscal="621" Rfc="AEMJ721203TV7"/>
   <cfdi:Receptor DomicilioFiscalReceptor="30790" Nombre="VENTA PUBLICO" RegimenFiscalReceptor="616" Rfc="XAXX010101000" UsoCFDI="S01"/>
   <cfdi:Conceptos>
-    <cfdi:Concepto Cantidad="1" ClaveProdServ="81112209" ClaveUnidad="E48" Descripcion="MANTENIMIENTO PREVENTIVO DE PROGRAMAS Y REDES DEL MES DE" Importe="10.74" ObjetoImp="02" ValorUnitario="10.74">
+    <cfdi:Concepto Cantidad="1" ClaveProdServ="01010101" ClaveUnidad="LTR" Descripcion="Servicio de prueba" Importe="1" ObjetoImp="02" ValorUnitario="1">
       <cfdi:Impuestos>
         <cfdi:Traslados>
-          <cfdi:Traslado Base="10.74" Importe="0.86" Impuesto="002" TasaOCuota="0.080000" TipoFactor="Tasa"/>
+          <cfdi:Traslado Base="1" Importe="0.16" Impuesto="002" TasaOCuota="0.160000" TipoFactor="Tasa"/>
         </cfdi:Traslados>
       </cfdi:Impuestos>
     </cfdi:Concepto>
   </cfdi:Conceptos>
-  <cfdi:Impuestos TotalImpuestosTrasladados="0.86">
+  <cfdi:Impuestos TotalImpuestosTrasladados="0.16">
     <cfdi:Traslados>
-      <cfdi:Traslado Base="10.74" Importe="0.86" Impuesto="002" TasaOCuota="0.080000" TipoFactor="Tasa"/>
+      <cfdi:Traslado Base="1" Importe="0.16" Impuesto="002" TasaOCuota="0.160000" TipoFactor="Tasa"/>
     </cfdi:Traslados>
   </cfdi:Impuestos>
 </cfdi:Comprobante>

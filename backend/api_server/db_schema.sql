@@ -53,7 +53,8 @@ CREATE TABLE IF NOT EXISTS factura (
     uuid VARCHAR(36),
     sello VARCHAR(500),
     status VARCHAR(20) DEFAULT 'creada',
-    forma_pago VARCHAR(10)
+    forma_pago VARCHAR(10),
+    acuse_cancelacion TEXT
 );
 
 -- Updates for existing tables
@@ -62,4 +63,5 @@ ALTER TABLE factura ADD COLUMN IF NOT EXISTS uuid VARCHAR(36);
 ALTER TABLE factura ADD COLUMN IF NOT EXISTS sello VARCHAR(500);
 ALTER TABLE factura ADD COLUMN IF NOT EXISTS status VARCHAR(20) DEFAULT 'creada';
 ALTER TABLE factura ADD COLUMN IF NOT EXISTS forma_pago VARCHAR(10);
+ALTER TABLE factura ADD COLUMN IF NOT EXISTS acuse_cancelacion TEXT;
 

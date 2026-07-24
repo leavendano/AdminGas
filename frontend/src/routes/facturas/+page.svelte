@@ -77,6 +77,11 @@
   let emisorLoading = $state(true);
   let stampingIds = $state<Record<number, boolean>>({});
   let sendingEmailIds = $state<Record<number, boolean>>({});
+  let showCancelModal = $state(false);
+  let cancelFacturaId = $state<number | null>(null);
+  let cancelMotivo = $state('02');
+  let cancelFolioSustitucion = $state('');
+  let cancellingIds = $state<Record<number, boolean>>({});
 
   // Form states (Captura)
   let selectedReceptorId = $state<string>('');
@@ -426,6 +431,54 @@
     }
   };
 
+  const openCancelModal = (fac: Factura) => {
+    cancelFacturaId = fac.id!;
+    cancelMotivo = '02';
+    cancelFolioSustitucion = '';
+    showCancelModal = true;
+  };
+
+  const confirmCancel = async () => {
+    if (!cancelFacturaId) return;
+    
+    if ((cancelMotivo === '01' || cancelMotivo === '04') && !cancelFolioSustitucion.trim()) {
+      alert("El folio fiscal del documento relacionado (Folio de Sustitución) es requerido para los motivos 01 y 04.");
+      return;
+    }
+
+    errorMessage = '';
+    successMessage = '';
+    const id = cancelFacturaId;
+    cancellingIds[id] = true;
+    showCancelModal = false;
+
+    try {
+      const response = await fetch(`/factura/${id}/cancelar`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          motivo: cancelMotivo,
+          folio_sustitucion: cancelFolioSustitucion.trim()
+        })
+      });
+      const data = await response.json();
+      if (response.ok) {
+        successMessage = `Solicitud de cancelación enviada correctamente. Código SAT: ${data.estatusUUID || '201'}`;
+        await loadFacturas();
+      } else {
+        errorMessage = data.error || "Ocurrió un error al cancelar la factura.";
+        alert(errorMessage);
+      }
+    } catch (e) {
+      console.error(e);
+      errorMessage = "Error de comunicación con el servidor al intentar cancelar.";
+      alert(errorMessage);
+    } finally {
+      cancellingIds[id] = false;
+      cancelFacturaId = null;
+    }
+  };
+
   const sendEmail = async (id: number) => {
     const customEmail = prompt("Ingrese el correo electrónico del destinatario (deje en blanco para usar el del receptor):");
     if (customEmail === null) return; // User cancelled
@@ -581,6 +634,11 @@
                     <span class="badge badge-success"><i class="fa-solid fa-circle-check"></i> Timbrada</span>
                     <span class="uuid-txt" title={fac.uuid}>{fac.uuid?.substring(0, 8)}...</span>
                   </div>
+                {:else if fac.status === 'cancelada'}
+                  <div class="status-cell">
+                    <span class="badge badge-danger"><i class="fa-solid fa-circle-xmark"></i> Cancelada</span>
+                    <span class="uuid-txt" title={fac.uuid}>{fac.uuid?.substring(0, 8)}...</span>
+                  </div>
                 {:else}
                   <span class="badge badge-secondary"><i class="fa-solid fa-file-pen"></i> Creada</span>
                 {/if}
@@ -605,6 +663,23 @@
                         <i class="fa-solid fa-paper-plane"></i>
                       </button>
                     {/if}
+                    {#if cancellingIds[fac.id!]}
+                      <span class="action-spinner" title="Cancelando..."><i class="fa-solid fa-spinner fa-spin"></i></span>
+                    {:else}
+                      <button class="action-btn cancel" onclick={() => openCancelModal(fac)} title="Cancelar CFDI">
+                        <i class="fa-solid fa-ban"></i>
+                      </button>
+                    {/if}
+                  {:else if fac.status === 'cancelada'}
+                    <a href={`/factura/${fac.id}/xml`} class="action-btn download" download title="Descargar XML">
+                      <i class="fa-solid fa-file-code"></i>
+                    </a>
+                    <a href={`/factura/${fac.id}/pdf`} class="action-btn download-pdf" download title="Descargar PDF">
+                      <i class="fa-solid fa-file-pdf"></i>
+                    </a>
+                    <a href={`/factura/${fac.id}/acuse`} class="action-btn download-acuse" download title="Descargar Acuse de Cancelación">
+                      <i class="fa-solid fa-receipt"></i>
+                    </a>
                   {:else}
                     {#if stampingIds[fac.id!]}
                       <span class="action-spinner" title="Timbrando..."><i class="fa-solid fa-spinner fa-spin"></i></span>
@@ -615,7 +690,7 @@
                     {/if}
                   {/if}
                   
-                  {#if fac.status !== 'timbrada'}
+                  {#if fac.status !== 'timbrada' && fac.status !== 'cancelada'}
                     <button class="action-btn delete" onclick={() => deleteFactura(fac.id!)} title="Eliminar">
                       <i class="fa-solid fa-trash"></i>
                     </button>
@@ -636,6 +711,55 @@
     </div>
   </div>
 </div>
+
+<!-- Modal: Cancelar CFDI -->
+{#if showCancelModal}
+  <div class="modal-overlay animate-fade-in" onclick={() => showCancelModal = false} role="presentation">
+    <div class="modal-card detail-modal animate-scale-up" onclick={(e) => e.stopPropagation()} role="presentation" style="max-width: 500px;">
+      <header class="modal-header">
+        <h2><i class="fa-solid fa-ban text-danger" style="color: #ef4444; margin-right: 8px;"></i> Cancelar Factura CFDI</h2>
+        <button class="close-btn" onclick={() => showCancelModal = false}>&times;</button>
+      </header>
+
+      <div class="modal-body" style="padding: 24px;">
+        <p style="margin-bottom: 20px; font-size: 0.95rem; color: #475569;">
+          Seleccione el motivo de la cancelación ante el SAT para la factura <strong>FAC-{cancelFacturaId?.toString().padStart(4, '0')}</strong>:
+        </p>
+        
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label for="cancelMotivo" style="display: block; margin-bottom: 8px; font-weight: 500; font-size: 0.85rem; color: #334155;">Motivo de Cancelación</label>
+          <select id="cancelMotivo" class="form-control" bind:value={cancelMotivo} style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; outline: none; font-size: 0.9rem;">
+            <option value="01">01 - Comprobante emitido con errores de relación</option>
+            <option value="02">02 - Comprobante emitido con errores sin relación</option>
+            <option value="03">03 - No se llevó a cabo la operación</option>
+            <option value="04">04 - Operación nominativa relacionada en una factura global</option>
+          </select>
+        </div>
+
+        {#if cancelMotivo === '01' || cancelMotivo === '04'}
+          <div class="form-group animate-fade-in" style="margin-bottom: 20px;">
+            <label for="cancelFolioSustitucion" style="display: block; margin-bottom: 8px; font-weight: 500; font-size: 0.85rem; color: #334155;">Folio Fiscal de Sustitución (UUID Relacionado)</label>
+            <input 
+              type="text" 
+              id="cancelFolioSustitucion" 
+              class="form-control" 
+              placeholder="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" 
+              bind:value={cancelFolioSustitucion} 
+              style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; outline: none; font-size: 0.9rem; font-family: monospace;"
+              required
+            />
+            <small style="display: block; margin-top: 6px; font-size: 0.75rem; color: #64748b;">Ingrese el UUID de la factura que sustituye a ésta.</small>
+          </div>
+        {/if}
+      </div>
+
+      <footer class="modal-footer" style="padding: 16px 24px; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 12px; background: #f8fafc; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;">
+        <button type="button" class="btn btn-secondary" onclick={() => showCancelModal = false}>Volver</button>
+        <button type="button" class="btn btn-danger" onclick={confirmCancel}>Confirmar Cancelación</button>
+      </footer>
+    </div>
+  </div>
+{/if}
 
 <!-- Modal: Capturar CFDI -->
 {#if showCaptureModal && activeEmisor}
@@ -1967,5 +2091,43 @@
     0%, 100% { transform: translateX(0); }
     25% { transform: translateX(-4px); }
     75% { transform: translateX(4px); }
+  }
+
+  .badge-danger {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+  }
+
+  .action-btn.cancel {
+    color: #f59e0b;
+    background-color: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+  }
+  
+  .action-btn.cancel:hover {
+    background-color: #f59e0b;
+    color: #ffffff;
+  }
+
+  .action-btn.download-acuse {
+    color: #8b5cf6;
+    background-color: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+  }
+  
+  .action-btn.download-acuse:hover {
+    background-color: #8b5cf6;
+    color: #ffffff;
+  }
+
+  .btn-danger {
+    background-color: #ef4444;
+    color: #ffffff;
+    border: none;
+  }
+  
+  .btn-danger:hover {
+    background-color: #dc2626;
   }
 </style>

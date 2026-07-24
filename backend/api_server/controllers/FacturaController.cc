@@ -397,7 +397,7 @@ void FacturaController::getXml(const HttpRequestPtr &req,
     try {
         auto factura = mp.findByPrimaryKey(std::stoi(id));
         
-        if (factura.getValueOfStatus() != "timbrada" || factura.getValueOfXmlTimbrado().empty()) {
+        if ((factura.getValueOfStatus() != "timbrada" && factura.getValueOfStatus() != "cancelada") || factura.getValueOfXmlTimbrado().empty()) {
             Json::Value error;
             error["error"] = "La factura no se encuentra timbrada o no cuenta con XML.";
             auto resp = HttpResponse::newHttpJsonResponse(error);
@@ -437,7 +437,7 @@ void FacturaController::getPdf(const HttpRequestPtr &req,
     try {
         auto factura = mp.findByPrimaryKey(std::stoi(id));
         
-        if (factura.getValueOfStatus() != "timbrada" || factura.getValueOfXmlTimbrado().empty()) {
+        if ((factura.getValueOfStatus() != "timbrada" && factura.getValueOfStatus() != "cancelada") || factura.getValueOfXmlTimbrado().empty()) {
             Json::Value error;
             error["error"] = "La factura no se encuentra timbrada o no cuenta con XML.";
             auto resp = HttpResponse::newHttpJsonResponse(error);
@@ -547,7 +547,7 @@ void FacturaController::sendEmail(const HttpRequestPtr &req,
         drogon::orm::Mapper<Factura> mpFactura(dbClient);
         auto factura = mpFactura.findByPrimaryKey(facturaId);
         
-        if (factura.getValueOfStatus() != "timbrada" || factura.getValueOfXmlTimbrado().empty()) {
+        if ((factura.getValueOfStatus() != "timbrada" && factura.getValueOfStatus() != "cancelada") || factura.getValueOfXmlTimbrado().empty()) {
             Json::Value error;
             error["error"] = "La factura no se encuentra timbrada o no cuenta con XML.";
             auto resp = HttpResponse::newHttpJsonResponse(error);
@@ -636,6 +636,157 @@ void FacturaController::sendEmail(const HttpRequestPtr &req,
         ret["success"] = true;
         ret["recipient"] = recipientEmail;
         auto resp = HttpResponse::newHttpJsonResponse(ret);
+        callback(resp);
+        
+    } catch (const drogon::orm::DrogonDbException &e) {
+        Json::Value error;
+        error["error"] = e.base().what();
+        auto resp = HttpResponse::newHttpJsonResponse(error);
+        resp->setStatusCode(k500InternalServerError);
+        callback(resp);
+    } catch (const std::exception &e) {
+        Json::Value error;
+        error["error"] = e.what();
+        auto resp = HttpResponse::newHttpJsonResponse(error);
+        resp->setStatusCode(k400BadRequest);
+        callback(resp);
+    }
+}
+
+void FacturaController::cancelar(const HttpRequestPtr &req,
+                                 std::function<void(const HttpResponsePtr &)> &&callback,
+                                 std::string &&id)
+{
+    auto jsonPtr = req->getJsonObject();
+    if (!jsonPtr || !jsonPtr->isMember("motivo")) {
+        Json::Value error;
+        error["error"] = "Motivo de cancelacion requerido.";
+        auto resp = HttpResponse::newHttpJsonResponse(error);
+        resp->setStatusCode(k400BadRequest);
+        callback(resp);
+        return;
+    }
+    
+    std::string motivo = (*jsonPtr)["motivo"].asString();
+    std::string folioSustitucion = jsonPtr->isMember("folio_sustitucion") ? (*jsonPtr)["folio_sustitucion"].asString() : "";
+    
+    auto dbClient = app().getDbClient();
+    
+    try {
+        int facturaId = std::stoi(id);
+        drogon::orm::Mapper<Factura> mpFactura(dbClient);
+        auto factura = mpFactura.findByPrimaryKey(facturaId);
+        
+        if (factura.getValueOfStatus() != "timbrada") {
+            Json::Value error;
+            error["error"] = "Solo se pueden cancelar facturas timbradas.";
+            auto resp = HttpResponse::newHttpJsonResponse(error);
+            resp->setStatusCode(k400BadRequest);
+            callback(resp);
+            return;
+        }
+
+        if (!factura.getEmisorId()) {
+            Json::Value error;
+            error["error"] = "La factura no tiene un emisor asignado.";
+            auto resp = HttpResponse::newHttpJsonResponse(error);
+            resp->setStatusCode(k400BadRequest);
+            callback(resp);
+            return;
+        }
+        
+        drogon::orm::Mapper<Emisor> mpEmisor(dbClient);
+        auto emisor = mpEmisor.findByPrimaryKey(*(factura.getEmisorId()));
+
+        if (emisor.getValueOfCertificado().empty() || emisor.getValueOfLlave().empty()) {
+            Json::Value error;
+            error["error"] = "El emisor asociado no tiene certificado o clave privada cargados.";
+            auto resp = HttpResponse::newHttpJsonResponse(error);
+            resp->setStatusCode(k400BadRequest);
+            callback(resp);
+            return;
+        }
+
+        // Call CfdiHelper to perform the cancel SOAP call
+        CfdiHelper::cancelarFinkok(
+            factura.getValueOfUuid(),
+            motivo,
+            folioSustitucion,
+            emisor.getValueOfRfc(),
+            emisor.getValueOfCertificado(),
+            emisor.getValueOfLlave(),
+            emisor.getValueOfLlavePassword(),
+            [callback, facturaId, dbClient](admingas::CfdiHelper::CancelResult res) {
+                if (!res.success) {
+                    Json::Value error;
+                    error["error"] = "Error al cancelar con el PAC: " + res.error;
+                    auto resp = HttpResponse::newHttpJsonResponse(error);
+                    resp->setStatusCode(k400BadRequest);
+                    callback(resp);
+                    return;
+                }
+
+                try {
+                    drogon::orm::Mapper<Factura> mp(dbClient);
+                    auto fac = mp.findByPrimaryKey(facturaId);
+                    fac.setAcuseCancelacion(res.acuse);
+                    fac.setStatus("cancelada");
+                    mp.update(fac);
+
+                    Json::Value ret;
+                    ret["success"] = true;
+                    ret["status"] = "cancelada";
+                    ret["estatusUUID"] = res.estatusUUID;
+                    ret["estatusCancelacion"] = res.estatusCancelacion;
+                    auto resp = HttpResponse::newHttpJsonResponse(ret);
+                    callback(resp);
+                } catch (const std::exception& e) {
+                    Json::Value error;
+                    error["error"] = std::string("Cancelacion exitosa, pero fallo al guardar acuse en base de datos: ") + e.what();
+                    auto resp = HttpResponse::newHttpJsonResponse(error);
+                    resp->setStatusCode(k500InternalServerError);
+                    callback(resp);
+                }
+            }
+        );
+    } catch (const drogon::orm::DrogonDbException &e) {
+        Json::Value error;
+        error["error"] = e.base().what();
+        auto resp = HttpResponse::newHttpJsonResponse(error);
+        resp->setStatusCode(k500InternalServerError);
+        callback(resp);
+    } catch (const std::exception &e) {
+        Json::Value error;
+        error["error"] = e.what();
+        auto resp = HttpResponse::newHttpJsonResponse(error);
+        resp->setStatusCode(k400BadRequest);
+        callback(resp);
+    }
+}
+
+void FacturaController::getAcuse(const HttpRequestPtr &req,
+                                 std::function<void(const HttpResponsePtr &)> &&callback,
+                                 std::string &&id)
+{
+    auto dbClient = app().getDbClient();
+    drogon::orm::Mapper<Factura> mp(dbClient);
+    
+    try {
+        auto factura = mp.findByPrimaryKey(std::stoi(id));
+        
+        if (factura.getValueOfStatus() != "cancelada" || factura.getValueOfAcuseCancelacion().empty()) {
+            Json::Value error;
+            error["error"] = "La factura no se encuentra cancelada o no cuenta con acuse.";
+            auto resp = HttpResponse::newHttpJsonResponse(error);
+            resp->setStatusCode(k404NotFound);
+            callback(resp);
+            return;
+        }
+        
+        auto resp = HttpResponse::newHttpResponse();
+        resp->setBody(factura.getValueOfAcuseCancelacion());
+        resp->addHeader("Content-Type", "application/xml; charset=utf-8");
+        resp->addHeader("Content-Disposition", "attachment; filename=\"Acuse_Cancelacion_" + id + "_" + factura.getValueOfUuid() + ".xml\"");
         callback(resp);
         
     } catch (const drogon::orm::DrogonDbException &e) {

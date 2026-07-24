@@ -578,4 +578,220 @@ void CfdiHelper::enviarAFinkok(const std::string &xmlFirmado,
   });
 }
 
+void CfdiHelper::cancelarFinkok(
+    const std::string& uuid,
+    const std::string& motivo,
+    const std::string& folioSustitucion,
+    const std::string& emisorRfc,
+    const std::string& certificadoBase64,
+    const std::string& llaveBase64,
+    const std::string& llavePassword,
+    std::function<void(CancelResult)>&& callback
+) {
+    CancelResult ret;
+    ret.success = false;
+
+    // 1. Convert Certificado to PEM format and then Base64
+    std::string certDer = drogon::utils::base64Decode(certificadoBase64);
+    if (certDer.empty()) {
+        ret.error = "Error al decodificar el certificado base64 del emisor.";
+        callback(ret);
+        return;
+    }
+
+    const unsigned char* certP = reinterpret_cast<const unsigned char*>(certDer.data());
+    X509* x509 = d2i_X509(nullptr, &certP, certDer.size());
+    if (!x509) {
+        ret.error = "Error al parsear el certificado X509 del emisor.";
+        callback(ret);
+        return;
+    }
+
+    BIO* certBio = BIO_new(BIO_s_mem());
+    if (PEM_write_bio_X509(certBio, x509) <= 0) {
+        X509_free(x509);
+        BIO_free(certBio);
+        ret.error = "Error al escribir el certificado en formato PEM.";
+        callback(ret);
+        return;
+    }
+    X509_free(x509);
+
+    char* certPemData = nullptr;
+    long certPemLen = BIO_get_mem_data(certBio, &certPemData);
+    std::string certPemStr(certPemData, certPemLen);
+    BIO_free(certBio);
+
+    std::string cer = drogon::utils::base64Encode(
+        reinterpret_cast<const unsigned char*>(certPemStr.data()), certPemStr.size()
+    );
+    // Strip whitespace from cer
+    cer.erase(std::remove_if(cer.begin(), cer.end(), [](unsigned char c) { return std::isspace(c); }), cer.end());
+
+    // 2. Convert Key to traditional RSA PEM encrypted with DES3 and then Base64
+    std::string keyDer = drogon::utils::base64Decode(llaveBase64);
+    if (keyDer.empty()) {
+        ret.error = "Error al decodificar la clave privada base64 del emisor.";
+        callback(ret);
+        return;
+    }
+
+    BIO* keyBio = BIO_new_mem_buf(keyDer.data(), keyDer.size());
+    EVP_PKEY* pkey = d2i_PKCS8PrivateKey_bio(keyBio, nullptr, nullptr, const_cast<char*>(llavePassword.c_str()));
+    BIO_free(keyBio);
+
+    if (!pkey) {
+        char errBuf[256];
+        ERR_error_string_n(ERR_get_error(), errBuf, sizeof(errBuf));
+        ret.error = std::string("No se pudo cargar la clave privada del emisor para la cancelacion: ") + errBuf;
+        callback(ret);
+        return;
+    }
+
+    RSA* rsa = EVP_PKEY_get1_RSA(pkey);
+    EVP_PKEY_free(pkey);
+    if (!rsa) {
+        ret.error = "No se pudo obtener la estructura RSA de la clave privada.";
+        callback(ret);
+        return;
+    }
+
+    BIO* outBio = BIO_new(BIO_s_mem());
+    std::string finkokPass = "W7y1g5z*"; // Passphrase required by Finkok for DES3 key
+    int writeOk = PEM_write_bio_RSAPrivateKey(
+        outBio,
+        rsa,
+        EVP_des_ede3_cbc(),
+        reinterpret_cast<unsigned char*>(const_cast<char*>(finkokPass.data())),
+        finkokPass.length(),
+        nullptr,
+        nullptr
+    );
+    RSA_free(rsa);
+
+    if (writeOk <= 0) {
+        BIO_free(outBio);
+        ret.error = "Error al cifrar la clave privada en formato tradicional PEM.";
+        callback(ret);
+        return;
+    }
+
+    char* keyPemData = nullptr;
+    long keyPemLen = BIO_get_mem_data(outBio, &keyPemData);
+    std::string keyPemStr(keyPemData, keyPemLen);
+    BIO_free(outBio);
+
+    std::string key = drogon::utils::base64Encode(
+        reinterpret_cast<const unsigned char*>(keyPemStr.data()), keyPemStr.size()
+    );
+    // Strip whitespace from key
+    key.erase(std::remove_if(key.begin(), key.end(), [](unsigned char c) { return std::isspace(c); }), key.end());
+
+    // 3. Build SOAP envelope
+    std::string soapBody =
+        "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:can=\"http://facturacion.finkok.com/cancel\" xmlns:apps=\"apps.services.soap.core.views\">"
+        "   <soapenv:Header/>"
+        "   <soapenv:Body>"
+        "      <can:cancel>"
+        "         <can:UUIDS>"
+        "            <apps:UUID UUID=\"" + uuid + "\" FolioSustitucion=\"" + folioSustitucion + "\" Motivo=\"" + motivo + "\"/>"
+        "         </can:UUIDS>"
+        "         <can:username>leavendano@gmail.com</can:username>"
+        "         <can:password>W7y1g5z*</can:password>"
+        "         <can:taxpayer_id>" + emisorRfc + "</can:taxpayer_id>"
+        "         <can:cer>" + cer + "</can:cer>"
+        "         <can:key>" + key + "</can:key>"
+        "         <can:store_pending>0</can:store_pending>"
+        "      </can:cancel>"
+        "   </soapenv:Body>"
+        "</soapenv:Envelope>";
+
+    // 4. Create HTTP Client
+    auto client = drogon::HttpClient::newHttpClient("https://facturacion.finkok.com");
+    auto req = drogon::HttpRequest::newHttpRequest();
+    req->setMethod(drogon::Post);
+    req->setPath("/servicios/soap/cancel");
+    req->addHeader("Content-Type", "text/xml; charset=utf-8");
+    req->setBody(soapBody);
+
+    // 5. Send request asynchronously
+    client->sendRequest(req, [callback = std::move(callback)](
+                                 drogon::ReqResult res,
+                                 const drogon::HttpResponsePtr &resp) {
+        CancelResult ret;
+        ret.success = false;
+
+        if (res != drogon::ReqResult::Ok || !resp) {
+            ret.error = "Error de red al conectar con el PAC Finkok. Intentelo de nuevo.";
+            callback(ret);
+            return;
+        }
+
+        if (resp->getStatusCode() != drogon::k200OK &&
+            resp->getStatusCode() != drogon::k500InternalServerError) {
+            ret.error = "Finkok respondio con codigo HTTP invalido: " + std::to_string(resp->getStatusCode());
+            callback(ret);
+            return;
+        }
+
+        std::string xmlResponse = std::string(resp->getBody());
+
+        // Parse SOAP response
+        xmlDocPtr doc = xmlReadMemory(xmlResponse.c_str(), xmlResponse.size(), nullptr, "UTF-8", 0);
+        if (!doc) {
+            ret.error = "Error al parsear la respuesta SOAP de cancelacion de Finkok.";
+            callback(ret);
+            return;
+        }
+
+        xmlNodePtr root = xmlDocGetRootElement(doc);
+        if (!root) {
+            ret.error = "Respuesta SOAP de cancelacion vacia de Finkok.";
+            xmlFreeDoc(doc);
+            callback(ret);
+            return;
+        }
+
+        // Check for Incidencias
+        xmlNodePtr incidenciasNode = buscarNodoPorNombreLocal(root, "Incidencias");
+        if (incidenciasNode) {
+            xmlNodePtr incidenciaNode = buscarNodoPorNombreLocal(incidenciasNode, "Incidencia");
+            if (incidenciaNode) {
+                xmlNodePtr msgNode = buscarNodoPorNombreLocal(incidenciaNode, "MensajeIncidencia");
+                xmlNodePtr codeNode = buscarNodoPorNombreLocal(incidenciaNode, "Codigo");
+                std::string msg = msgNode ? obtenerTextoNodo(msgNode) : "Error desconocido de Finkok";
+                std::string code = codeNode ? obtenerTextoNodo(codeNode) : "";
+                ret.error = "Rechazo del PAC (" + code + "): " + msg;
+                xmlFreeDoc(doc);
+                callback(ret);
+                return;
+            }
+        }
+
+        // Extract Acuse, EstatusUUID, EstatusCancelacion
+        xmlNodePtr acuseNode = buscarNodoPorNombreLocal(root, "Acuse");
+        xmlNodePtr estatusNode = buscarNodoPorNombreLocal(root, "EstatusUUID");
+        xmlNodePtr descNode = buscarNodoPorNombreLocal(root, "EstatusCancelacion");
+
+        if (estatusNode) {
+            ret.estatusUUID = obtenerTextoNodo(estatusNode);
+        }
+        if (descNode) {
+            ret.estatusCancelacion = obtenerTextoNodo(descNode);
+        }
+        if (acuseNode) {
+            ret.acuse = obtenerTextoNodo(acuseNode);
+        }
+
+        if (!ret.acuse.empty()) {
+            ret.success = true;
+        } else {
+            ret.error = "La respuesta de Finkok no contiene el acuse de cancelacion.";
+        }
+
+        xmlFreeDoc(doc);
+        callback(ret);
+    });
+}
+
 } // namespace admingas
