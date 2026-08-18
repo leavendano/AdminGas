@@ -1,0 +1,46 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Backend (Drogon C++)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/backend/api_server/build/api_server",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/backend/api_server",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "build-backend"
+        },
+        {
+            "name": "Frontend (Vite)",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run",
+                "dev"
+            ],
+            "cwd": "${workspaceFolder}/frontend",
+            "console": "integratedTerminal"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Frontend + Backend",
+            "configurations": [
+                "Frontend (Vite)",
+                "Backend (Drogon C++)"
+            ]
+        }
+    ]
+}

@@ -22,7 +22,7 @@ void FacturaController::get(const HttpRequestPtr &req,
     drogon::orm::Mapper<Factura> mp(dbClient);
     
     try {
-        auto facturas = mp.findAll();
+        auto facturas = mp.orderBy(Factura::Cols::_fecha, drogon::orm::SortOrder::DESC).findAll();
         Json::Value ret(Json::arrayValue);
         for (auto const &f : facturas) {
             Json::Value fJson = f.toJson();

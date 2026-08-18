@@ -219,7 +219,7 @@
             ...f,
             conceptos: parsedConceptos
           };
-        });
+        }).sort((a, b) => (b.fecha || '').localeCompare(a.fecha || ''));
       }
     } catch (error) {
       console.error("Error cargando facturas:", error);
@@ -527,7 +527,8 @@
       f.receptor_nombre.toLowerCase().includes(searchQuery.toLowerCase()) ||
       f.receptor_rfc.toLowerCase().includes(searchQuery.toLowerCase()) ||
       f.emisor_nombre.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      f.id?.toString() === searchQuery
+      f.id?.toString() === searchQuery ||
+      (f.uuid && f.uuid.toLowerCase().includes(searchQuery.toLowerCase()))
     )
   );
 
@@ -616,7 +617,11 @@
           {#each filteredFacturas as fac}
             <tr class="table-row">
               <td class="folio-col">
-                <strong>FAC-{fac.id?.toString().padStart(4, '0')}</strong>
+                {#if fac.uuid}
+                  <strong>{fac.uuid.slice(-8)}</strong>
+                {:else}
+                  <strong>FAC-{fac.id?.toString().padStart(4, '0')}</strong>
+                {/if}
               </td>
               <td><span class="date-badge">{fac.fecha}</span></td>
               <td>
